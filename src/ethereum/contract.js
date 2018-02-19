@@ -1,36 +1,51 @@
 var Web3 = require('web3');
- 
-var bettingContract;
- 
-function startUp() {
- 
-    var web3 = new Web3(Web3.givenProvider);
-    web3.eth.contract([{"constant":true,"inputs":[],"name":"creator","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"outcomeOne","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_outcome","type":"string"}],"name":"changeBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"outcomeTwo","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"outcomeThree","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"bets","outputs":[{"name":"outcome","type":"string"},{"name":"amount","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_outcome","type":"string"}],"name":"placeBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"claimWinnings","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"testCounter","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_outcomeOne","type":"string"},{"name":"_outcomeTwo","type":"string"},{"name":"_outcomeThree","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
+var web3 = new Web3(Web3.givenProvider);
 
-}
- 
-function placeBet(contractAddress, outcome, value, receiptfunc) {
-    bettingContract.options.address = contractAddress;
-    bettingContract.methods.placeBet(outcome).send({ from: web3.eth.accounts[0], value: web3.utils.toWei(value, 'ether') })
-        .then(function (receipt) {
-            receiptfunc(receipt);
+var bettingContract = new web3.eth.Contract([{ "constant": true, "inputs": [], "name": "creator", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "outTwo", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "outcome", "type": "string" }], "name": "changeBet", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "bets", "outputs": [{ "name": "outcome", "type": "string" }, { "name": "amount", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "outcome", "type": "string" }], "name": "placeBet", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "outOne", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "claimWinnings", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "outThree", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "testCounter", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [{ "name": "outcomeOne", "type": "string" }, { "name": "outcomeTwo", "type": "string" }, { "name": "outcomeThree", "type": "string" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]);
+
+//For test purposes only
+function deployContract() {
+
+    var outcomeOne = "Manchester United";
+    var outcomeTwo = "Draw";
+    var outcomeThree = "Chelsea";
+
+    bettingContract.options.data = '0x6060604052341561000f57600080fd5b60405161086d38038061086d83398101604052808051820191906020018051820191906020018051820191905050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555082600190805190602001906100939291906100d2565b5081600290805190602001906100aa9291906100d2565b5080600390805190602001906100c19291906100d2565b506000600581905550505050610177565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061011357805160ff1916838001178555610141565b82800160010185558215610141579182015b82811115610140578251825591602001919060010190610125565b5b50905061014e9190610152565b5090565b61017491905b80821115610170576000816000905550600101610158565b5090565b90565b6106e7806101866000396000f300606060405260043610610099576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806302d05d3f1461009e5780630502d550146100f357806358aae3601461018157806389a78f1a146101d357806397bfeb88146102a9578063ac4c7d27146102fb578063b401faf114610389578063bd267b511461039e578063d356aeb81461042c575b600080fd5b34156100a957600080fd5b6100b1610455565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100fe57600080fd5b61010661047a565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561014657808201518184015260208101905061012b565b50505050905090810190601f1680156101735780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101d1600480803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610518565b005b34156101de57600080fd5b61020a600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061052d565b60405180806020018381526020018281038252848181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156102995780601f1061026e57610100808354040283529160200191610299565b820191906000526020600020905b81548152906001019060200180831161027c57829003601f168201915b5050935050505060405180910390f35b6102f9600480803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610550565b005b341561030657600080fd5b61030e610565565b6040518080602001828103825283818151815260200191508051906020019080838360005b8381101561034e578082015181840152602081019050610333565b50505050905090810190601f16801561037b5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561039457600080fd5b61039c610603565b005b34156103a957600080fd5b6103b1610617565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156103f15780820151818401526020810190506103d6565b50505050905090810190601f16801561041e5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561043757600080fd5b61043f6106b5565b6040518082815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60028054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156105105780601f106104e557610100808354040283529160200191610510565b820191906000526020600020905b8154815290600101906020018083116104f357829003601f168201915b505050505081565b60056000815480929190600101919050555050565b600460205280600052604060002060009150905080600001908060010154905082565b60056000815480929190600101919050555050565b60018054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156105fb5780601f106105d0576101008083540402835291602001916105fb565b820191906000526020600020905b8154815290600101906020018083116105de57829003601f168201915b505050505081565b600560008154809291906001019190505550565b60038054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156106ad5780601f10610682576101008083540402835291602001916106ad565b820191906000526020600020905b81548152906001019060200180831161069057829003601f168201915b505050505081565b600554815600a165627a7a7230582041b73a655987ed244ece6c8d7879a1c8fdafac4f84917ff9190a97df76c538b70029';
+
+    bettingContract.deploy({
+        arguments: [outcomeOne, outcomeTwo, outcomeThree]
+    })
+        .send({
+            from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
+            gas: 1500000,
+            gasPrice: '30000000000000'
+        })
+        .then(function (newContractInstance) {
+            console.log(newContractInstance.options.address) // instance with the new contract address
         });
 }
 
-function changeBet(contractAddress, outcome, receiptfunc) {
-    bettingContract.options.address = contractAddress;
-    bettingContract.methods.changeBet(outcome).call({ from: web3.eth.accounts[0] })
-        .then(function (receipt) {
-            receiptfunc(receipt);
-        });
-}
-
-function claimWinnings(contractAddress, receiptfunc) {
-    bettingContract.options.address = contractAddress;
-    bettingContract.methods.claimWinnings(outcome).call({ from: web3.eth.accounts[0] })
-        .then(function (receipt) {
-            receiptfunc(receipt);
-        });
-}
-
-export {startUp, placeBet}
+//Note only works with constant from address currently
+export default {
+    placeBet: function (contractAddress, outcome, value) {
+        bettingContract.options.address = contractAddress;
+        bettingContract.methods.placeBet(outcome).send({ from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57', value: web3.utils.toWei(value, 'ether') })
+            .then(function (receipt) {
+                console.log(receipt.contractAddress);
+            });
+    },
+    changeBet: function (contractAddress, outcome) {
+        bettingContract.options.address = contractAddress;
+        bettingContract.methods.changeBet(outcome).call({ from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57' })
+            .then(function (receipt) {
+                console.log(receipt.contractAddress);
+            });
+    },
+    claimWinnings: function (contractAddress) {
+        bettingContract.options.address = contractAddress;
+        bettingContract.methods.claimWinnings().call({ from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57' })
+            .then(function (receipt) {
+                console.log(receipt.contractAddress);
+            });
+    }
+};
