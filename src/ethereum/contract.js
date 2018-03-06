@@ -1,8 +1,11 @@
 var Web3 = require('web3');
 var web3 = new Web3(Web3.givenProvider);
 
-var bettingContract = new web3.eth.Contract([{ "constant": true, "inputs": [], "name": "creator", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "placeBet", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeOne", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "eventStarted", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "totalPools", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeTwo", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeThree", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "bets", "outputs": [{ "name": "outcomeIndex", "type": "uint256" }, { "name": "amount", "type": "uint256" }, { "name": "paid", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "claimWinnings", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "state", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "eventOver", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "winningIndex", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "changeBet", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_outcomeOne", "type": "string" }, { "name": "_outcomeTwo", "type": "string" }, { "name": "_outcomeThree", "type": "string" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]);
+var bettingContract = new web3.eth.Contract([{ "constant": true, "inputs": [], "name": "creator", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "placeBet", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeOne", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "eventStarted", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "totalPools", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeTwo", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "kickOffTime", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "outcomeThree", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "bets", "outputs": [{ "name": "outcomeIndex", "type": "uint256" }, { "name": "amount", "type": "uint256" }, { "name": "paid", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "claimWinnings", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "state", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "eventOver", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "winningIndex", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_outcomeIndex", "type": "uint256" }], "name": "changeBet", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "name": "_outcomeOne", "type": "string" }, { "name": "_outcomeTwo", "type": "string" }, { "name": "_outcomeThree", "type": "string" }, { "name": "_kickOffTime", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]);
 var managerContract = new web3.eth.Contract([{ "constant": true, "inputs": [], "name": "creator", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "betEvents", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "length", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "eventAddr", "type": "address" }], "name": "addEvent", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]);
+var managerAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+
+managerContract.options.address = managerAddress;
 
 /**
  * getAmountOfBets
@@ -42,7 +45,6 @@ const getAllBets = async (account, managerAddress) => {
  */
 const getPlacedBets = async (account, betEvents) => {
     var placedBets = [];
-    managerContract.options.address = managerAddress;
     for (var i = 0; i < betEvents.length; i++) {
         bettingContract.options.address = betEvents[i];
         var bet = await bettingContract.methods.bets(account).call({ from: account });
@@ -64,7 +66,7 @@ const getAvailableBets = async (account, betEvents) => {
     for (var i = 0; i < betEvents.length; i++) {
         bettingContract.options.address = betEvents[i];
         var state = await bettingContract.methods.state().call({ from: account });
-        if (state < 2) availableBets.push(betEvents.address);
+        if (state < 2) availableBets.push(betEvents[i]);
     }
     return availableBets;
 }
@@ -122,7 +124,9 @@ export default {
                 from: accounts[0],
                 value: web3.utils.toWei(value, 'ether')
             }).then(function (receipt) {
-                console.log(receipt.contractAddress);
+                console.log(receipt.transactionHash);
+            }).catch(function (error) {
+                console.log("Placing bet cancelled.");
             });
         });
     },
@@ -135,9 +139,12 @@ export default {
     changeBet: function (contractAddress, outcomeIndex) {
         bettingContract.options.address = contractAddress;
         web3.eth.getAccounts(function (error, accounts) {
-            bettingContract.methods.changeBet(outcomeIndex).call({ from: accounts[0] })
+            bettingContract.methods.changeBet(outcomeIndex).send({ from: accounts[0] })
                 .then(function (receipt) {
-                    console.log(receipt.contractAddress);
+                    console.log(receipt.transactionHash);
+                })
+                .catch(function (error) {
+                    console.log("Changing bet cancelled");
                 });
         });
     },
@@ -149,9 +156,12 @@ export default {
     claimWinnings: function (contractAddress) {
         bettingContract.options.address = contractAddress;
         web3.eth.getAccounts(function (error, accounts) {
-            bettingContract.methods.claimWinnings().call({ from: accounts[0] })
+            bettingContract.methods.claimWinnings().send({ from: accounts[0] })
                 .then(function (receipt) {
-                    console.log(receipt.contractAddress);
+                    console.log(receipt.transactionHash);
+                })
+                .catch(function (error) {
+                    console.log("Claiming winnings cancelled.")
                 });
         });
     },
