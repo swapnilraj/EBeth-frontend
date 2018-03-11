@@ -7,6 +7,15 @@ const Colors = {
   accent: '#273142',
   black: '#000000',
   white: '#000000',
+  shadow: '0 2px 27px -5px rgba(0, 0, 0, 0.15)',
+  textLight: 'rgba(255, 255, 255, 0.87)',
 };
 
-export { Colors };
+/**
+ * Dimension contants
+ */
+const Dimens = {
+  sidebarCollapsedWidth: 107,
+};
+
+export { Colors, Dimens };
