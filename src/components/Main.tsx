@@ -12,6 +12,10 @@ import About from './About';
 const container = style(
   {
     marginLeft: Dimens.sidebarCollapsedWidth,
+    paddingLeft: Dimens.contentHorizontalPadding,
+    paddingRight: Dimens.contentHorizontalPadding,
+    paddingTop: Dimens.contentVerticalPadding,
+    paddingBottom: Dimens.contentVerticalPadding,
   },
   fillParent,
 );

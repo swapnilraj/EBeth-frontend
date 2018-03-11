@@ -10,13 +10,6 @@ import LargeText from './LargeText';
 import MiniTextPane from './MiniTextPane';
 import TextPane from './TextPane';
 
-const container = style({
-  paddingLeft: Dimens.contentHorizontalPadding,
-  paddingRight: Dimens.contentHorizontalPadding,
-  paddingTop: Dimens.contentVerticalPadding,
-  paddingBottom: Dimens.contentVerticalPadding,
-});
-
 const titleTextContainer = style({
   marginBottom: Dimens.contentTitleTrailingMargin,
 });
@@ -50,7 +43,7 @@ const bottomPanes = style({
 });
 
 const About = () => (
-  <div className={container}>
+  <div>
     <div className={titleTextContainer}>
       <LargeText className={titleStyle} text={Text.aboutTitle} />
     </div>
