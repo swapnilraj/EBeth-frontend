@@ -56,6 +56,10 @@ export interface IRouterState {
   path: string;
 }
 
+export const defaultRouterState: IRouterState = {
+  path: '/',
+};
+
 /**
  * Router navigation epic
  */
@@ -69,12 +73,7 @@ export const routerEpic: Epic<RouterActions, IState> = action$ =>
 /**
  * Router reducer
  */
-export const router = (
-  state: IRouterState = {
-    path: '/',
-  },
-  action: RouterActions,
-): IRouterState => {
+export const router = (state: IRouterState = defaultRouterState, action: RouterActions): IRouterState => {
   switch (action.type) {
     case NAVIGATE:
     case ROUTER_NAVIGATE:

@@ -22,15 +22,14 @@ export interface ISidebarState {
   isCollapsed: boolean;
 }
 
+export const defaultSidebarState: ISidebarState = {
+  isCollapsed: true,
+};
+
 /**
  * Sidebar reducer
  */
-export const sidebar = (
-  state: ISidebarState = {
-    isCollapsed: true,
-  },
-  action: SidebarActions,
-): ISidebarState => {
+export const sidebar = (state: ISidebarState = defaultSidebarState, action: SidebarActions): ISidebarState => {
   switch (action.type) {
     case TOGGLE_SIDEBAR:
       return { ...state, isCollapsed: !state.isCollapsed };
