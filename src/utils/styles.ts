@@ -7,6 +7,7 @@ import { Colors } from './constants';
  * Font family for application
  */
 const fontFamily = [
+  'Lato',
   '-apple-system',
   `BlinkMacSystemFont`,
   `"Segoe UI"`,
@@ -27,18 +28,8 @@ export const fixGlobalStyles = () => {
   cssRule('body', {
     backgroundColor: Colors.background,
     fontFamily,
-    fontSize: 20,
+    fontSize: 16,
   });
-  cssRule('button', {
-    backgroundColor: '#8E9AAF',
-    color: 'white',
-    padding: 8,
-    fontSize: 36,
-    borderRadius: 8,
-    outline: 0,
-    minWidth: 120,
-  });
-  cssRule('input, button', { fontFamily });
 };
 
 /**
