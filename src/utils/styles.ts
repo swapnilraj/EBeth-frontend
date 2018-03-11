@@ -27,7 +27,6 @@ export const fixGlobalStyles = () => {
     backgroundColor: '#CBC0D3',
     fontFamily,
     fontSize: 20,
-    padding: 16,
   });
   cssRule('button', {
     backgroundColor: '#8E9AAF',
