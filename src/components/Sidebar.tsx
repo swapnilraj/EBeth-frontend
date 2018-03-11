@@ -17,6 +17,7 @@ const container = style({
   transition: 'all 0.3s ease',
   $nest: {
     '&[data-is-collapsed="true"]': {
+      minWidth: Dimens.sidebarCollapsedWidth,
       width: Dimens.sidebarCollapsedWidth,
       maxWidth: Dimens.sidebarCollapsedWidth,
     },
@@ -31,7 +32,7 @@ const banner = style({
 
 const collapsedBanner = style({
   justifyContent: 'center',
-  marginLeft: 'inital',
+  marginLeft: 'initial',
   width: '100%',
 });
 

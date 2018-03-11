@@ -20,7 +20,7 @@ const mainContainer = style(
 
 const App = () => (
   <div className={classes(normalizeEl, mainContainer)}>
-    <Sidebar isCollapsed={!true} />
+    <Sidebar isCollapsed={true} />
     <Main />
   </div>
 );
