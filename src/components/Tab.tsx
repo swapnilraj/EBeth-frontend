@@ -38,9 +38,6 @@ const iconContainer = style({
 
 const titleStyle = style({
   color: Colors.textLight,
-  marginTop: 20,
-  marginBottom: 15,
-  marginRight: 35,
   textDecoration: 'none',
 });
 
