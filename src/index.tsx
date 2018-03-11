@@ -2,6 +2,8 @@
  * Root app file
  */
 
+import 'babel-polyfill';
+
 import * as React from 'react';
 
 import { render } from 'react-dom';
@@ -23,7 +25,7 @@ interface IAppProps {
   version: string;
 }
 
-const boot = () => {
+const boot = async () => {
   const store = configureStore();
   const appVersion = process.env.APP_VERSION as string;
 
