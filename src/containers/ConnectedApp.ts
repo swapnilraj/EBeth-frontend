@@ -12,6 +12,6 @@ import App from '../components/App';
 
 const mapDispatch = (dispatch: Dispatch<IState>) => bindActionCreators({}, dispatch);
 
-const ConnectedApp = connect({}, mapDispatch)(App);
+const ConnectedApp = connect(null, mapDispatch)(App);
 
 export default ConnectedApp;
