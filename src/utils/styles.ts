@@ -1,6 +1,7 @@
 import { normalize, setupPage } from 'csstips';
-
 import { cssRule, style } from 'typestyle';
+
+import { Colors } from './constants';
 
 /**
  * Font family for application
@@ -24,7 +25,7 @@ export const fixGlobalStyles = () => {
   normalize();
   setupPage('#root');
   cssRule('body', {
-    backgroundColor: '#CBC0D3',
+    backgroundColor: Colors.background,
     fontFamily,
     fontSize: 20,
   });
