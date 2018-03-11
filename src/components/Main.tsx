@@ -4,6 +4,7 @@
 
 import { fillParent } from 'csstips';
 import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { style } from 'typestyle';
 
 import { Dimens } from '../utils/constants';
@@ -20,9 +21,14 @@ const container = style(
   fillParent,
 );
 
+const NoMatch = () => <div>Page under construction</div>;
+
 const Main = () => (
   <div className={container}>
-    <About />
+    <Switch>
+      <Route exact path="/about" component={About} />
+      <Route component={NoMatch} />
+    </Switch>
   </div>
 );
 
