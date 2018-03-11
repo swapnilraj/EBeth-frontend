@@ -21,6 +21,11 @@ const Dimens = {
   sidebarCollapsedWidth: 107,
   sidebarWidth: 273,
   sidebarTabsLeadingMargin: 132,
+  tabLeadingPadding: 30,
+  tabImageTrailingMargin: 13,
+  tabImageSize: 48,
+  tabImageVeticalPadding: 8,
+  tabTrailingMargin: 16,
 };
 
 /**

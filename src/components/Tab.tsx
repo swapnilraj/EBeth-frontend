@@ -5,25 +5,34 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 
-import { Colors } from '../utils/constants';
+import { Colors, Dimens } from '../utils/constants';
 import MediumText from './MediumText';
 
 const container = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
   width: '100%',
+  paddingLeft: Dimens.tabLeadingPadding,
+  marginBottom: Dimens.tabTrailingMargin,
   $nest: {
     '&[data-is-active="true"]': {
       background: Colors.activeTab,
       borderLeftStyle: 'solid',
       borderLeftColor: Colors.primary,
     },
+    '& [data-image-container]': {
+      marginRight: Dimens.tabImageTrailingMargin,
+    },
+    '& [data-image-container]>*': {
+      height: Dimens.tabImageSize,
+      width: Dimens.tabImageSize,
+    },
   },
 });
 
 const iconContainer = style({
-  padding: 12,
+  paddingTop: Dimens.tabImageVeticalPadding,
+  paddingBottom: Dimens.tabImageVeticalPadding,
 });
 
 const titleStyle = style({
@@ -43,7 +52,11 @@ interface IProps {
 
 const Tab = ({ icon, isActive, title, route, isCollapsed }: IProps) => (
   <div className={container} data-route={route} data-is-active={isActive}>
-    {icon ? <div className={iconContainer}>{icon}</div> : null}
+    {icon ? (
+      <div data-image-container className={iconContainer}>
+        {icon}
+      </div>
+    ) : null}
     {isCollapsed ? null : <MediumText className={titleStyle} text={title} />}
   </div>
 );
