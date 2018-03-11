@@ -8,8 +8,8 @@ import { classes, style } from 'typestyle';
 
 import { normalizeEl } from '../utils/styles';
 
+import ConnectedSidebar from '../containers/ConnectedSidebar';
 import Main from './Main';
-import Sidebar from './Sidebar';
 
 const mainContainer = style(
   {
@@ -20,7 +20,7 @@ const mainContainer = style(
 
 const App = () => (
   <div className={classes(normalizeEl, mainContainer)}>
-    <Sidebar isCollapsed={true} />
+    <ConnectedSidebar />
     <Main />
   </div>
 );

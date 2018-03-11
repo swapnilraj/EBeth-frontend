@@ -47,10 +47,11 @@ const tabsContainer = style({
 
 interface IProps {
   isCollapsed: boolean;
+  toggleSidebar();
 }
 
-const Sidebar = ({ isCollapsed }: IProps) => (
-  <div className={container} data-is-collapsed={isCollapsed}>
+const Sidebar = ({ isCollapsed, toggleSidebar }: IProps) => (
+  <div className={container} data-is-collapsed={isCollapsed} onMouseEnter={toggleSidebar} onMouseLeave={toggleSidebar}>
     <div className={classes(banner, isCollapsed ? collapsedBanner : null)}>
       <LargeText text={isCollapsed ? Text.bannerShortTitle : Text.bannerTitle} className={bannerText} />
     </div>
