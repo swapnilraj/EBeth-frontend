@@ -3,6 +3,7 @@
  */
 
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import { style } from 'typestyle';
 
 import { Colors, Dimens } from '../utils/constants';
@@ -15,7 +16,7 @@ const container = style({
   paddingLeft: Dimens.tabLeadingPadding,
   marginBottom: Dimens.tabTrailingMargin,
   $nest: {
-    '&[data-is-active="true"]': {
+    '&.is-active': {
       background: Colors.activeTab,
       borderLeftStyle: 'solid',
       borderLeftColor: Colors.primary,
@@ -40,25 +41,25 @@ const titleStyle = style({
   marginTop: 20,
   marginBottom: 15,
   marginRight: 35,
+  textDecoration: 'none',
 });
 
 interface IProps {
   icon?: JSX.Element;
-  isActive: boolean;
   title: string;
   route: string;
   isCollapsed: boolean;
 }
 
-const Tab = ({ icon, isActive, title, route, isCollapsed }: IProps) => (
-  <div className={container} data-route={route} data-is-active={isActive}>
+const Tab = ({ icon, title, route, isCollapsed }: IProps) => (
+  <NavLink className={container} to={route} activeClassName="is-active">
     {icon ? (
       <div data-image-container className={iconContainer}>
         {icon}
       </div>
     ) : null}
     {isCollapsed ? null : <MediumText className={titleStyle} text={title} />}
-  </div>
+  </NavLink>
 );
 
 export default Tab;

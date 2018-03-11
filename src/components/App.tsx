@@ -4,6 +4,7 @@
 
 import { fillParent } from 'csstips';
 import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { classes, style } from 'typestyle';
 
 import { normalizeEl } from '../utils/styles';
@@ -19,10 +20,12 @@ const mainContainer = style(
 );
 
 const App = () => (
-  <div className={classes(normalizeEl, mainContainer)}>
-    <ConnectedSidebar />
-    <Main />
-  </div>
+  <Router>
+    <div className={classes(normalizeEl, mainContainer)}>
+      <ConnectedSidebar />
+      <Main />
+    </div>
+  </Router>
 );
 
 export default App;

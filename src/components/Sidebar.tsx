@@ -61,31 +61,12 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: IProps) => (
         icon={<RoungImg src="/icons/johndoe.jpg" />}
         isCollapsed={isCollapsed}
         route="/profile"
-        isActive={false}
         title={Text.profilePlaceholder}
       />
-      <Tab
-        icon={<Icon type="place-bets" />}
-        isCollapsed={isCollapsed}
-        route="/place_bets"
-        isActive={true}
-        title={Text.placeBetsTab}
-      />
-      <Tab
-        icon={<Icon type="my-bets" />}
-        isCollapsed={isCollapsed}
-        route="/my_bets"
-        isActive={false}
-        title={Text.currentBetsTab}
-      />
-      <Tab
-        icon={<Icon type="results" />}
-        isCollapsed={isCollapsed}
-        route="/results"
-        isActive={false}
-        title={Text.resultsTab}
-      />
-      <Tab isCollapsed={isCollapsed} route="/about" isActive={false} title={Text.aboutTab} />
+      <Tab icon={<Icon type="place-bets" />} isCollapsed={isCollapsed} route="/place_bets" title={Text.placeBetsTab} />
+      <Tab icon={<Icon type="my-bets" />} isCollapsed={isCollapsed} route="/my_bets" title={Text.currentBetsTab} />
+      <Tab icon={<Icon type="results" />} isCollapsed={isCollapsed} route="/results" title={Text.resultsTab} />
+      <Tab isCollapsed={isCollapsed} route="/about" title={Text.aboutTab} />
     </div>
   </div>
 );
