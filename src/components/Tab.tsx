@@ -38,13 +38,13 @@ interface IProps {
   isActive: boolean;
   title: string;
   route: string;
-  collapsed: boolean;
+  isCollapsed: boolean;
 }
 
-const Tab = ({ icon, isActive, title, route, collapsed }: IProps) => (
+const Tab = ({ icon, isActive, title, route, isCollapsed }: IProps) => (
   <div className={container} data-route={route} data-is-active={isActive}>
     {icon ? <div className={iconContainer}>{icon}</div> : null}
-    {collapsed ? null : <MediumText className={titleStyle} text={title} />}
+    {isCollapsed ? null : <MediumText className={titleStyle} text={title} />}
   </div>
 );
 

@@ -17,7 +17,9 @@ const Colors = {
  */
 const Dimens = {
   sidebarBannerLeadingMargin: 64,
+  sidebarBannerTextLeadingMargin: 41,
   sidebarCollapsedWidth: 107,
+  sidebarWidth: 273,
   sidebarTabsLeadingMargin: 132,
 };
 

@@ -3,7 +3,7 @@
  */
 
 import * as React from 'react';
-import { style } from 'typestyle';
+import { classes, style } from 'typestyle';
 
 import { Colors, Dimens, Text } from '../utils/constants';
 import Icon from './Icon';
@@ -13,14 +13,26 @@ import Tab from './Tab';
 const container = style({
   background: Colors.accent,
   boxShadow: Colors.shadow,
-  width: Dimens.sidebarCollapsedWidth,
+  minWidth: Dimens.sidebarWidth,
+  transition: 'all 0.3s ease',
+  $nest: {
+    '&[data-is-collapsed="true"]': {
+      width: Dimens.sidebarCollapsedWidth,
+      maxWidth: Dimens.sidebarCollapsedWidth,
+    },
+  },
 });
 
 const banner = style({
-  width: '100%',
   marginTop: Dimens.sidebarBannerLeadingMargin,
   display: 'flex',
+  marginLeft: Dimens.sidebarBannerTextLeadingMargin,
+});
+
+const collapsedBanner = style({
   justifyContent: 'center',
+  marginLeft: 'inital',
+  width: '100%',
 });
 
 const bannerText = style({
@@ -32,35 +44,45 @@ const tabsContainer = style({
   marginTop: Dimens.sidebarTabsLeadingMargin,
 });
 
-const Sidebar = () => (
-  <div className={container}>
-    <div className={banner}>
-      <LargeText text={Text.bannerShotTitle} className={bannerText} />
+interface IProps {
+  isCollapsed: boolean;
+}
+
+const Sidebar = ({ isCollapsed }: IProps) => (
+  <div className={container} data-is-collapsed={isCollapsed}>
+    <div className={classes(banner, isCollapsed ? collapsedBanner : null)}>
+      <LargeText text={isCollapsed ? Text.bannerShortTitle : Text.bannerTitle} className={bannerText} />
     </div>
     <div className={tabsContainer}>
       <Tab
         icon={<Icon type="my-bets" />}
-        collapsed={true}
+        isCollapsed={isCollapsed}
         route="/profile"
         isActive={false}
         title={Text.profilePlaceholder}
       />
       <Tab
         icon={<Icon type="place-bets" />}
-        collapsed={true}
+        isCollapsed={isCollapsed}
         route="/place_bets"
         isActive={true}
         title={Text.placeBetsTab}
       />
       <Tab
         icon={<Icon type="my-bets" />}
-        collapsed={true}
+        isCollapsed={isCollapsed}
         route="/my_bets"
         isActive={false}
         title={Text.currentBetsTab}
       />
-      <Tab icon={<Icon type="results" />} collapsed={true} route="/results" isActive={false} title={Text.resultsTab} />
-      <Tab collapsed={true} route="/about" isActive={false} title={Text.aboutTab} />
+      <Tab
+        icon={<Icon type="results" />}
+        isCollapsed={isCollapsed}
+        route="/results"
+        isActive={false}
+        title={Text.resultsTab}
+      />
+      <Tab isCollapsed={isCollapsed} route="/about" isActive={false} title={Text.aboutTab} />
     </div>
   </div>
 );
