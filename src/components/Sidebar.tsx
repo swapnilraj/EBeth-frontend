@@ -8,6 +8,7 @@ import { classes, style } from 'typestyle';
 import { Colors, Dimens, Text } from '../utils/constants';
 import Icon from './Icon';
 import LargeText from './LargeText';
+import RoungImg from './RoundImg';
 import Tab from './Tab';
 
 const container = style({
@@ -57,7 +58,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: IProps) => (
     </div>
     <div className={tabsContainer}>
       <Tab
-        icon={<Icon type="my-bets" />}
+        icon={<RoungImg src="/icons/johndoe.jpg" />}
         isCollapsed={isCollapsed}
         route="/profile"
         isActive={false}

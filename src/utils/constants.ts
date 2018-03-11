@@ -39,6 +39,7 @@ const Text = {
   currentBetsTab: 'My current bets',
   resultsTab: 'All results',
   aboutTab: 'About Ebeth',
+  profileAltTitle: 'Profile photo',
 };
 
 export { Colors, Dimens, Text };
