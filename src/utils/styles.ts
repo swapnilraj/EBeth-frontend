@@ -1,11 +1,13 @@
 import { normalize, setupPage } from 'csstips';
-
 import { cssRule, style } from 'typestyle';
+
+import { Colors } from './constants';
 
 /**
  * Font family for application
  */
 const fontFamily = [
+  'Lato',
   '-apple-system',
   `BlinkMacSystemFont`,
   `"Segoe UI"`,
@@ -24,21 +26,10 @@ export const fixGlobalStyles = () => {
   normalize();
   setupPage('#root');
   cssRule('body', {
-    backgroundColor: '#CBC0D3',
+    backgroundColor: Colors.background,
     fontFamily,
-    fontSize: 20,
-    padding: 16,
+    fontSize: 16,
   });
-  cssRule('button', {
-    backgroundColor: '#8E9AAF',
-    color: 'white',
-    padding: 8,
-    fontSize: 36,
-    borderRadius: 8,
-    outline: 0,
-    minWidth: 120,
-  });
-  cssRule('input, button', { fontFamily });
 };
 
 /**

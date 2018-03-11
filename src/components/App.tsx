@@ -2,45 +2,26 @@
  * App component
  */
 
+import { fillParent } from 'csstips';
 import * as React from 'react';
-
 import { classes, style } from 'typestyle';
-
-import { ITimerState } from '../stores/timer';
 
 import { normalizeEl } from '../utils/styles';
 
-import { renderIf } from '../utils/render-if-else';
+import Main from './Main';
+import Sidebar from './Sidebar';
 
-import Time from './Time';
+const mainContainer = style(
+  {
+    display: 'flex',
+  },
+  fillParent,
+);
 
-const mainContainer = style({
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-});
-
-interface IAppProps extends ITimerState {
-  startTimer();
-  stopTimer();
-}
-
-const App = ({
-  isRunning,
-  startTimer,
-  stopTimer,
-  time,
-}: IAppProps) => (
+const App = () => (
   <div className={classes(normalizeEl, mainContainer)}>
-    <main className={mainContainer}>
-      <Time time={time} />
-      {renderIf(
-        isRunning,
-        <button onClick={stopTimer}>Stop</button>,
-        <button onClick={startTimer}>Start</button>,
-      )}
-    </main>
+    <Sidebar isCollapsed={!true} />
+    <Main />
   </div>
 );
 
