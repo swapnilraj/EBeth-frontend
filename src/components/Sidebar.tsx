@@ -14,6 +14,10 @@ import Tab from './Tab';
 const container = style({
   background: Colors.accent,
   boxShadow: Colors.shadow,
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  height: '100%',
   minWidth: Dimens.sidebarWidth,
   transition: 'all 0.3s ease',
   $nest: {
