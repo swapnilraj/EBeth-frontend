@@ -30,6 +30,9 @@ export const fixGlobalStyles = () => {
     fontFamily,
     fontSize: 16,
   });
+  cssRule('a', {
+    textDecoration: 'none',
+  });
 };
 
 /**
