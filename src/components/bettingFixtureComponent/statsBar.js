@@ -39,8 +39,7 @@ export class StatsBar extends React.Component {
 		
 		const statsBar= style({
 
-			//marginLeft: "10%",
-			//position: 'absolute',
+			
 			height:"20%",
 			width:"80%",
 			borderRadius:"10px",
@@ -93,6 +92,7 @@ export class StatsBar extends React.Component {
 
 		const drawStats = style({
 			//float:"left",
+			float:"left",
 			height:"5%",
 			width:"100%",
 			marginTop:"0%",

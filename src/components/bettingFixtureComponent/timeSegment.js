@@ -15,10 +15,10 @@ export class TimeSegment extends React.Component {
 		    };
 		  }
 
-		mouseOver() {
+		 mouseOver() {
     		
     		this.setState({hover: 'mouseOver'});
-    		//dynamicStyle.backgroundColor = colors["red"];
+    		
   		}
 
   		mouseOut() {
