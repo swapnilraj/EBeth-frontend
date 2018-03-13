@@ -98,9 +98,9 @@ export class BettingFixtureComponent extends React.Component {
 		return(
 				<div>
 					<div className = {bettingFixtureComponent}>
-						<TeamSegment teamName = {this.state.homeTeam} crest = {this.state.homeCrest} team = "home"/>
+						<TeamSegment teamName = {this.state.homeTeam} crest = {this.state.homeCrest} team = "Home" status = {this.state.status}/>
 						<TimeSegment />
-						<TeamSegment teamName = {this.state.awayTeam} crest = {this.state.awayCrest} team = "away"/>
+						<TeamSegment teamName = {this.state.awayTeam} crest = {this.state.awayCrest} team = "Away" status = {this.state.status}/>
 						<BetButtonSegment message = {this.state.message} handler = {this.handler}/>
 						
 					</div>

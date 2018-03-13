@@ -11,8 +11,9 @@ export class TeamSegment extends React.Component {
 
 		    this.state = 
 		    {
-				hover:"mouseOut",
-				team:"none"
+				
+				team:"none",
+				status:"none"
 		    };
 		  }
 
@@ -82,7 +83,7 @@ export class TeamSegment extends React.Component {
 		})
 		
 		const dynamicCenterText= {
-			home:
+			Home:
 			{
 				position: 'absolute',
 				top: '50%',
@@ -90,15 +91,15 @@ export class TeamSegment extends React.Component {
 				marginRight: "-50%",
 				transform: "translate(0%, -50%)"  
 			},
-			away:{
-			margin: 0,
-			position: 'absolute',
-			top: '50%',
-			right: '5%',
-			marginRight: "0%",
-			transform: "translate(0%, -50%)"  
-			},
-			none:{}
+				Away:{
+				margin: 0,
+				position: 'absolute',
+				top: '50%',
+				right: '5%',
+				marginRight: "0%",
+				transform: "translate(0%, -50%)"  
+				},
+				none:{}
 
 		}
 
@@ -107,20 +108,72 @@ export class TeamSegment extends React.Component {
 
 		const homeOrAway = 
 		{
-			home:{
+			Home:{
+				
 				float:"left",
 				marginLeft:"5%",
 				marginRight:"0%"
 			},
-			away:
+			Away:
 			{
 				float:"right",
 				marginLeft:"0%",
-				marginRight:"5%"
+				marginRight:"5%",
+				backgroundColor:"white"
 			},
 			none:{}
 		}
+		const expandedOrContracted = 
+		{
+			expanded:
+			{
+				display:"inherit",
+			},
+			contracted:
+			{
+				display:"none"
+			},
+			none:
+			{
+				display:"none"
+			}
+		}
 
+		const dynamicHomeAwayText= {
+			Home:
+			{
+				color:"rgb(140, 140, 140)",
+				position: 'absolute',
+				top: '75%',
+				left: '5%',
+				marginRight: "-50%",
+				transform: "translate(0%, -50%)" ,
+				fontSize:".8em", 
+				//display:expandedOrContracted[this.state.status].display
+			},
+				Away:
+				{
+				color:"rgb(140, 140, 140)",
+				margin: 0,
+				position: 'absolute',
+				top: '75%',
+				right: '5%',
+				marginRight: "0%",
+				transform: "translate(0%, -50%)" ,
+				fontSize:".8em" ,
+				//display:expandedOrContracted[this.state.status].display
+				},
+				none:{}
+
+		}
+
+
+		const homeOrAwayText= () => style(
+			dynamicHomeAwayText[this.state.team],
+			expandedOrContracted[this.state.status]
+			)
+
+	
 		const crestWrapper= () => 
 
 		style({
@@ -143,6 +196,7 @@ export class TeamSegment extends React.Component {
 		style({
 
 			//margin: 0,
+			
 			height:"100%",
 			float:homeOrAway[this.state.team].float, 
 			width:"60%",
@@ -167,6 +221,11 @@ export class TeamSegment extends React.Component {
 		{
 			this.setState({team:this.props.team})
 		}
+		if(this.props.status && this.state.status !=this.props.status)
+		{
+			console.log(this.props.status)
+			this.setState({status:this.props.status})
+		}
 
 
 
@@ -177,6 +236,8 @@ export class TeamSegment extends React.Component {
 						</div>
 						<div className = {textWrapper()}>
 							<div className = {centerText()}>{teamName}
+							</div>
+							<div className = {homeOrAwayText()}>{this.props.team}
 							</div>
 						</div>
 					</div>
