@@ -7,7 +7,7 @@ var managerContractJSON = require('./BetManager.json')
 
 var bettingContract = new web3.eth.Contract(bettingContractJSON['abi']);
 var managerContract = new web3.eth.Contract(managerContractJSON['abi']);
-var managerAddress = '0x72212ec4a000c3f7667661cf6b873d7e15e496f2';
+var managerAddress = '0x410a4bcb61bfe8ffe2cb281d12cfbb61d345c6a8';
 
 managerContract.options.address = managerAddress;
 
@@ -52,8 +52,10 @@ const getPlacedBets = async (account, betEvents) => {
     for (var i = 0; i < betEvents.length; i++) {
         bettingContract.options.address = betEvents[i];
         var bet = await bettingContract.methods.bets(account).call({ from: account });
-        bet['address'] = betEvents[i];
-        if (bet !== 0) placedBets.push(bet);
+        if (bet.amount != 0) {
+            bet['address'] = betEvents[i];
+            placedBets.push(bet);
+        }
     }
     return placedBets;
 }
@@ -95,7 +97,6 @@ const getBetInfo = async (account, betEvent) => {
     betInfo['state'] = await bettingContract.methods.state().call({ from: account });
     betInfo['winningIndex'] = await bettingContract.methods.winningIndex().call({ from: account });
     var kickOffTime = await bettingContract.methods.kickOffTime().call({ from: account });
-    console.log(kickOffTime);
     betInfo['kickOffDate'] = new Date(parseInt(kickOffTime));
     betInfo['teamOneScore'] = await bettingContract.methods.teamOneScore().call({ from: account });
     betInfo['teamTwoScore'] = await bettingContract.methods.teamTwoScore().call({ from: account });
