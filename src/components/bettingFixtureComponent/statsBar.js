@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as csstips from 'csstips';
 import {style} from "typestyle";
-import {BetPercentage} from "./betPercentage.js"
+import {BetPercentage} from "./betPercentage"
 
 export class StatsBar extends React.Component {
 	

@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as csstips from 'csstips';
 import {style} from "typestyle";
-import {TeamSegment} from "./teamSegment.js"
-import {TimeSegment} from "./timeSegment.js"
-import {BetButtonSegment} from "./betButtonSegment.js"
-import {PotValue} from "./potValue.js"
-import {StatsBar} from "./statsBar.js"
+import {TeamSegment} from "./teamSegment"
+import {TimeSegment} from "./timeSegment"
+import {BetButtonSegment} from "./betButtonSegment"
+import {PotValue} from "./potValue"
+import {StatsBar} from "./statsBar"
 
 export class BettingFixtureComponent extends React.Component {
 	
@@ -51,6 +51,7 @@ export class BettingFixtureComponent extends React.Component {
 		
 
 		 const bettingFixtureComponent = style({
+		 	//marginTop:"2%",
 		 	height:"5em",
 		 	marginLeft:"10%",
 		 	marginRight:"10%",
