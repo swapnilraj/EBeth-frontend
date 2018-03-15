@@ -51,7 +51,6 @@ export interface IUserBetInfo {
 }
 
 /**
- * _getAmountOfBets
  * Returns the amount of BetEvents managed by the smart contract.
  * @param account the address of the user account.
  * @returns amount of BetEvents managed by the smart contract.
@@ -62,7 +61,6 @@ const _getAmountOfBets = async (account: string): Promise<number> => {
 };
 
 /**
- * _getAllBets
  * returns an array of addresses to Betting contracts managed by the smart contract.
  * @param account Address of the user account.
  * @returns Array of addresses of Betting contracts.
@@ -77,7 +75,6 @@ const _getAllBets = async (account: string): Promise<string[]> => {
 };
 
 /**
- * _getPlacedBets
  * Returns an array of the bet objects for bets placed by a user.
  * @param account Address of the user account.
  * @param betEvents Array of addresses of Betting contracts.
@@ -96,7 +93,6 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
 };
 
 /**
- * _getAvailableBets
  * Returns an array of bets for which the event is not over.
  * @param account Address of the user account. 
  * @param betEvents Array of addresses of Betting contracts.
@@ -115,7 +111,6 @@ const _getAvailableBets = async (account: string, betEvents: string[]): Promise<
 };
 
 /**
- * _getBetInfo
  * Returns Information about a bet event.
  * @param account Account the address of the user account. 
  * @param betEvent Address of the Betting contract.
