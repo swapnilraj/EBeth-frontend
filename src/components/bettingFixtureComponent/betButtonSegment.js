@@ -12,6 +12,7 @@ export class BetButtonSegment extends React.Component {
 		    this.state = 
 		    {
 				hover:"mouseOut"
+				
 		    };
 		  }
 

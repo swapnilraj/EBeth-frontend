@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as csstips from 'csstips';
 import {style} from "typestyle";
 
-export class TimeSegment extends React.Component {
+export class BetPercentage extends React.Component {
 	
 
 	constructor(props){
@@ -31,36 +31,37 @@ export class TimeSegment extends React.Component {
 
 	render()
 	{
-		var time = "11am";
+		var homeTeamPundits = 0;
+		var awayTeamPundits = 0;
 
-		 	
-		const timeWrapper= style({
-
-			height:"100%",
-			width:"15%",
-			float:"left",
-			position:"relative"
-			
-
-		})
+		const dynamicBarColor = 
+		{
+			backgroundColor:"rgb(161, 229, 237)"
+		}
 		
+		const betPercentageStyle= () => style({
 
-		const centerText= style({
+			//marginLeft: "10%",
+			//position: 'absolute',
+			height:"100%",
+			width:"33.33%",
+			float:"left",
+			backgroundColor:dynamicBarColor.backgroundColor
 
-			margin: 0,
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			marginRight: "-50%",
-			transform: "translate(-50%, -50%)"  
 
-		})
+		})		
+
+		if(this.props.color)
+		{
+			dynamicBarColor.backgroundColor = this.props.color;
+		}
+
+		
 		return(
-					<div className = {timeWrapper}>
-						<div className = {centerText}>
-						{time}
-						</div>
+					<div className ={betPercentageStyle()} >
+					
 					</div>
+				
 				
 
 		)

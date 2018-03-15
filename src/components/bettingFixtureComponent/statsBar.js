@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as csstips from 'csstips';
 import {style} from "typestyle";
+import {BetPercentage} from "./betPercentage"
 
 export class StatsBar extends React.Component {
 	
@@ -38,8 +39,7 @@ export class StatsBar extends React.Component {
 		
 		const statsBar= style({
 
-			//marginLeft: "10%",
-			//position: 'absolute',
+			
 			height:"20%",
 			width:"80%",
 			borderRadius:"10px",
@@ -50,7 +50,8 @@ export class StatsBar extends React.Component {
 			//marginTop:"10%",
 			position:"relative" ,
 			marginTop:".5%",
-			marginLeft:"1%"
+			marginLeft:"1%",
+			overflow:"hidden"
 
 		})		
 
@@ -66,7 +67,7 @@ export class StatsBar extends React.Component {
 		})
 
 		const wrapper= style({
-			
+
 			height:"50%",
 			width:"100%",
 			position:"relative", 
@@ -88,11 +89,31 @@ export class StatsBar extends React.Component {
 			position:'relative'
 
 		})
+
+		const drawStats = style({
+			//float:"left",
+			float:"left",
+			height:"5%",
+			width:"100%",
+			marginTop:"0%",
+			float:"left"
+			//marginLeft:"1%",
+			//position:'relative',
+
+
+
+		})
+
 		return(
 					<div className = {wrapper}>
 						<div className = {homeStats}>{homeTeamPundits}</div>
-						<div className = {statsBar}></div>
-						<div className = {awayStats}>{awayTeamPundits}</div>	
+						<div className = {statsBar}>
+							<BetPercentage color = "rgb(161, 229, 237)"/>
+							<BetPercentage color = "rgb(252, 239, 126)"/>
+							<BetPercentage color = "rgb(255, 129, 129)"/>
+						</div>
+						<div className = {awayStats}>{awayTeamPundits}</div>
+						<div className = {drawStats}><div className = {centerText}>0</div></div>	
 						
 					</div>
 				
