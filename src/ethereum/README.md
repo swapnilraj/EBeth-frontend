@@ -1,4 +1,6 @@
-## Index
+# Contract Interaction
+
+## Index 
 
 ### Interfaces
 
@@ -118,7 +120,7 @@ ___
 
 ### «Const» getBetInfo
 
-► **getBetInfo**(betEvent: *`string`*): `Promise`.<[IBetInfo](../interfaces/_ethereum_contract_interaction_.ibetinfo.md)>
+► **getBetInfo**(betEvent: *`string`*): `Promise`.<[IBetInfo](ibetinfo.md)>
 
 
 
@@ -139,7 +141,7 @@ Returns information about a bet event.
 
 
 
-**Returns:** `Promise`.<[IBetInfo](../interfaces/_ethereum_contract_interaction_.ibetinfo.md)>
+**Returns:** `Promise`.<[IBetInfo](ibetinfo.md)>
 Information about a match that a bet is a available for.
 
 
@@ -180,7 +182,7 @@ ___
 
 ### «Const» getUserBetInfo
 
-► **getUserBetInfo**(betEvent: *`string`*): `Promise`.<[IUserBetInfo](../interfaces/_ethereum_contract_interaction_.iuserbetinfo.md)>
+► **getUserBetInfo**(betEvent: *`string`*): `Promise`.<[IUserBetInfo](iuserbetinfo.md)>
 
 
 
@@ -201,7 +203,7 @@ Returns information about a bet a user placed.
 
 
 
-**Returns:** `Promise`.<[IUserBetInfo](../interfaces/_ethereum_contract_interaction_.iuserbetinfo.md)>
+**Returns:** `Promise`.<[IUserBetInfo](iuserbetinfo.md)>
 Information about a bet that a user has placed.
 
 
