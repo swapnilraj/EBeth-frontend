@@ -4,7 +4,7 @@
 
 ### Interfaces
 
-* [ibetinfo.md)
+* [IBetInfo](ibetinfo.md)
 * [IUserBetInfo](iuserbetinfo.md)
 
 
