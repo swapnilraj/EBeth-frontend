@@ -65,14 +65,21 @@ export class PlaceBetComponent extends React.Component {
 
 		})
 
-		if(this.props.date && this.state.date == "none")
+		if(this.props.fixture && this.state.date == "none")
 		{
 			this.setState(
 					{
-						date:this.props.date,
+						date:this.props.fixture.date,
 						showDate:"true"
 					}
 				)
+
+			if(this.props.fixture.date == "")
+			{
+				this.setState({
+					showDate:"false"
+				})
+			}
 		}
 		
 		const componentStyle= style({
@@ -83,9 +90,9 @@ export class PlaceBetComponent extends React.Component {
 		})
 
 		return(
-				<div className = {componentStyle}>
+				<div className = {componentStyle} >
 					<div className = {dateWrapper()}>{this.state.date}</div>
-					<BettingFixtureComponent />
+					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} />
 				</div>
 				
 			)

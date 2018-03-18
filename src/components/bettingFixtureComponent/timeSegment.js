@@ -11,21 +11,11 @@ export class TimeSegment extends React.Component {
 
 		    this.state = 
 		    {
-				hover:"mouseOut"
+				time:""
 		    };
 		  }
 
-		 mouseOver() {
-    		
-    		this.setState({hover: 'mouseOver'});
-    		
-  		}
-
-  		mouseOut() {
-    		
-    		this.setState({hover: 'mouseOut'});
-    		//dynamicStyle.backgroundColor = colors["red"];
-  		}
+		
 		 
 		
 
@@ -55,10 +45,15 @@ export class TimeSegment extends React.Component {
 			transform: "translate(-50%, -50%)"  
 
 		})
+
+		if(this.props.startTime && this.state.time =="")
+		{
+			this.setState({time:this.props.startTime});
+		}
 		return(
 					<div className = {timeWrapper}>
 						<div className = {centerText}>
-						{time}
+							{this.state.time}
 						</div>
 					</div>
 				

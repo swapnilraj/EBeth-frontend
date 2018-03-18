@@ -6,6 +6,8 @@ import {style} from "typestyle";
 export class BetButtonSegment extends React.Component {
 	
 
+
+
 	constructor(props){
 		    super(props);
 
@@ -19,16 +21,16 @@ export class BetButtonSegment extends React.Component {
 		mouseOver() {
     		
     		this.setState({hover: 'mouseOver'});
-    		//dynamicStyle.backgroundColor = colors["red"];
   		}
 
   		mouseOut() {
     		
     		this.setState({hover: 'mouseOut'});
-    		//dynamicStyle.backgroundColor = colors["red"];
+    		
   		}
 		 
 		
+	
 
 	render()
 	{
@@ -85,17 +87,17 @@ export class BetButtonSegment extends React.Component {
 		 }
 
 		return(
-					<div className = {betButtonWrapper}>
-						<div className = {container}>
-							<div className = {centerText} onClick = {this.props.handler}>{message}</div>
-						</div>
-						<div className = {container}>
-							<div className = {betButton} >
-								<div className = {centerText}>BET
-								</div>
+				<div className = {betButtonWrapper}>
+					<div className = {container}>
+						<div className = {centerText} onClick = {this.props.handler}>{message}</div>
+					</div>
+					<div  className = {container}>
+						<div onClick = {() => this.props.openDialogueBoxClick(this.props.fixture)} className = {betButton} >
+							<div className = {centerText}>BET
 							</div>
 						</div>
 					</div>
+				</div>
 				
 
 		)

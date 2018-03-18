@@ -23,41 +23,7 @@ export class TeamSegment extends React.Component {
 	{
 		var teamName = "Arsenal";
 		var crestSource = "./images/arsenal.png";
-		 // const dynamicButtonStyle = 
-			// {
-			  
-			//   fontSize:"1.1em",
-			//   mouseOver:
-			//   {
-			//   	backgroundColor:"rgb(26, 35, 42)"
-			//   },
-			//   mouseOut:
-			//   {
-			  	
-			//   }
-
-			  
-			// }
-
-		 // 	const buttonStyle = () =>
-  	// 		style(
-    				
-   //  			{
-   //  				backgroundColor : dynamicButtonStyle[this.state.hover].backgroundColor,
-   //  				cursor:"pointer",
-			// 	    height:"20%",
-			// 		width:"100%",
-			// 		position:"relative",
-			// 		color:"white",
-			// 		fontFamily:"lato",
-			// 		fontSize:dynamicButtonStyle.fontSize
-					
-					
-   //  			}
- 		// 	);
-
-		 
-
+	
 		
 		const teamWrapper= style({
 
@@ -74,7 +40,6 @@ export class TeamSegment extends React.Component {
 		const crestStyle = style({
 			height:"100%",
 			width:"auto",
-			//marginTop:"10%",
 			position:"relative",
 			display:"inline-block", 
 			verticalAlign:"middle", 
