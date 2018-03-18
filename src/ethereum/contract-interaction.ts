@@ -84,8 +84,8 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
   const placedBets: string[] = [];
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
-    const bet = await bettingContract.methods.bets(account).call({ from: account });
-    if (bet.amount !== '0') {
+    const betIndex = await bettingContract.methods.betttingIndices(account).call({ from: account });
+    if (betIndex !== '0') {
       placedBets.push(betEvent);
     }
   }
@@ -157,7 +157,8 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
  */
 const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUserBetInfo> => {
   bettingContract.options.address = betEvent;
-  const info = await bettingContract.methods.bets(account).call({ from: account });
+  const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
+  const info = await bettingContract.methods.bets(betIndex).call({ from: account });
   const userBetInfo: IUserBetInfo = {
     amount: info.amount,
     paid: info.paid,
@@ -192,18 +193,6 @@ export const changeBet = async (betEvent: string, outcomeIndex: number) => {
   bettingContract.options.address = betEvent;
   const accounts = await web3.eth.getAccounts();
   bettingContract.methods.changeBet(outcomeIndex).send({ from: accounts[0] });
-};
-
-/**
- * Allows a user to claim their winnings
- * @param betEvent Address of the Betting contract.
- */
-export const claimWinnings = async (betEvent: string) => {
-  try {
-    bettingContract.options.address = betEvent;
-    const accounts = await web3.eth.getAccounts();
-    bettingContract.methods.claimWinnings().send({ from: accounts[0] });
-  } catch { }
 };
 
 /**
@@ -288,9 +277,9 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
     if (accounts[0].length > 0) {
       userLoggedIn = true;
     }
-  } catch{ }
+  } catch { }
   return userLoggedIn;
-}
+};
 
 /**
  * Returns an array of club names that are in our system.
@@ -298,28 +287,29 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
  */
 export const getAllClubs = (): string[] => {
   const clubs: string[] = [
-    "Arsenal",
-    "Bournemouth",
-    "Brighton",
-    "Burnley",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Huddersfield",
-    "Leicester",
-    "Liverpool",
-    "Man City",
-    "Man Utd",
-    "Newcastle",
-    "Southampton",
-    "Stoke",
-    "Swansea",
-    "Spurs",
-    "Watford",
-    "West Brom",
-    "West Ham"]
+    'Arsenal',
+    'Bournemouth',
+    'Brighton',
+    'Burnley',
+    'Chelsea',
+    'Crystal Palace',
+    'Everton',
+    'Huddersfield',
+    'Leicester',
+    'Liverpool',
+    'Man City',
+    'Man Utd',
+    'Newcastle',
+    'Southampton',
+    'Stoke',
+    'Swansea',
+    'Spurs',
+    'Watford',
+    'West Brom',
+    'West Ham',
+  ];
   return clubs;
-}
+};
 
 /**
  * Returns an array of bets for a specific club.
@@ -327,7 +317,7 @@ export const getAllClubs = (): string[] => {
  * @returns An array of the bets for a specific club.
  */
 export const getGamesByClub = async (club: string): Promise<string[]> => {
-  let gamesByClub: string[] = [];
+  const gamesByClub: string[] = [];
   try {
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
@@ -340,6 +330,6 @@ export const getGamesByClub = async (club: string): Promise<string[]> => {
         gamesByClub.push(betEvent);
       }
     }
-  } catch{ }
+  } catch { }
   return gamesByClub;
-}
+};
