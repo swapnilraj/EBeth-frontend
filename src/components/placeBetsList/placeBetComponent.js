@@ -92,7 +92,7 @@ export class PlaceBetComponent extends React.Component {
 		return(
 				<div className = {componentStyle} >
 					<div className = {dateWrapper()}>{this.state.date}</div>
-					<BettingFixtureComponent fixture = {this.props.fixture} />
+					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} />
 				</div>
 				
 			)

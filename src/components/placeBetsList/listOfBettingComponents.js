@@ -6,7 +6,14 @@ import {PlaceBetComponent} from "./placeBetComponent"
 
 // named
 
-
+function renderBettingComponents(fixtures,clickHandler) {
+    if (fixtures.length > 0) {      
+        return fixtures.map((fixture, index) => (
+            <PlaceBetComponent fixture = {fixture} openDialogueBoxClick = {clickHandler} />
+        ));
+    }
+    else return [];
+}
 
 export class ListOfBettingComponents extends React.Component {
 	
@@ -28,11 +35,17 @@ clickHandler(e)
 
 }
 createComponent(newFixture){
-    return <PlaceBetComponent fixture = {newFixture} />;
+    return <PlaceBetComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {newFixture} />;
   }
+
+
+
 
 	render()
 	{
+
+		const bettingComponents = renderBettingComponents(this.props.fixtures,this.props.openDialogueBoxClick);
+
 		if(this.props.fixtures && this.state.fixtures[0]==null)
 {
 			var newFixtures = this.props.fixtures;
@@ -44,6 +57,7 @@ createComponent(newFixture){
 				}
 			}
 			this.setState({fixtures:newFixtures})
+		
 			
 }
 	
@@ -63,10 +77,7 @@ createComponent(newFixture){
 
 		return(
 			<div>
-			<PlaceBetComponent fixture = {this.state.fixtures[0]}/>
-			<PlaceBetComponent fixture = {this.state.fixtures[1]}/>
-			<PlaceBetComponent fixture = {this.state.fixtures[2]}/>
-			{this.createComponent(this.state.fixtures[3])}
+				{bettingComponents}
 			</div>
 
 			)

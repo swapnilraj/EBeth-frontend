@@ -11,7 +11,7 @@ export class PotValue extends React.Component {
 
 		    this.state = 
 		    {
-				hover:"mouseOut"
+				potValue : "0"
 				
 		    };
 		  }
@@ -43,10 +43,18 @@ export class PotValue extends React.Component {
 			position:"relative", 
 
 		})
+
+		if(this.props.fixture && this.state.potValue == "0")
+		{
+
+			this.setState({
+				potValue: "Pot : "+this.props.fixture.potValue+ " ETH"
+			})
+		}
 		return(
 					<div className = {wrapper}>
 						<div className = {centerText}>
-							{potValue}
+							{this.state.potValue}
 						</div>
 					</div>
 				
