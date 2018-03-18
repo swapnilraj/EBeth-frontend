@@ -1,3 +1,4 @@
+/* tslint:disable:no-var-requires no-empty */
 const Web3 = require('web3');
 const web3 = new Web3(Web3.givenProvider);
 
@@ -78,7 +79,7 @@ const _getAllBets = async (account: string): Promise<string[]> => {
  * Returns an array of the bet objects for bets placed by a user.
  * @param account Address of the user account.
  * @param betEvents Array of addresses of Betting contracts.
- * @returns Array of addresses of Betting contracts that user placed bet on. 
+ * @returns Array of addresses of Betting contracts that user placed bet on.
  */
 const _getPlacedBets = async (account: string, betEvents: string[]): Promise<string[]> => {
   const placedBets: string[] = [];
@@ -94,7 +95,7 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
 
 /**
  * Returns an array of bets for which the event is not over.
- * @param account Address of the user account. 
+ * @param account Address of the user account.
  * @param betEvents Array of addresses of Betting contracts.
  * @returns Array of bets for which the event is not over.
  */
@@ -112,7 +113,7 @@ const _getAvailableBets = async (account: string, betEvents: string[]): Promise<
 
 /**
  * Returns Information about a bet event.
- * @param account Account the address of the user account. 
+ * @param account Account the address of the user account.
  * @param betEvent Address of the Betting contract.
  * @returns Information about a bet event.
  */
@@ -151,7 +152,7 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
 
 /**
  * Returns an object containing information about a bet a user placed.
- * @param account Account the address of the user account. 
+ * @param account Account the address of the user account.
  * @param betEvent Address of the Betting contract.
  * @returns Information about a bet a user placed.
  */
@@ -207,8 +208,8 @@ export const claimWinnings = async (betEvent: string) => {
 };
 
 /**
- * Returns an array of the bet objects for bets placed by a user. 
- * @returns Array of addresses of Betting contracts that user placed bet on. 
+ * Returns an array of the bet objects for bets placed by a user.
+ * @returns Array of addresses of Betting contracts that user placed bet on.
  */
 export const getPlacedBets = async (): Promise<string[]> => {
   let placedBets: string[] = [];
@@ -298,26 +299,26 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
  */
 export const getAllClubs = (): string[] => {
   const clubs: string[] = [
-    "Arsenal",
-    "Bournemouth",
-    "Brighton",
-    "Burnley",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Huddersfield",
-    "Leicester",
-    "Liverpool",
-    "Man City",
-    "Man Utd",
-    "Newcastle",
-    "Southampton",
-    "Stoke",
-    "Swansea",
-    "Spurs",
-    "Watford",
-    "West Brom",
-    "West Ham"]
+    'Arsenal',
+    'Bournemouth',
+    'Brighton',
+    'Burnley',
+    'Chelsea',
+    'Crystal Palace',
+    'Everton',
+    'Huddersfield',
+    'Leicester',
+    'Liverpool',
+    'Man City',
+    'Man Utd',
+    'Newcastle',
+    'Southampton',
+    'Stoke',
+    'Swansea',
+    'Spurs',
+    'Watford',
+    'West Brom',
+    'West Ham']
   return clubs;
 }
 
@@ -327,7 +328,7 @@ export const getAllClubs = (): string[] => {
  * @returns An array of the bets for a specific club.
  */
 export const getGamesByClub = async (club: string): Promise<string[]> => {
-  let gamesByClub: string[] = [];
+  const gamesByClub: string[] = [];
   try {
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
