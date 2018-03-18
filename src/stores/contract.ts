@@ -6,8 +6,8 @@ import { Epic } from 'redux-observable';
 
 import { Actions, IState } from './root';
 
-import {getAvailableBets} from '../ethereum/contract-interaction';
 import { fromPromise } from 'rxjs/observable/fromPromise';
+import { getAvailableBets } from '../ethereum/contract-interaction';
 
 /**
  * Action to issue a fetch request for all available bets
@@ -28,18 +28,15 @@ interface ISuccessAvailableBets {
   availableBets: string[];
 }
 const SUCESS_AVAILABLE_BETS: ISuccessAvailableBets['type'] = 'SUCCESS_AVAILABLE_BETS';
-export const sucessAvailableBets = (availableBets): ISuccessAvailableBets => ({
+export const sucessAvailableBets = (availableBets: ISuccessAvailableBets['availableBets']): ISuccessAvailableBets => ({
   type: SUCESS_AVAILABLE_BETS,
   availableBets,
 });
 
 export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
-  action$.ofType(FETCH_AVAILABLE_BETS)
-    .mergeMap(fromPromise(getAvailableBets)))
+  action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
 
-export type ContractActions =
-  IFetchAvailableBets |
-  ISuccessAvailableBets;
+export type ContractActions = IFetchAvailableBets | ISuccessAvailableBets;
 
 export interface IContractsState {
   availableBets: string[];
@@ -47,10 +44,10 @@ export interface IContractsState {
 
 export const defaultContractsState: IContractsState = {
   availableBets: [],
-}
+};
 
 export const contract = (state: IContractsState = defaultContractsState, action: ContractActions): IContractsState => {
-  switch(action.type) {
+  switch (action.type) {
     case SUCESS_AVAILABLE_BETS:
       return { ...state, availableBets: action.availableBets };
     default:
