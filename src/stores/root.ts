@@ -11,9 +11,7 @@ import { ISidebarState, sidebar, SidebarActions } from './sidebar';
 /**
  * Combined application actions interface
  */
-export type Actions =
-  SidebarActions |
-  ContractActions;
+export type Actions = SidebarActions | ContractActions;
 
 /**
  * Combined application state interface
@@ -23,7 +21,9 @@ export interface IState {
   contract: IContractsState;
 }
 
-const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic].filter(epic => epic !== null) as Array<Epic<Actions, IState, any>>;
+const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic].filter(epic => epic !== null) as Array<
+  Epic<Actions, IState, any>
+>;
 
 export const rootEpic = combineEpics<Actions, IState>(...epics);
 

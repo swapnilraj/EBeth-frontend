@@ -5,4 +5,4 @@
  * @param elseComp component to render if predicate is false
  */
 export const renderIf = (predicate: boolean, ifComp: JSX.Element, elseComp: JSX.Element) =>
-predicate ? ifComp : elseComp;
+  predicate ? ifComp : elseComp;
