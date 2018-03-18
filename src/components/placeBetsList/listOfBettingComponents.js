@@ -5,16 +5,7 @@ import {style} from "typestyle";
 import {PlaceBetComponent} from "./placeBetComponent"
 
 // named
-var Fixtures = class Fixtures {
-  constructor(homeTeamName,awayTeamName,date,homeBets,awayBets,drawBets) {
-    this.homeTeamName = homeTeamName;
-    this.awayTeamName = awayTeamName;
-    this.date = date;
-    this.homeBets = homeBets;
-    this.awayBets = awayBets;
-    this.drawBets = drawBets;
-  }
-};
+
 
 
 export class ListOfBettingComponents extends React.Component {
@@ -36,8 +27,27 @@ clickHandler(e)
 {e.preventDefault()
 
 }
+createComponent(newFixture){
+    return <PlaceBetComponent fixture = {newFixture} />;
+  }
+
 	render()
 	{
+		if(this.props.fixtures && this.state.fixtures[0]==null)
+{
+			var newFixtures = this.props.fixtures;
+			for(var i = newFixtures.length-1;i>0;i--)
+			{
+				if(newFixtures[i].date == newFixtures[i-1].date )
+				{
+					newFixtures[i].date = "";
+				}
+			}
+			this.setState({fixtures:newFixtures})
+			
+}
+	
+
 		var message = "Show More";
 
 		 	
@@ -48,15 +58,15 @@ clickHandler(e)
 
 		})
 
-
-		
+ 
 
 
 		return(
 			<div>
-			<PlaceBetComponent onClick = {this.clickHandler} date = "Saturday | 22nd August"/>
-			<PlaceBetComponent />
-			<PlaceBetComponent date = "Tuesday | 25th August"/>
+			<PlaceBetComponent fixture = {this.state.fixtures[0]}/>
+			<PlaceBetComponent fixture = {this.state.fixtures[1]}/>
+			<PlaceBetComponent fixture = {this.state.fixtures[2]}/>
+			{this.createComponent(this.state.fixtures[3])}
 			</div>
 
 			)

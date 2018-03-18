@@ -12,7 +12,15 @@ export class StatsBar extends React.Component {
 
 		    this.state = 
 		    {
-				hover:"mouseOut"
+		    	initialized:"false",
+				homePercentage:33.33,
+				awayPercentage:33.33,
+				drawPercentage:33.33,
+				betsOnHomeTeam:0,
+				betsOnAwayTeam:0,
+				betsOnDraw:0,
+				dynamicTextMargin:"50%"
+
 		    };
 		  }
 
@@ -44,10 +52,7 @@ export class StatsBar extends React.Component {
 			width:"80%",
 			borderRadius:"10px",
 			backgroundColor:"rgb(216, 216, 216)",
-			//top: '40%',
 			float:"left",
-			//transform: "translate(0%, -50%)" 
-			//marginTop:"10%",
 			position:"relative" ,
 			marginTop:".5%",
 			marginLeft:"1%",
@@ -90,13 +95,30 @@ export class StatsBar extends React.Component {
 
 		})
 
+		const dynamicDrawMargin =
+		{
+			left: this.state.dynamicTextMargin,
+		}
+
+		const positionDrawText = () => style({
+
+			margin: 0,
+			position: 'relative',
+			//top: '50%',
+			marginLeft: dynamicDrawMargin.left,
+			//marginRight: "-50%",
+			//transform: "translate(-50%, -50%)"  
+
+		}) 
+
 		const drawStats = style({
 			//float:"left",
 			float:"left",
 			height:"5%",
-			width:"100%",
+			width:"80%",
 			marginTop:"0%",
-			float:"left"
+			float:"left",
+			marginLeft:"10%"
 			//marginLeft:"1%",
 			//position:'relative',
 
@@ -104,16 +126,36 @@ export class StatsBar extends React.Component {
 
 		})
 
+		if(this.props.fixture && this.state.initialized == "false")
+		{
+			var total = this.props.fixture.homeBets + this.props.fixture.drawBets + this.props.fixture.awayBets
+			var homeBets = this.props.fixture.homeBets / total
+			var drawBets = this.props.fixture.drawBets / total
+			var awayBets = this.props.fixture.awayBets / total
+			this.setState({
+				initialized:"true",
+				homePercentage:homeBets,
+				drawPercentage:drawBets,
+				awayPercentage:awayBets,
+				betsOnDraw:this.props.fixture.drawBets,
+				betsOnHomeTeam: this.props.fixture.homeBets,
+				betsOnAwayTeam: this.props.fixture.awayBets,
+				dynamicTextMargin:((homeBets + (drawBets/2))*100).toString()+"%"
+			})
+
+			
+		}
+
 		return(
 					<div className = {wrapper}>
-						<div className = {homeStats}>{homeTeamPundits}</div>
+						<div className = {homeStats}>{this.state.betsOnHomeTeam}</div>
 						<div className = {statsBar}>
-							<BetPercentage color = "rgb(161, 229, 237)"/>
-							<BetPercentage color = "rgb(252, 239, 126)"/>
-							<BetPercentage color = "rgb(255, 129, 129)"/>
+							<BetPercentage width = {this.state.homePercentage} color = "rgb(161, 229, 237)"/>
+							<BetPercentage width = {this.state.drawPercentage} color ="rgb(252, 239, 126)"/>
+							<BetPercentage width = {this.state.awayPercentage} color = "rgb(255, 129, 129)"/>
 						</div>
-						<div className = {awayStats}>{awayTeamPundits}</div>
-						<div className = {drawStats}><div className = {centerText}>0</div></div>	
+						<div className = {awayStats}>{this.state.betsOnAwayTeam}</div>
+						<div className = {drawStats}><div className = {positionDrawText()}>{this.state.betsOnDraw}</div></div>	
 						
 					</div>
 				
