@@ -297,31 +297,28 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
  * Returns an array of club names that are in our system.
  * @returns An array with club names that are in our system.
  */
-export const getAllClubs = (): string[] => {
-  const clubs: string[] = [
-    'Arsenal',
-    'Bournemouth',
-    'Brighton',
-    'Burnley',
-    'Chelsea',
-    'Crystal Palace',
-    'Everton',
-    'Huddersfield',
-    'Leicester',
-    'Liverpool',
-    'Man City',
-    'Man Utd',
-    'Newcastle',
-    'Southampton',
-    'Stoke',
-    'Swansea',
-    'Spurs',
-    'Watford',
-    'West Brom',
-    'West Ham',
-  ];
-  return clubs;
-};
+export const getAllClubs = (): string[] => [
+  'Arsenal',
+  'Bournemouth',
+  'Brighton',
+  'Burnley',
+  'Chelsea',
+  'Crystal Palace',
+  'Everton',
+  'Huddersfield',
+  'Leicester',
+  'Liverpool',
+  'Man City',
+  'Man Utd',
+  'Newcastle',
+  'Southampton',
+  'Stoke',
+  'Swansea',
+  'Spurs',
+  'Watford',
+  'West Brom',
+  'West Ham',
+];
 
 /**
  * Returns an array of bets for a specific club.
