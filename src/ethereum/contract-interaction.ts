@@ -283,6 +283,19 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
 };
 
 /**
+ * Returns the address of the users account.
+ * @returns The address of the users account.
+ */
+export const getUserAccount = async (): Promise<string> => {
+  let account = '';
+  try {
+    const accounts = await web3.eth.getAccounts();
+    account = accounts[0];
+  } catch {}
+  return account;
+};
+
+/**
  * Returns an array of club names that are in our system.
  * @returns An array with club names that are in our system.
  */
