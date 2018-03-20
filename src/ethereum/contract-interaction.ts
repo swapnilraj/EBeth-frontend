@@ -206,7 +206,7 @@ export const getPlacedBets = async (): Promise<string[]> => {
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
     placedBets = await _getPlacedBets(accounts[0], bets);
-  } catch { }
+  } catch {}
   return placedBets;
 };
 
@@ -220,7 +220,7 @@ export const getAvailableBets = async (): Promise<string[]> => {
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
     availableBets = await _getAvailableBets(accounts[0], bets);
-  } catch { }
+  } catch {}
   return availableBets;
 };
 
@@ -235,7 +235,7 @@ export const getAvailableBetsFromList = async (betEvents: string[]): Promise<str
   try {
     const accounts = await web3.eth.getAccounts();
     availableBets = await _getAvailableBets(accounts[0], betEvents);
-  } catch { }
+  } catch {}
   return availableBets;
 };
 
@@ -249,7 +249,7 @@ export const getBetInfo = async (betEvent: string): Promise<IBetInfo> => {
   try {
     const accounts = await web3.eth.getAccounts();
     betInfo = await _getBetInfo(accounts[0], betEvent);
-  } catch { }
+  } catch {}
   return betInfo;
 };
 
@@ -263,7 +263,7 @@ export const getUserBetInfo = async (betEvent: string): Promise<IUserBetInfo> =>
   try {
     const accounts = await web3.eth.getAccounts();
     userBetInfo = await _getUserBetInfo(accounts[0], betEvent);
-  } catch { }
+  } catch {}
   return userBetInfo;
 };
 
@@ -278,7 +278,7 @@ export const isUserLoggedIn = async (): Promise<boolean> => {
     if (accounts[0].length > 0) {
       userLoggedIn = true;
     }
-  } catch { }
+  } catch {}
   return userLoggedIn;
 };
 
@@ -322,12 +322,12 @@ export const getGamesByClub = async (club: string): Promise<string[]> => {
     for (const betEvent of bets) {
       bettingContract.options.address = betEvent;
       const teamOne = await bettingContract.methods.outcomeOne().call({ from: accounts[0] });
-      const teamTwo = await bettingContract.methods.outcomeOne().call({ from: accounts[0] });
+      const teamTwo = await bettingContract.methods.outcomeThree().call({ from: accounts[0] });
 
       if (teamOne === club || teamTwo === club) {
         gamesByClub.push(betEvent);
       }
     }
-  } catch { }
+  } catch {}
   return gamesByClub;
 };
