@@ -7,7 +7,7 @@ import { Epic } from 'redux-observable';
 import { Actions, IState } from './root';
 
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { getAvailableBets, getPlacedBets } from '../ethereum/contract-interaction';
+import { getAvailableBets } from '../ethereum/contract-interaction';
 
 /**
  * Action to issue a fetch request for all available bets
@@ -39,7 +39,7 @@ export const sucessAvailableBets = (availableBets: ISuccessAvailableBets['availa
 interface IPlaceBet {
   type: 'PLACE_BET';
   betEvent: string;
-  outcomeIndex: string;
+  outcomeIndex: number;
   value: string;
 }
 const PLACE_BET: IPlaceBet['type'] = 'PLACE_BET';
