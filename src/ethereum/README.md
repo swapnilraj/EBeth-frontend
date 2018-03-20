@@ -17,6 +17,7 @@
 * [getBetInfo](README.md#getbetinfo)
 * [getGamesByClub](README.md#getgamesbyclub)
 * [getPlacedBets](README.md#getplacedbets)
+* [getUserAccount](README.md#getuseraccount)
 * [getUserBetInfo](README.md#getuserbetinfo)
 * [isUserLoggedIn](README.md#isuserloggedin)
 * [placeBet](README.md#placebet)
@@ -33,7 +34,7 @@
 
 
 
-*Defined in [ethereum/contract-interaction.ts:193](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L193)*
+*Defined in [ethereum/contract-interaction.ts:193](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L193)*
 
 
 
@@ -67,7 +68,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:289](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L289)*
+*Defined in [ethereum/contract-interaction.ts:302](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L302)*
 
 
 
@@ -94,7 +95,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:217](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L217)*
+*Defined in [ethereum/contract-interaction.ts:217](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L217)*
 
 
 
@@ -121,7 +122,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:233](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L233)*
+*Defined in [ethereum/contract-interaction.ts:233](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L233)*
 
 
 
@@ -156,7 +157,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:247](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L247)*
+*Defined in [ethereum/contract-interaction.ts:247](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L247)*
 
 
 
@@ -191,7 +192,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:317](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L317)*
+*Defined in [ethereum/contract-interaction.ts:330](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L330)*
 
 
 
@@ -226,7 +227,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:203](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L203)*
+*Defined in [ethereum/contract-interaction.ts:203](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L203)*
 
 
 
@@ -245,6 +246,33 @@ Array of addresses of Betting contracts that user placed bet on.
 
 ___
 
+<a id="getuseraccount"></a>
+
+### «Const» getUserAccount
+
+► **getUserAccount**(): `Promise`.<`string`>
+
+
+
+*Defined in [ethereum/contract-interaction.ts:289](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L289)*
+
+
+
+Returns the address of the users account.
+
+
+
+
+**Returns:** `Promise`.<`string`>
+The address of the users account.
+
+
+
+
+
+
+___
+
 <a id="getuserbetinfo"></a>
 
 ### «Const» getUserBetInfo
@@ -253,7 +281,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:261](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L261)*
+*Defined in [ethereum/contract-interaction.ts:261](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L261)*
 
 
 
@@ -288,7 +316,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:274](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L274)*
+*Defined in [ethereum/contract-interaction.ts:274](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L274)*
 
 
 
@@ -315,7 +343,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:179](https://github.com/swapnilraj/EBeth-frontend/blob/74798eb/src/ethereum/contract-interaction.ts#L179)*
+*Defined in [ethereum/contract-interaction.ts:179](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L179)*
 
 
 
