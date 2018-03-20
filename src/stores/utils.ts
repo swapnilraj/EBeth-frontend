@@ -4,6 +4,7 @@
 
 import { IState } from './root';
 
+import { defaultContractsState as contract } from './contract';
 import { defaultSidebarState as sidebar } from './sidebar';
 
 /**
@@ -11,4 +12,5 @@ import { defaultSidebarState as sidebar } from './sidebar';
  */
 export const getDefaultState = (): IState => ({
   sidebar,
+  contract,
 });

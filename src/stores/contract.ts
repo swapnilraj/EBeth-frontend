@@ -1,13 +1,10 @@
 /**
  * Actions for handling async calls to ethereum contract
  */
-
 import { Epic } from 'redux-observable';
-
-import { Actions, IState } from './root';
-
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { getAvailableBets } from '../ethereum/contract-interaction';
+import { getAvailableBets, placeBet as ethPlaceBet } from '../ethereum/contract-interaction';
+import { Actions, IState } from './root';
 
 /**
  * Action to issue a fetch request for all available bets
@@ -56,6 +53,9 @@ export const placeBet = (
 
 export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
+
+export const placeBetEpic: Epic<Actions, IState> = action$ =>
+  action$.ofType(PLACE_BET).do((action: IPlaceBet) => ethPlaceBet(action.betEvent, action.outcomeIndex, action.value));
 
 export type ContractActions = IFetchAvailableBets | ISuccessAvailableBets | IPlaceBet;
 
