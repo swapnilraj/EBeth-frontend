@@ -9,12 +9,7 @@ export class TeamSegment extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				
-				team:"none",
-				status:"none"
-		    };
+		   
 		  }
 
 		
@@ -69,7 +64,7 @@ export class TeamSegment extends React.Component {
 		}
 
 
-		const centerText= () => style(dynamicCenterText[this.state.team])
+		const centerText= () => style(dynamicCenterText[this.props.team])
 
 		const homeOrAway = 
 		{
@@ -134,8 +129,8 @@ export class TeamSegment extends React.Component {
 
 
 		const homeOrAwayText= () => style(
-			dynamicHomeAwayText[this.state.team],
-			expandedOrContracted[this.state.status]
+			dynamicHomeAwayText[this.props.team],
+			expandedOrContracted[this.props.status]
 			)
 
 	
@@ -150,9 +145,9 @@ export class TeamSegment extends React.Component {
 			textAlign:"center",
 			marginTop:"5%",
 			position:"relative",
-			marginLeft:homeOrAway[this.state.team].marginLeft,
-			marginRight:homeOrAway[this.state.team].marginRight,
-			float:homeOrAway[this.state.team].float,
+			marginLeft:homeOrAway[this.props.team].marginLeft,
+			marginRight:homeOrAway[this.props.team].marginRight,
+			float:homeOrAway[this.props.team].float,
 
 
 		})
@@ -163,7 +158,7 @@ export class TeamSegment extends React.Component {
 			//margin: 0,
 			
 			height:"100%",
-			float:homeOrAway[this.state.team].float, 
+			float:homeOrAway[this.props.team].float, 
 			width:"60%",
 			marginLeft:"2%",
 			position:"relative"
@@ -172,35 +167,13 @@ export class TeamSegment extends React.Component {
 
 
 
-		if(this.props.teamName)
-		{
-			teamName = this.props.teamName;
-		}
-
-		if(this.props.crest)
-		{
-			crestSource = this.props.crest
-		}
-
-		if(this.props.team && this.state.team=="none")
-		{
-			this.setState({team:this.props.team})
-		}
-		if(this.props.status && this.state.status !=this.props.status)
-		{
-			console.log(this.props.status)
-			this.setState({status:this.props.status})
-		}
-
-
-
 		return(
 					<div className = {teamWrapper}>
 						<div className = {crestWrapper()}>
-							<img className = {crestStyle} src = {crestSource} />
+							<img className = {crestStyle} src = {this.props.crest} />
 						</div>
 						<div className = {textWrapper()}>
-							<div className = {centerText()}>{teamName}
+							<div className = {centerText()}>{this.props.teamName}
 							</div>
 							<div className = {homeOrAwayText()}>{this.props.team}
 							</div>

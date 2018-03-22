@@ -32,7 +32,18 @@ export class SelectionPanel extends React.Component {
 			this.setState({
 				teamName:nextProps.teamName
 			})
-			//console.log(nextProps).selected
+			if(nextProps.selected == this.props.name)
+			{
+				this.setState({
+					click:"selected"
+				})
+			}
+			else
+			{
+				this.setState({
+					click:"unselected"
+				})
+			}
 
 			// if(this.props.name == nextProps.selected)
 			// {
@@ -47,6 +58,12 @@ export class SelectionPanel extends React.Component {
 			// })
 			// }
 		}	
+
+
+	highlight()
+	{
+		
+	}	
 
 	render()
 	{
@@ -87,7 +104,7 @@ export class SelectionPanel extends React.Component {
 
 			height:"4%",
 			width:"100%",
-			marginTop:"15%",
+			marginTop:"0%",
 			position:"relative"
 
 		})
@@ -106,7 +123,6 @@ export class SelectionPanel extends React.Component {
 
 		const crestContainer= style({
 			position:"relative",
-			marginTop:"15%",
 			height:"40%",
 			width:"100%",
 			position:"relative"
@@ -131,6 +147,15 @@ export class SelectionPanel extends React.Component {
 
 
 		})
+
+		const paddingDiv= style({
+			height:"15%",
+			width:"100%",
+			position:"relative"
+			
+
+
+		})
 		
 		if(this.props.marginLeft)
 		{
@@ -146,12 +171,14 @@ export class SelectionPanel extends React.Component {
 		}
 
 		return(
-				<div className = {panelStyle()} onClick = {() => this.props.selectFunction(this.props.name)}>
+				<div className = {panelStyle()} onClick = {() => this.props.selectFunction(this.props.name,this.state.teamName)}>
+					<div className = {paddingDiv}></div>
 					<div className = {teamName}><div className={centerText}>{this.state.teamName}</div></div>
+					<div className = {paddingDiv}></div>
 					<div className = {crestContainer}>
 						<img className = {crestStyle} src = {"./images"+crests[this.state.teamName]} />
 					</div>
-					<div className = {teamType}><div className = {centerText}>{this.state.panelType}</div></div>
+					<div className = {teamType}><div className = {centerText}>{this.props.panelType}</div></div>
 				</div>
 				
 			)

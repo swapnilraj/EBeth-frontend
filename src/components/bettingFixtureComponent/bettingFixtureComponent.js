@@ -32,22 +32,25 @@ export class BettingFixtureComponent extends React.Component {
 		     this.handler = this.handler.bind(this)
 		  }
 		 
-		handler() {
+	handler() {
     
-    if(this.state.status =="contracted")
-    {
-    this.setState({
-      status: "expanded",
-      message:"Show Less"
-    })
-	}
-	else
-	{
-		this.setState({
-      status: "contracted",
-      message: "Show More"
-    })
-	}
+  
+    this.props.toggleStatsBar(this.props.status.status,this.props.status.id)
+
+  }
+
+  componentWillReceiveProps(nextProps)
+  {
+  	this.setState({
+				hover:"expanded",
+				fixturePopulated:"true",
+				homeTeam:nextProps.fixture.homeTeamName,
+				homeCrest:"./images"+crests[nextProps.fixture.homeTeamName],
+				awayTeam:nextProps.fixture.awayTeamName,
+				awayCrest:"./images"+crests[nextProps.fixture.awayTeamName],
+				time : nextProps.fixture.time,
+				potValue:nextProps.fixture.potValue
+			})
   }
 
 	render()
@@ -74,7 +77,6 @@ export class BettingFixtureComponent extends React.Component {
 		
 
 		 const bettingFixtureComponent = style({
-		 	//marginTop:"2%",
 		 	height:"5em",
 		 	marginLeft:"10%",
 		 	marginRight:"10%",
@@ -107,7 +109,7 @@ export class BettingFixtureComponent extends React.Component {
 		 	position:"relative",
 		 	fontFamily:"lato",
 		 	boxShadow: "1px 2px 9px -5px rgba(0, 0, 0, 0.1)",
-		 	display:dynamicStats[this.state.status].display
+		 	display:dynamicStats[this.props.status.status].display
 
 		 })
 
@@ -121,11 +123,12 @@ export class BettingFixtureComponent extends React.Component {
 		
 		return(
 				<div>
+					
 					<div className = {bettingFixtureComponent}>
-						<TeamSegment teamName = {this.state.homeTeam} crest = {this.state.homeCrest} team = "Home" status = {this.state.status}/>
-						<TimeSegment startTime = {this.state.time} />
-						<TeamSegment teamName = {this.state.awayTeam} crest = {this.state.awayCrest} team = "Away" status = {this.state.status}/>
-						<BetButtonSegment openDialogueBoxClick = {this.props.openDialogueBoxClick} message = {this.state.message} handler = {this.handler} fixture = {this.props.fixture}/>
+						<TeamSegment teamName = {this.props.fixture.homeTeamName} crest = {"./images"+crests[this.props.fixture.homeTeamName]} team = "Home" status = {this.props.status.status}/>
+						<TimeSegment startTime = {this.props.fixture.time} />
+						<TeamSegment teamName = {this.props.fixture.awayTeamName} crest = {"./images"+crests[this.props.fixture.awayTeamName]} team = "Away" status = {this.props.status.status}/>
+						<BetButtonSegment openDialogueBoxClick = {this.props.openDialogueBoxClick} message = {this.state.message} showMore = {this.handler} fixture = {this.props.fixture}  expandBetMenu = {this.props.expandBetMenu}/>
 						
 					</div>
 					<div className = {stats()}>

@@ -89,10 +89,10 @@ export class BetButtonSegment extends React.Component {
 		return(
 				<div className = {betButtonWrapper}>
 					<div className = {container}>
-						<div className = {centerText} onClick = {this.props.handler}>{message}</div>
+						<div className = {centerText} onClick = {this.props.showMore}>{message}</div>
 					</div>
 					<div  className = {container}>
-						<div onClick = {() => this.props.openDialogueBoxClick(this.props.fixture)} className = {betButton} >
+						<div onClick = {() => this.props.expandBetMenu("hide",this.props.fixture)} className = {betButton} >
 							<div className = {centerText}>BET
 							</div>
 						</div>

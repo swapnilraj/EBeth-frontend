@@ -18,11 +18,16 @@ export class PlaceBetComponent extends React.Component {
 		    };
 		  }
 		
+	componentWillReceiveProps(){
+
+	}
 
 	render()
 	{
 
-
+		
+		
+		
 		const dynamicDateWrapper = 
 		{
 			true:{
@@ -91,8 +96,9 @@ export class PlaceBetComponent extends React.Component {
 
 		return(
 				<div className = {componentStyle} >
+
 					<div className = {dateWrapper()}>{this.state.date}</div>
-					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} />
+					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} status = {this.props.status} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu}/>
 				</div>
 				
 			)

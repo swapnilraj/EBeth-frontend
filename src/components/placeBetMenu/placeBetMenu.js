@@ -3,6 +3,17 @@ import ReactDOM from 'react-dom';
 import * as csstips from 'csstips';
 import {style} from "typestyle";
 import {SelectionPanel} from "./selectionPanel.js"
+import swal from 'sweetalert2'
+import {creatStore} from 'redux';
+
+var Bet = class Bet {
+  constructor(teamName,amount) {
+    this.teamName = teamName;
+    this.amount = amount;
+  }
+};
+
+ 
 export class PlaceBetMenu extends React.Component {
 	
 
@@ -15,27 +26,102 @@ export class PlaceBetMenu extends React.Component {
 				showDate:"false",
 				display:"show",
 				fixture:{},
-				selectedPanel:"none"
-				
+				selectedPanel:"none",
+				currentBet: new Bet("",0),
+				teamSelected:"unselected",
+				amountInput:"unselected",
+				userInput:""
 		    };
 		    this.minimise = this.minimise.bind(this);
 		    this.selectTeam = this.selectTeam.bind(this);
+		    this.handleUserInput = this.handleUserInput.bind(this);
+		    this.makeBet = this.makeBet.bind(this);
 		  }
 		
 		
 
+makeBet()
+{
+	this.state.currentBet.amount = this.state.userInput;
+	var outcome = ""
+	if(this.state.currentBet.teamName == "Draw")
+	{
+		outcome  = " the match will be a draw."
+	}
+	else if(this.state.currentBet.teamName == this.state.fixture.homeTeamName)
+	{
+		outcome  = " "+ this.state.fixture.homeTeamName +" will win"
+	}
+	else
+	{
+			outcome  = " "+ this.state.fixture.awayTeamName +" will win"
+	
+	}
+	 swal({
+		title: "You Placed A Bet!",
+		text: "You have bet "+this.state.currentBet.amount+" ETH, that" +outcome,
+		type: "success",
+		confirmButtonColor: "rgb(251, 98, 53)",
+		confirmButtonText: "OK"
+})
+	this.minimise();
+}
+
+handleUserInput(e)
+  {
+  	if(e.target.value != "" && isNaN(e.target.value) ==false && parseFloat(e.target.value)>0 ){
+  		this.setState({
+     	amountInput:"selected"
+     
+
+  })
+  	}
+  	else
+  	{
+  		this.setState({
+     	amountInput:"unselected"
+  		})
+  	}
+    this.setState({
+      userInput: e.target.value
+
+  })
+  }
+
+
 	minimise()
 	{
+		this.props.closeDialogueBox()
 		this.setState({
-			display:"hide"
+			selectedPanel:"none",
+			userInput:"",
+			amountInput:"unselected",
+			teamSelected:"unselected"
 		})
 	}
 
-	selectTeam(type)
+	selectTeam(type,teamName)
 	{
-		this.setState({
-			selectionPanel:type
-		})
+		if(this.state.selectedPanel != type){
+			this.setState({
+				selectedPanel:type,
+				teamSelected:"selected"
+			})
+			this.state.currentBet.teamName = teamName;
+		}
+		else
+		{
+			this.setState({
+				selectedPanel:"none",
+				userInput:"",
+				amountInput:"unselected",
+				teamSelected:"unselected"
+				
+			})
+			this.state.currentBet.teamName = "";
+		}
+		
+		
 	}
 
 	componentWillReceiveProps(nextProps)
@@ -61,7 +147,10 @@ export class PlaceBetMenu extends React.Component {
 			width:"70%",
 			left:"15%",
 			boxShadow: "2px 4px 50px -5px rgba(0, 0, 0, 1)",
-			borderRadius:"2px"
+			borderRadius:"2px",
+			"WebkitUserSelect": "none",
+			"MozUserSelect": "none",
+			"MsUserSelect": "none"
 
 
 		})
@@ -163,7 +252,7 @@ export class PlaceBetMenu extends React.Component {
 
 			height:"40%",
 			width:"100%",
-			marginTop:"2%"
+			marginTop:"2%",
 
 		})
 
@@ -243,18 +332,11 @@ export class PlaceBetMenu extends React.Component {
 			width:"20%",
 			float:"left",
 			margin:"0 auto",
-			backgroundColor:"yellow",
 			marginLeft:"40%"
 
 
 		})
-		const inputBoxWrapper =  style({
-			height:"6%",
-			width:"100%",
-			marginTop:"2%",
-			position:"relative",
-
-		})
+		
 
 		const currencyStyle =  style({
 			float:"left",
@@ -271,29 +353,162 @@ export class PlaceBetMenu extends React.Component {
 
 		const currencyTextWrapper =  style({
 			
-			width:"10%",
-			height:"100%",
+			width:"30%",
+			height:"40%",
 			float:"left",
 			position:"relative",
 
 
 		})
 
+		const currencyText= style({
+
+			margin: 0,
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			marginRight: "-50%",
+			transform: "translate(-100%, -50%)" ,
+			fontSize:"1.1em" 
+
+		})
+
+		
+
+		const betInputWrapper =  style({
+			
+			height:"37.5%",
+			width:"100%",
+			position:"relative"
+			
+
+		})
+
+		const centralComponent =  style({
+			
+			height:"100%",
+			width:"30%",
+			position:"relative",
+			margin:"0 auto"
+			
+
+		})
+
+		const inputBoxWrapper =  style({
+			
+			height:"40%",
+			width:"100%",
+			position:"relative",
+			marginLeft:"10%"
+			
+			
+
+		})
+
+		const wrapInputBox =  style({
+			
+			height:"40%",
+			width:"70%",
+			position:"relative",
+			float:"left"
+			
+
+		})
+
+		const tenPercentMargin = style({
+
+			height:"10%",
+			width:"100%"
+		})
+
+		const fifteenPercentMargin = style({
+
+			height:"15%",
+			width:"100%"
+		})
+
+
+		const twentyPercentMargin = style({
+
+			height:"25%",
+			width:"100%",
+		})
+
+		const fivePercentMargin = style({
+
+			height:"5%",
+			width:"100%"
+		})
+		
+		const inputQuestionText = style({
+			fontSize:".8em"
+		})
+
+		const inputStyle = style({
+			height:"90%",
+			width:"95%",
+			textAlign:"right",
+			fontSize:"1.2em"
+		})
+
+		const overlayDynamicStyle = 
+		{
+			selected:
+			{
+				opacity:"0",
+				display:"none"
+			},
+			unselected:
+			{
+				opacity:".65",
+				display:"initial"
+			}
+		}
+
+		const overlay1 = () => style({
+			height:"100%",
+			width:"100%",
+			position:"absolute",
+			backgroundColor:"#F5F5F5",
+			zIndex:"20",
+			opacity:overlayDynamicStyle[this.state.teamSelected].opacity,
+			display:overlayDynamicStyle[this.state.teamSelected].display
+		})
+
+
+		const betButtonWrapper = () => style({
+			height:"15%",
+			width:"100%",
+			position:"relative"
+			
+		})
+
 		const betButton =  style({
 			
-			height:"5%",
-			width:"12.5%",
+			height:"100%",
+			width:"50%",
 			backgroundColor:"rgb(251, 98, 53)",
-			marginTop:"3%",
 			margin:"0 auto",
 			borderRadius:"16px",
 			position:"relative",
-			fontSize:"1.1em",
+			fontSize:"1.4em",
 			color:"white",
-			cursor:"pointer"
+			cursor:"pointer",
 
 		})
-		
+
+		const overlay2 = () => style({
+			top:"0",
+			bottom:"0",
+			left:"0",
+			right:"0",
+			position:"absolute",
+			backgroundColor:"#F5F5F5",
+			zIndex:"20",
+			opacity:overlayDynamicStyle[this.state.amountInput].opacity,
+			display:overlayDynamicStyle[this.state.amountInput].display
+		})
+
 		if(this.props.display && this.props.display != this.state.display)
 		{
 			console.log(this.props.display)
@@ -302,6 +517,19 @@ export class PlaceBetMenu extends React.Component {
 			})
 		}
 //
+// //
+
+// 							<div className = {inputBoxWrapper}>
+// 								<div className ={wrapper}>
+// 									<input className = {inputBoxStyle} placeholder="0.00" />
+									
+// 								</div>
+// 								<div className = {currencyTextWrapper}>
+// 									<div className = {currencyStyle} > ETH</div>
+// 								</div>
+// 							</div>
+
+
 		return(
 				<div className = {opaqueBackdrop}>
 					<div className = {betMenu} >
@@ -310,34 +538,41 @@ export class PlaceBetMenu extends React.Component {
 								<div className = {verticalAlign}>Place a bet</div>
 							</div>
 							<div className = {cancelBox}>
-								<div onClick = {this.props.closeDialogueBox} className = {exText}>X</div>
+								<div onClick = {() => this.props.toggleMenuDisplay("show")} className = {exText}>X</div>
 							</div>
 						</div>
 						<div className = {subTextBar}>
 							<div >WHAT WILL THE OUTCOME BE ?</div>
 						</div>
 						<div className = {selectionPanel}>
-							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectionPanel} panelType = "Home" teamName = {this.state.fixture.homeTeamName} marginLeft  ="9%" name = "Home"/>
-							<SelectionPanel selectedFunction = {this.selectTeam} selected = {this.state.selectionPanel} panelType = "" teamName = "Draw" marginLeft  ="7%" name = "Draw"/>
-							<SelectionPanel selectedFunction = {this.selectTeam} selected = {this.state.selectionPanel} panelType = "Away" teamName = {this.state.fixture.awayTeamName} marginLeft  ="7%" name = "Away"/>
-						</div>
-						<div className = {InputText}>
-							<div className = {centerText}>How Much Ethereum ?</div>
+							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "Home" teamName = {this.state.fixture.homeTeamName} marginLeft  ="9%" name = "Home"/>
+							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "" teamName = "Draw" marginLeft  ="7%" name = "Draw"/>
+							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "Away" teamName = {this.state.fixture.awayTeamName} marginLeft  ="7%" name = "Away"/>
 						</div>
 						
-
-						<div className = {inputBoxWrapper}>
-							<div className ={wrapper}>
-								<input className = {inputBoxStyle} placeholder="0.00" />
-								
+						
+						<div className = {betInputWrapper}>
+							<div className = {centralComponent}>
+								<div className = {fifteenPercentMargin}></div>
+								<div className = {inputBoxWrapper}>
+									<div className = {overlay1()}></div>
+									<div className = {inputQuestionText}>HOW MUCH ETHEREUM ?</div>
+									<div className = {fifteenPercentMargin}></div>
+									<div className = {wrapInputBox}>
+										<input value = {this.state.userInput} onChange = {this.handleUserInput} className = {inputStyle} placeholder = "0.00"/>
+									</div>
+									<div className = {currencyTextWrapper}>
+										<div className  ={currencyText}>ETH</div>
+									</div>
+								</div>
+								<div className = {tenPercentMargin}></div>
+								<div className = {betButtonWrapper()}>
+									<div className = {overlay2()}></div>
+									<div onClick = {this.makeBet} className = {betButton}>
+										<div className = {centerText}>Place Bet</div>
+									</div>
+								</div>
 							</div>
-							<div className = {currencyTextWrapper}>
-								<div className = {currencyStyle} > ETH</div>
-							</div>
-						</div>
-
-						<div className = {betButton}>
-							<div className = {centerText}>Place Bet</div>
 						</div>
 
 
