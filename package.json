@@ -30,6 +30,7 @@
     "csstips": "^0.2.2",
     "package.json": "^2.0.1",
     "react": "^16.2.0",
+    "react-blockies": "^1.2.2",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
