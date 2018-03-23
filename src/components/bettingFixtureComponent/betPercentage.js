@@ -9,25 +9,8 @@ export class BetPercentage extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				hover:"mouseOut"
-		    };
+		    
 		  }
-
-		mouseOver() {
-    		
-    		this.setState({hover: 'mouseOver'});
-    		//dynamicStyle.backgroundColor = colors["red"];
-  		}
-
-  		mouseOut() {
-    		
-    		this.setState({hover: 'mouseOut'});
-    		//dynamicStyle.backgroundColor = colors["red"];
-  		}
-		 
-		
 
 	render()
 	{

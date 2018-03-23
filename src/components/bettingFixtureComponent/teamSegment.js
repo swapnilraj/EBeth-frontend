@@ -109,7 +109,7 @@ export class TeamSegment extends React.Component {
 				marginRight: "-50%",
 				transform: "translate(0%, -50%)" ,
 				fontSize:".8em", 
-				//display:expandedOrContracted[this.state.status].display
+				
 			},
 				Away:
 				{
@@ -121,7 +121,7 @@ export class TeamSegment extends React.Component {
 				marginRight: "0%",
 				transform: "translate(0%, -50%)" ,
 				fontSize:".8em" ,
-				//display:expandedOrContracted[this.state.status].display
+				
 				},
 				none:{}
 

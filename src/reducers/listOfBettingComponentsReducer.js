@@ -35,7 +35,15 @@ export default function ListOfBettingComponentReducer(state={fixture:array,compo
 
 		
 		case updateFixtureList:
+
 			const replace = {fixture:action.payload.componentList,components:[]}
+				for(var i = replace.fixture.length-1;i>0;i--)
+			{
+				if(replace.fixture[i].date == replace.fixture[i-1].date )
+				{
+					replace.fixture[i].date = "";
+				}
+			}
 			return Object.assign({},state,replace);
 			break;
 
@@ -51,10 +59,12 @@ export default function ListOfBettingComponentReducer(state={fixture:array,compo
 			if(action.payload.toggleState==="contracted")
 			{
 				currentStateOfBars.components[action.payload.barId].status = "expanded"
+				currentStateOfBars.components[action.payload.barId].message = "Show Less"
 			}
 			else
 			{
 				currentStateOfBars.components[action.payload.barId].status = "contracted"
+				currentStateOfBars.components[action.payload.barId].message = "Show More"
 			}
 			return Object.assign({},state,currentStateOfBars);
 

@@ -1,4 +1,4 @@
-import {toggleMenuDisplay} from "../actions/betMenuActions"
+import {toggleMenuDisplay, toggleValidInput, selectTeam,updateBetValueInput} from "../actions/betMenuActions"
 export default function betMenuReducer(state={
 						
 						display:"hide",
@@ -15,9 +15,10 @@ export default function betMenuReducer(state={
 						},
 						selected:
 						{
-							teamName:"",
+							selectTeam:"",
 							selectedTab:"none",
-							betPlaced:0
+							validBetAmount:false,
+							betInputValue:"",
 						}
 
 
@@ -39,10 +40,49 @@ export default function betMenuReducer(state={
 			{
 				replace = {
 							display:"hide",
-							fixture:{}
+							fixture:{},
+							selected:
+								{
+								selectTeam:"",
+								selectedTab:"none",
+								validBetAmount:false,
+								betInputValue:""
+								}
 							}
 			}
 			return Object.assign({},state,replace)
+		
+		case selectTeam:
+			var newSelected = Object.assign({},state.selected)
+			if(newSelected.selectTeam != action.payload.teamName)
+			{
+				newSelected.selectTeam = action.payload.teamName;
+				newSelected.selectedTab = action.payload.tileDescription;
+			}
+			else
+			{
+				newSelected.selectTeam = "";
+				newSelected.selectedTab = "none";
+
+			}
+			newSelected.betInputValue = "";
+			var replace = {selected:newSelected}
+			return Object.assign({},state,replace)
+
+
+		case toggleValidInput:
+			var currentState = Object.assign({},state.selected);
+			currentState.validBetAmount = (!currentState.validBetAmount);
+			var nextState = {selected:currentState};
+			return Object.assign({},state,nextState);
+
+		
+
+		case updateBetValueInput:
+			var currentState = Object.assign({},state.selected);
+			currentState.betInputValue = action.payload.newInput;
+			var nextState = {selected:currentState};
+			return Object.assign({},state,nextState)
 	}
 
 	return state

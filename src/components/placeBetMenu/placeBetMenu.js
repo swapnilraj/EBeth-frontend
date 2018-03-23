@@ -20,20 +20,7 @@ export class PlaceBetMenu extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				date:"none",
-				showDate:"false",
-				display:"show",
-				fixture:{},
-				selectedPanel:"none",
-				currentBet: new Bet("",0),
-				teamSelected:"unselected",
-				amountInput:"unselected",
-				userInput:""
-		    };
-		    this.minimise = this.minimise.bind(this);
-		    this.selectTeam = this.selectTeam.bind(this);
+		 
 		    this.handleUserInput = this.handleUserInput.bind(this);
 		    this.makeBet = this.makeBet.bind(this);
 		  }
@@ -42,93 +29,60 @@ export class PlaceBetMenu extends React.Component {
 
 makeBet()
 {
-	this.state.currentBet.amount = this.state.userInput;
+	
 	var outcome = ""
-	if(this.state.currentBet.teamName == "Draw")
+	
+	if(this.props.menuState.selected.selectedTab == "Draw")
 	{
 		outcome  = " the match will be a draw."
 	}
-	else if(this.state.currentBet.teamName == this.state.fixture.homeTeamName)
+	else if(this.props.menuState.selected.selectTeam== this.props.fixture.homeTeamName)
 	{
-		outcome  = " "+ this.state.fixture.homeTeamName +" will win"
+		outcome  = " "+ this.props.menuState.fixture.homeTeamName +" will win"
 	}
 	else
 	{
-			outcome  = " "+ this.state.fixture.awayTeamName +" will win"
+			outcome  = " "+ this.props.menuState.fixture.awayTeamName +" will win"
 	
 	}
 	 swal({
 		title: "You Placed A Bet!",
-		text: "You have bet "+this.state.currentBet.amount+" ETH, that" +outcome,
+		text: "You have bet "+this.props.menuState.selected.betInputValue+" ETH, that" +outcome,
 		type: "success",
 		confirmButtonColor: "rgb(251, 98, 53)",
 		confirmButtonText: "OK"
 })
-	this.minimise();
+	 this.props.toggleMenuDisplay("show")
 }
 
 handleUserInput(e)
   {
+  	console.log(this.props)
   	if(e.target.value != "" && isNaN(e.target.value) ==false && parseFloat(e.target.value)>0 ){
-  		this.setState({
-     	amountInput:"selected"
-     
-
-  })
+  		
+  		if(this.props.menuState.selected.validBetAmount == false)
+     	 {
+     	 	this.props.toggleValidUserInput()
+     	 }
   	}
   	else
   	{
-  		this.setState({
-     	amountInput:"unselected"
-  		})
+  		if(this.props.menuState.selected.validBetAmount == true)
+     	 {
+     	 	this.props.toggleValidUserInput()
+     	 }
   	}
-    this.setState({
-      userInput: e.target.value
-
-  })
+  	this.props.updateInputValue(e.target.value)
+   
   }
 
 
-	minimise()
-	{
-		this.props.closeDialogueBox()
-		this.setState({
-			selectedPanel:"none",
-			userInput:"",
-			amountInput:"unselected",
-			teamSelected:"unselected"
-		})
-	}
 
-	selectTeam(type,teamName)
-	{
-		if(this.state.selectedPanel != type){
-			this.setState({
-				selectedPanel:type,
-				teamSelected:"selected"
-			})
-			this.state.currentBet.teamName = teamName;
-		}
-		else
-		{
-			this.setState({
-				selectedPanel:"none",
-				userInput:"",
-				amountInput:"unselected",
-				teamSelected:"unselected"
-				
-			})
-			this.state.currentBet.teamName = "";
-		}
-		
-		
-	}
-
+	
 	componentWillReceiveProps(nextProps)
 		{
-			this.setState({
-				fixture:nextProps.fixture
-			})
+			
+			
 		}
 
 	render()
@@ -175,7 +129,7 @@ handleUserInput(e)
 			left:"0",
 			right:"0",
 			backgroundColor:"rgba(0, 0, 0, 0.6)",
-			display:dynamicBackdropStyle[this.state.display].display
+			display:dynamicBackdropStyle[this.props.menuState.display].display
 
 
 		})
@@ -453,12 +407,13 @@ handleUserInput(e)
 
 		const overlayDynamicStyle = 
 		{
-			selected:
+
+			true:
 			{
 				opacity:"0",
 				display:"none"
 			},
-			unselected:
+			false:
 			{
 				opacity:".65",
 				display:"initial"
@@ -471,8 +426,8 @@ handleUserInput(e)
 			position:"absolute",
 			backgroundColor:"#F5F5F5",
 			zIndex:"20",
-			opacity:overlayDynamicStyle[this.state.teamSelected].opacity,
-			display:overlayDynamicStyle[this.state.teamSelected].display
+			opacity:overlayDynamicStyle[(this.props.menuState.selected.selectedTab != "none")].opacity,
+			display:overlayDynamicStyle[(this.props.menuState.selected.selectedTab != "none")].display
 		})
 
 
@@ -505,29 +460,11 @@ handleUserInput(e)
 			position:"absolute",
 			backgroundColor:"#F5F5F5",
 			zIndex:"20",
-			opacity:overlayDynamicStyle[this.state.amountInput].opacity,
-			display:overlayDynamicStyle[this.state.amountInput].display
+			opacity:overlayDynamicStyle[(this.props.menuState.selected.validBetAmount)].opacity,
+			display:overlayDynamicStyle[(this.props.menuState.selected.validBetAmount)].display
 		})
 
-		if(this.props.display && this.props.display != this.state.display)
-		{
-			console.log(this.props.display)
-			this.setState({
-				display:this.props.display
-			})
-		}
-//
-// //
 
-// 							<div className = {inputBoxWrapper}>
-// 								<div className ={wrapper}>
-// 									<input className = {inputBoxStyle} placeholder="0.00" />
-									
-// 								</div>
-// 								<div className = {currencyTextWrapper}>
-// 									<div className = {currencyStyle} > ETH</div>
-// 								</div>
-// 							</div>
 
 
 		return(
@@ -545,9 +482,9 @@ handleUserInput(e)
 							<div >WHAT WILL THE OUTCOME BE ?</div>
 						</div>
 						<div className = {selectionPanel}>
-							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "Home" teamName = {this.state.fixture.homeTeamName} marginLeft  ="9%" name = "Home"/>
-							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "" teamName = "Draw" marginLeft  ="7%" name = "Draw"/>
-							<SelectionPanel selectFunction = {this.selectTeam} selected = {this.state.selectedPanel} panelType = "Away" teamName = {this.state.fixture.awayTeamName} marginLeft  ="7%" name = "Away"/>
+							<SelectionPanel selectFunction = {this.selectTeam}  panelType = "Home" teamName = {this.props.menuState.fixture.homeTeamName} marginLeft  ="9%" name = "Home" menuState =  {this.props.menuState} selectPanel = {this.props.selectPanel} />
+							<SelectionPanel selectFunction = {this.selectTeam}  panelType = "" teamName = "Draw" marginLeft  ="7%" name = "Draw" menuState =  {this.props.menuState} selectPanel = {this.props.selectPanel} />
+							<SelectionPanel selectFunction = {this.selectTeam}  panelType = "Away" teamName = {this.props.menuState.fixture.awayTeamName} marginLeft  ="7%" name = "Away" menuState =  {this.props.menuState} selectPanel = {this.props.selectPanel} />
 						</div>
 						
 						
@@ -559,7 +496,7 @@ handleUserInput(e)
 									<div className = {inputQuestionText}>HOW MUCH ETHEREUM ?</div>
 									<div className = {fifteenPercentMargin}></div>
 									<div className = {wrapInputBox}>
-										<input value = {this.state.userInput} onChange = {this.handleUserInput} className = {inputStyle} placeholder = "0.00"/>
+										<input value = {this.props.menuState.selected.betInputValue} onChange = {this.handleUserInput} className = {inputStyle} placeholder = "0.00"/>
 									</div>
 									<div className = {currencyTextWrapper}>
 										<div className  ={currencyText}>ETH</div>

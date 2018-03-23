@@ -9,20 +9,11 @@ export class TimeSegment extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				time:""
-		    };
 		  }
 
 		
-		 
-		
-
 	render()
 	{
-		var time = "11am";
-
 		 	
 		const timeWrapper= style({
 
@@ -46,14 +37,11 @@ export class TimeSegment extends React.Component {
 
 		})
 
-		if(this.props.startTime && this.state.time =="")
-		{
-			this.setState({time:this.props.startTime});
-		}
+		
 		return(
 					<div className = {timeWrapper}>
 						<div className = {centerText}>
-							{this.state.time}
+							{this.props.startTime}
 						</div>
 					</div>
 				

@@ -11,26 +11,10 @@ export class BetButtonSegment extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				hover:"mouseOut"
-				
-		    };
+		    
 		  }
 
-		mouseOver() {
-    		
-    		this.setState({hover: 'mouseOver'});
-  		}
-
-  		mouseOut() {
-    		
-    		this.setState({hover: 'mouseOut'});
-    		
-  		}
-		 
 		
-	
 
 	render()
 	{

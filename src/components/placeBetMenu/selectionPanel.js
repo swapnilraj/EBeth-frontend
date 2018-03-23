@@ -10,66 +10,10 @@ export class SelectionPanel extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				teamName:"",
-				panelType:"",
-				click:"unselected"
-				
-		    };
-		    //this.highlightBox = this.highlightBox.bind(this)
 		  }
 		
-	// highlightBox()
-	// {
-	// 	this.setState({
-	// 		click:"selected"
-	// 	})
-	// }	
-
-	componentWillReceiveProps(nextProps)
-		{
-			this.setState({
-				teamName:nextProps.teamName
-			})
-			if(nextProps.selected == this.props.name)
-			{
-				this.setState({
-					click:"selected"
-				})
-			}
-			else
-			{
-				this.setState({
-					click:"unselected"
-				})
-			}
-
-			// if(this.props.name == nextProps.selected)
-			// {
-			// 	this.setState({
-			// 	click:"selected"
-			// })
-			// }
-			// else
-			// {
-			// 	this.setState({
-			// 	click:"unselected"
-			// })
-			// }
-		}	
-
-
-	highlight()
-	{
-		
-	}	
-
 	render()
 	{
-
-
-		
 
 		const dynamicPanelStyle = 
 		{
@@ -78,10 +22,10 @@ export class SelectionPanel extends React.Component {
 
 		const highlight = 
 		{
-			selected:{
+			true:{
 				 border: "5px solid rgb(251, 98, 53)"
 			},
-			unselected:{
+			false:{
 				border:"none"
 			}
 		}
@@ -95,7 +39,7 @@ export class SelectionPanel extends React.Component {
 			boxShadow: "3px 3px 15px -5px rgba(0, 0, 0, 0.5)",
 			cursor:"pointer",
 			position:"relative",
-			border:highlight[this.state.click].border
+			border:highlight[(this.props.menuState.selected.selectedTab == this.props.name)].border
 			
 
 		})
@@ -162,21 +106,15 @@ export class SelectionPanel extends React.Component {
 			dynamicPanelStyle.marginLeft = this.props.marginLeft
 		}
 
-		if(this.props.teamName &&  this.state.teamName =="")
-		{
-			this.setState({
-				teamName:this.props.teamName,
-				panelType:this.props.panelType
-			})
-		}
+		
 
 		return(
-				<div className = {panelStyle()} onClick = {() => this.props.selectFunction(this.props.name,this.state.teamName)}>
+				<div className = {panelStyle()} onClick = {() => this.props.selectPanel(this.props.teamName,this.props.name)}>
 					<div className = {paddingDiv}></div>
-					<div className = {teamName}><div className={centerText}>{this.state.teamName}</div></div>
+					<div className = {teamName}><div className={centerText}>{this.props.teamName}</div></div>
 					<div className = {paddingDiv}></div>
 					<div className = {crestContainer}>
-						<img className = {crestStyle} src = {"./images"+crests[this.state.teamName]} />
+						<img className = {crestStyle} src = {"./images"+crests[this.props.teamName]} />
 					</div>
 					<div className = {teamType}><div className = {centerText}>{this.props.panelType}</div></div>
 				</div>

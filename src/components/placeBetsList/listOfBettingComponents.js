@@ -13,11 +13,6 @@ export class ListOfBettingComponents extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				fixtures:[]
-				
-		    };
 		    this.clickHandler = this.clickHandler.bind(this)
 
 		  }
@@ -79,8 +74,24 @@ componentWillReceiveProps(nextProps)
 {
 	
 	if(((nextProps.fixtures) && (nextProps.fixtures[0] != this.props.fixtures[0]) ) ){
+
+
+
+
+		var newFixtures = nextProps.fixtures;
+			for(var i = nextProps.fixtures-1;i>0;i--)
+			{
+				if(nextProps.fixtures[i].date == newFixtures[i-1].date )
+				{
+					newFixtures[i].date = "";
+				}
+			}
+
+
+
 		for(var i =0;i<nextProps.fixtures.length;i++)
 		{
+
 		var newComponent = 
 		{
 			fixture:nextProps.fixtures[i],
@@ -99,22 +110,7 @@ componentWillReceiveProps(nextProps)
 
 		
 		var bettingComponents = this.renderBettingComponents(this.props.fixtures,this.props.openDialogueBoxClick);
-		
-
-		if(this.props.fixtures && this.state.fixtures[0]==null)
-{
-			var newFixtures = this.props.fixtures;
-			for(var i = newFixtures.length-1;i>0;i--)
-			{
-				if(newFixtures[i].date == newFixtures[i-1].date )
-				{
-					newFixtures[i].date = "";
-				}
-			}
-			//this.setState({fixtures:newFixtures})
-		
-			
-}		
+	
 	
 
 		var message = "Show More";

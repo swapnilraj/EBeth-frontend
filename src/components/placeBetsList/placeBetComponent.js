@@ -9,13 +9,6 @@ export class PlaceBetComponent extends React.Component {
 
 	constructor(props){
 		    super(props);
-
-		    this.state = 
-		    {
-				date:"none",
-				showDate:"false"
-				
-		    };
 		  }
 		
 	componentWillReceiveProps(){
@@ -30,7 +23,7 @@ export class PlaceBetComponent extends React.Component {
 		
 		const dynamicDateWrapper = 
 		{
-			true:{
+			false:{
 			paddingTop:".7%",
 			width:"80%",
 			margin:"0 auto",
@@ -39,7 +32,7 @@ export class PlaceBetComponent extends React.Component {
 			color:"rgb(110, 110, 110)",
 			display:"inherit"
 			},
-			false:
+			true:
 			{
 			paddingTop:".7%",
 			width:"80%",
@@ -54,7 +47,7 @@ export class PlaceBetComponent extends React.Component {
 		 	
 		const dateWrapper= () =>style (
 
-			dynamicDateWrapper[this.state.showDate]
+			dynamicDateWrapper[(this.props.fixture.date=="")]
 
 		)
 
@@ -70,22 +63,6 @@ export class PlaceBetComponent extends React.Component {
 
 		})
 
-		if(this.props.fixture && this.state.date == "none")
-		{
-			this.setState(
-					{
-						date:this.props.fixture.date,
-						showDate:"true"
-					}
-				)
-
-			if(this.props.fixture.date == "")
-			{
-				this.setState({
-					showDate:"false"
-				})
-			}
-		}
 		
 		const componentStyle= style({
 
@@ -97,7 +74,7 @@ export class PlaceBetComponent extends React.Component {
 		return(
 				<div className = {componentStyle} >
 
-					<div className = {dateWrapper()}>{this.state.date}</div>
+					<div className = {dateWrapper()}>{this.props.fixture.date}</div>
 					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} status = {this.props.status} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu}/>
 				</div>
 				

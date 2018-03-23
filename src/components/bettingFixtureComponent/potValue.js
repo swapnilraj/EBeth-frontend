@@ -9,11 +9,6 @@ export class PotValue extends React.Component {
 	constructor(props){
 		    super(props);
 
-		    this.state = 
-		    {
-				potValue : "0"
-				
-		    };
 		  }
 
 		
@@ -44,17 +39,10 @@ export class PotValue extends React.Component {
 
 		})
 
-		if(this.props.fixture && this.state.potValue == "0")
-		{
-
-			this.setState({
-				potValue: "Pot : "+this.props.fixture.potValue+ " ETH"
-			})
-		}
 		return(
 					<div className = {wrapper}>
 						<div className = {centerText}>
-							{this.state.potValue}
+							{this.props.fixture.potValue +" ETH"}
 						</div>
 					</div>
 				
