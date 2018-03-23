@@ -20,10 +20,14 @@ export class ListOfBettingComponents extends React.Component {
 
 renderBettingComponents(fixtures,clickHandler) {
 	if(this.props.componentStatus[0]!=undefined){
+		console.log("Doing My Best")
+		console.log(this.props.fixtures)
+		console.log(this.props.componentStatus)
 		if (fixtures.length > 0) {      
+
 		        return fixtures.map((fixture, index) => (
 		        	
-		            <PlaceBetComponent fixture = {fixture} openDialogueBoxClick = {clickHandler} status = {this.props.componentStatus[index]} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu}/>
+		            <PlaceBetComponent marginLeft = {this.props.marginLeft} width = {this.props.width} fixture = {fixture} openDialogueBoxClick = {clickHandler} status = {this.props.componentStatus[index]} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu}/>
 		           
 
 		        ));
@@ -35,7 +39,7 @@ renderBettingComponents(fixtures,clickHandler) {
 		const defaultStatus = {fixture:undefined,id:0,potValue:0,status:"contracted"}   
 		        return fixtures.map((fixture, index) => (
 		        	
-		            <PlaceBetComponent fixture = {fixture} openDialogueBoxClick = {clickHandler} status = {defaultStatus} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu} />
+		            <PlaceBetComponent marginLeft = {this.props.marginLeft} width = {this.props.width} fixture = {fixture} openDialogueBoxClick = {clickHandler} status = {defaultStatus} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu} />
 		           
 
 		        ));
@@ -50,25 +54,7 @@ clickHandler(e)
 
 }
 
-componentWillMount()
-{
-	
-	if((this.props.fixtures)){
-		for(var i =0;i<this.props.fixtures.length;i++)
-		{
-		var newComponent = 
-		{
-			fixture:this.props.fixtures[i],
-			id:i,
-			status:"contracted",
-			potValue:0.00,
-			message:"Show More"
-		}
 
-			this.props.addBetComponentToState(newComponent)
-		}
-	}
-}
 
 componentWillReceiveProps(nextProps)
 {
@@ -89,20 +75,27 @@ componentWillReceiveProps(nextProps)
 
 
 
-		for(var i =0;i<nextProps.fixtures.length;i++)
-		{
+	
 
-		var newComponent = 
-		{
-			fixture:nextProps.fixtures[i],
-			id:i,
-			status:"contracted",
-			message:"Show More"
-		}
 
-			nextProps.addBetComponentToState(newComponent)
+			if((nextProps.fixtures)){
+				console.log("should be updating")
+				console.log(nextProps.fixtures)
+				for(var i =0;i<nextProps.fixtures.length;i++)
+				{
+				var newComponent = 
+				{
+					fixture:nextProps.fixtures[i],
+					id:i,
+					status:"contracted",
+					potValue:0.00,
+					message:"Show More"
+				}
+
+					this.props.addBetComponentToState(newComponent)
+				}
+			}
 		}
-	}
 }
 
 	render()
@@ -118,7 +111,7 @@ componentWillReceiveProps(nextProps)
 		 	
 		const componentStyle= style({
 
-			marginTop : "30%"
+			//marginLeft:"30%"
 			
 
 		})
@@ -127,7 +120,7 @@ componentWillReceiveProps(nextProps)
 
 
 		return(
-			<div>
+			<div className ={componentStyle}>
 				{bettingComponents}
 			</div>
 

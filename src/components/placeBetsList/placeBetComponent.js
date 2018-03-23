@@ -19,28 +19,42 @@ export class PlaceBetComponent extends React.Component {
 	{
 
 		
-		
+		const dynamicMargin = 
+		{
+			true:
+			{
+				left:this.props.marginLeft
+			},
+			false:
+			{
+				left:"0%"
+			}
+		}
 		
 		const dynamicDateWrapper = 
 		{
 			false:{
 			paddingTop:".7%",
-			width:"80%",
+			width:this.props.width,
 			margin:"0 auto",
 			paddingBottom:".7%",
 			textAlign:"left",
 			color:"rgb(110, 110, 110)",
-			display:"inherit"
+			display:"inherit",
+			position:"relative",
+			left:dynamicMargin[this.props.marginLeft!=undefined].left
 			},
 			true:
 			{
 			paddingTop:".7%",
-			width:"80%",
+			width:this.props.width,
 			margin:"0 auto",
 			paddingBottom:".7%",
 			textAlign:"left",
 			color:"rgb(110, 110, 110)",
-			display:"none"
+			display:"none",
+			position:"relative",
+			left:dynamicMargin[this.props.marginLeft!=undefined].left
 			}
 
 		}
@@ -64,18 +78,20 @@ export class PlaceBetComponent extends React.Component {
 		})
 
 		
-		const componentStyle= style({
+		const componentStyle= () =>style({
 
-			marginBottom : ".2%"
+			marginBottom : ".2%",
 			
 
 		})
 
+
+
 		return(
-				<div className = {componentStyle} >
+				<div className = {componentStyle()} >
 
 					<div className = {dateWrapper()}>{this.props.fixture.date}</div>
-					<BettingFixtureComponent openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} status = {this.props.status} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu}/>
+					<BettingFixtureComponent marginLeft = {this.props.marginLeft} openDialogueBoxClick = {this.props.openDialogueBoxClick} fixture = {this.props.fixture} status = {this.props.status} toggleStatsBar = {this.props.toggleStatsBar} expandBetMenu = {this.props.expandBetMenu} width = {this.props.width}/>
 				</div>
 				
 			)

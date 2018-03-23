@@ -21,10 +21,12 @@ export function updateBetFixtureList(array){
 
 
 export function addBetComponentToState(newComponent){
+
 	return{
 		type:insertNewComponents,
 		payload:{
 			componentList : newComponent
+
 		}
 	}
 } 
@@ -64,17 +66,7 @@ var Fixtures = class Fixtures {
 };
 
 
-		var fixture1 = new Fixtures("Crystal Palace","Liverpool","Saturday | 31st March","12.30pm",16, 40,32,1.17)
-		var fixture2 = new Fixtures("Newcastle United","Huddersfield United","Saturday | 31st March","3pm",40, 40,60,2.2)
-		var fixture3 = new Fixtures("Manchester United","Swansea City","Saturday | 31st March","3pm",100, 45,92,0.38)
-		var fixture4 = new Fixtures("Watford City","Bournemouth","Saturday | 31st March","3pm",150, 82,120,4.433)
-		var fixture5 = new Fixtures("West Brom","Burnley","Saturday | 31st March","3pm",16, 40,32,0.50)
-		var fixture6 = new Fixtures("West Ham United","Southampton","Saturday | 31st March","3pm",40, 40,60,1.2)
-		var fixture7 = new Fixtures("Brighton","Leicester City","Sunday | 1st April","3pm",100, 45,92,0.45)
-		var fixture8 = new Fixtures("Everton","Manchester City","Sunday | 1st April","5.30pm",169, 82,120,1.12)
-		
-var array = [fixture1,fixture2,fixture3,fixture4,fixture5, fixture6,fixture7,fixture8]
-
+var array = []
 
 export default function ListOfBettingComponentReducer(state={fixture:array,components:[]},action){
 	
@@ -95,8 +87,17 @@ export default function ListOfBettingComponentReducer(state={fixture:array,compo
 			break;
 
 		case insertNewComponents:
-			var replacement = state.components.concat(action.payload.componentList)
+			var replacement = Object.assign({},state);
+			if(action.payload.componentList.id>0){
+			replacement = replacement.components.concat(action.payload.componentList)
+		    }
+		    else
+		    {
+		    	replacement = [action.payload.componentList]
+		    }
 			var objReplacement = {components:replacement}
+			console.log(objReplacement)
+			console.log(state)
 			return Object.assign({},state,objReplacement);
 			break;
 

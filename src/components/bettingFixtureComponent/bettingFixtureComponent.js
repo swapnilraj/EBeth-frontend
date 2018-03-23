@@ -29,12 +29,39 @@ export class BettingFixtureComponent extends React.Component {
 
 	render()
 	{
+		var defaultWidth = "10%";
+		var newWidth = 0;
+		var offsetDueToMargin = 0;
+	
+		if(this.props.width)
+		{
+			var widthAsNumber = parseInt(this.props.width.substring(0,(this.props.width.length)-1));
+			newWidth = (100-widthAsNumber)/2
+		}
 
+		if(this.props.marginLeft)
+		{
+			offsetDueToMargin = parseInt(this.props.marginLeft.substring(0,(this.props.marginLeft.length)-1))
+		}
+		console.log("newWidth")
+		console.log(newWidth)
+	
+		const setWidth = 
+		{
+			true:{
+				marginLeft:(newWidth+ offsetDueToMargin)+"%",
+				marginRight:(newWidth- offsetDueToMargin)+"%"
+			},
+			false:
+			{
+				width:"10%"
+			}
+		}
 		
-		 const bettingFixtureComponent = style({
+		 const bettingFixtureComponent = () => style({
 		 	height:"5em",
-		 	marginLeft:"10%",
-		 	marginRight:"10%",
+		 	marginLeft:setWidth[newWidth!=0].marginLeft,
+		 	marginRight:setWidth[newWidth!=0].marginRight,
 		 	backgroundColor:"white",
 		 	margin:"0 auto",
 		 	position:"relative",
@@ -57,8 +84,8 @@ export class BettingFixtureComponent extends React.Component {
 
 		 const stats = () => style({
 		 	height:"6em",
-		 	marginLeft:"10%",
-		 	marginRight:"10%",
+		 	marginLeft:setWidth[newWidth!=0].marginLeft,
+		 	marginRight:setWidth[newWidth!=0].marginRight,
 		 	backgroundColor:"white",
 		 	margin:"0 auto",
 		 	position:"relative",
@@ -79,7 +106,7 @@ export class BettingFixtureComponent extends React.Component {
 		return(
 				<div>
 					
-					<div className = {bettingFixtureComponent}>
+					<div className = {bettingFixtureComponent()}>
 						<TeamSegment teamName = {this.props.fixture.homeTeamName} crest = {"./images"+crests[this.props.fixture.homeTeamName]} team = "Home" status = {this.props.status.status}/>
 						<TimeSegment startTime = {this.props.fixture.time} />
 						<TeamSegment teamName = {this.props.fixture.awayTeamName} crest = {"./images"+crests[this.props.fixture.awayTeamName]} team = "Away" status = {this.props.status.status}/>
