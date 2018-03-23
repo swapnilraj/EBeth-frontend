@@ -1,20 +1,27 @@
 /**
  * Round image component
  */
-
 import * as React from 'react';
+import Blockies from 'react-blockies';
 import { style } from 'typestyle';
-
-import { Text } from '../utils/constants';
-
-interface IProps {
-  src: string;
-}
 
 const container = style({
   borderRadius: '50%',
 });
 
-const RoungImg = ({ src }: IProps) => <img className={container} src={src} alt={Text.profileAltTitle} />;
+interface IProps {
+  userAccount: string;
+  fetchUserAccount();
+}
 
-export default RoungImg;
+class RoundImg extends React.Component<IProps, {}> {
+  public componentDidMount() {
+    const { fetchUserAccount } = this.props;
+    fetchUserAccount();
+  }
+
+  public render() {
+    return <Blockies seed={this.props.userAccount || 'Ebeth'} className={container} />;
+  }
+}
+export default RoundImg;

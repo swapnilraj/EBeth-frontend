@@ -5,10 +5,10 @@
 import * as React from 'react';
 import { classes, style } from 'typestyle';
 
+import ConnectedRoundImg from '../containers/ConnectedRoundImg';
 import { Colors, Dimens, Text } from '../utils/constants';
 import Icon from './Icon';
 import LargeText from './LargeText';
-import RoungImg from './RoundImg';
 import Tab from './Tab';
 
 const container = style({
@@ -61,12 +61,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: IProps) => (
       <LargeText text={isCollapsed ? Text.bannerShortTitle : Text.bannerTitle} className={bannerText} />
     </div>
     <div className={tabsContainer}>
-      <Tab
-        icon={<RoungImg src="/icons/johndoe.jpg" />}
-        isCollapsed={isCollapsed}
-        route="/profile"
-        title={Text.profilePlaceholder}
-      />
+      <Tab icon={<ConnectedRoundImg />} isCollapsed={isCollapsed} route="/profile" title={Text.profilePlaceholder} />
       <Tab icon={<Icon type="place-bets" />} isCollapsed={isCollapsed} route="/place_bets" title={Text.placeBetsTab} />
       <Tab icon={<Icon type="my-bets" />} isCollapsed={isCollapsed} route="/my_bets" title={Text.currentBetsTab} />
       <Tab icon={<Icon type="results" />} isCollapsed={isCollapsed} route="/results" title={Text.resultsTab} />
