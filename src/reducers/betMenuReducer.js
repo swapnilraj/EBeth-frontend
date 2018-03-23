@@ -1,4 +1,63 @@
-import {toggleMenuDisplay, toggleValidInput, selectTeam,updateBetValueInput} from "../actions/betMenuActions"
+//import {toggleMenuDisplay, toggleValidInput, selectTeam,updateBetValueInput} from "../actions/betMenuActions"
+export const toggleMenuDisplay = "toggleMenuDisplay"
+export const selectTeam = "selectTeam"
+export const toggleValidInput = "toggleValidInput"
+export const updateBetValueInput = "onUpdateBetValueInput"
+
+
+//************************__ACTIONS__*******************************
+
+export function onToggleBetMenuDisplay(currentDisplay,fixture){
+
+	return{
+		type:toggleMenuDisplay,
+		payload:{
+			currentDisplay:currentDisplay,
+			currentFixture:fixture
+		}
+	}
+}
+
+export function onSelectTeam(teamName,tileDescription){
+
+	return{
+		type:selectTeam,
+		payload:{
+			teamName:teamName,
+			tileDescription:tileDescription
+		}
+	}
+}
+
+
+export function onToggleValidInput(){
+	return{
+		type:toggleValidInput,
+		payload:{
+			
+		}
+	}
+}
+
+export function onUpdateBetValueInput(newInput){
+	
+	return{
+		type:updateBetValueInput,
+		payload:{
+			newInput:newInput
+		}
+	}
+}
+
+
+
+//************************__ACTIONS__*******************************
+//************************__REDUCERS__*******************************
+
+
+
+
+
 export default function betMenuReducer(state={
 						
 						display:"hide",
@@ -87,3 +146,9 @@ export default function betMenuReducer(state={
 
 	return state
 }
+
+
+
+//************************__REDUCERS__*******************************
+
+

@@ -1,6 +1,53 @@
-import {insertNewComponents} from "../actions/listOfBettingComponentsActions"
-import {updateFixtureList}  from "../actions/listOfBettingComponentsActions"
-import {toggleStatsBar}  from "../actions/listOfBettingComponentsActions"
+// import {insertNewComponents} from "../actions/listOfBettingComponentsActions"
+// import {updateFixtureList}  from "../actions/listOfBettingComponentsActions"
+// import {toggleStatsBar}  from "../actions/listOfBettingComponentsActions"
+
+export const updateFixtureList = "updateFixtureList"
+export const insertNewComponents = "insertNewBetComponent"
+export const toggleStatsBar = "toggleStatsBar"
+
+//***********************__ACTIONS__*****************************
+
+export function updateBetFixtureList(array){
+	
+	console.log(array)
+	return{
+		type:updateFixtureList,
+		payload:{
+			componentList : array
+		}
+	}
+}
+
+
+export function addBetComponentToState(newComponent){
+	return{
+		type:insertNewComponents,
+		payload:{
+			componentList : newComponent
+		}
+	}
+} 
+
+
+export function toggleStatsBarFunc(currentState,barId){
+	
+	return{
+		type:toggleStatsBar,
+		payload:{
+			toggleState : currentState,
+			barId:barId
+		}
+	}
+} 
+
+
+
+
+
+
+//***********************__ACTIONS__*****************************
+//***********************__REDUCERS__*****************************
 
 
 var Fixtures = class Fixtures {
@@ -74,3 +121,7 @@ export default function ListOfBettingComponentReducer(state={fixture:array,compo
 	}
 	return state
 }
+
+
+
+//***********************__REDUCERS__*****************************
