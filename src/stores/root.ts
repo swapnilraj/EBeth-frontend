@@ -6,7 +6,7 @@ import { combineEpics, Epic } from 'redux-observable';
 
 import { combineReducers } from 'redux';
 
-import { contract, ContractActions, fetchAvailableEpic, IContractsState } from './contract';
+import { contract, ContractActions, fetchAvailableEpic, IContractsState, placeBetEpic, fetchUserAccountEpic } from './contract';
 import { ISidebarState, sidebar, SidebarActions } from './sidebar';
 /**
  * Combined application actions interface
@@ -21,7 +21,7 @@ export interface IState {
   contract: IContractsState;
 }
 
-const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic].filter(epic => epic !== null) as Array<
+const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic, placeBetEpic, fetchUserAccountEpic].filter(epic => epic !== null) as Array<
   Epic<Actions, IState, any>
 >;
 
