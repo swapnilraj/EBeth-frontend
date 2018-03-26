@@ -8,7 +8,7 @@
 
 **●  address**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:50](https://github.com/swapnilraj/EBeth-frontend/blob/9a866d4/src/ethereum/contract-interaction.ts#L50)*
+*Defined in [ethereum/contract-interaction.ts:55](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L55)*
 
 
 
@@ -25,7 +25,7 @@ ___
 
 **●  amount**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:42](https://github.com/swapnilraj/EBeth-frontend/blob/9a866d4/src/ethereum/contract-interaction.ts#L42)*
+*Defined in [ethereum/contract-interaction.ts:47](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L47)*
 
 
 
@@ -42,7 +42,7 @@ ___
 
 **●  outcomeIndex**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:48](https://github.com/swapnilraj/EBeth-frontend/blob/9a866d4/src/ethereum/contract-interaction.ts#L48)*
+*Defined in [ethereum/contract-interaction.ts:53](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L53)*
 
 
 
@@ -59,7 +59,7 @@ ___
 
 **●  paid**:  *`boolean`* 
 
-*Defined in [ethereum/contract-interaction.ts:44](https://github.com/swapnilraj/EBeth-frontend/blob/9a866d4/src/ethereum/contract-interaction.ts#L44)*
+*Defined in [ethereum/contract-interaction.ts:49](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L49)*
 
 
 
@@ -76,7 +76,7 @@ ___
 
 **●  winnings**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:46](https://github.com/swapnilraj/EBeth-frontend/blob/9a866d4/src/ethereum/contract-interaction.ts#L46)*
+*Defined in [ethereum/contract-interaction.ts:51](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L51)*
 
 
 
