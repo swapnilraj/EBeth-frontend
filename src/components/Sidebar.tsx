@@ -15,6 +15,7 @@ const container = style({
   background: Colors.accent,
   boxShadow: Colors.shadow,
   position: 'fixed',
+  zIndex: 1000,
   top: 0,
   left: 0,
   height: '100%',

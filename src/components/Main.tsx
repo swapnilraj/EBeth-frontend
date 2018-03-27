@@ -8,6 +8,8 @@ import { Route, Switch } from 'react-router-dom';
 import { style } from 'typestyle';
 
 import { Dimens } from '../utils/constants';
+import PlaceBets from './PlaceBets';
+
 import About from './About';
 
 const container = style(
@@ -27,6 +29,7 @@ const Main = () => (
   <div className={container}>
     <Switch>
       <Route exact path="/about" component={About} />
+      <Route exact path="/place_bets" component={PlaceBets} />
       <Route component={NoMatch} />
     </Switch>
   </div>

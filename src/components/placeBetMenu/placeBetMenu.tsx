@@ -33,8 +33,8 @@ interface IProps {
 
   display: string;
   fixture: IFixture;
-  selectPanel();
-  toggleMenuDisplay(currentState: string);
+  selectPanel(homeTeamName: string, panelType: string);
+  toggleMenuDisplay(currentState: string, fixture: IFixture);
   updateInputValue(newInput: string);
   toggleValidUserInput();
 }
@@ -57,7 +57,7 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
       confirmButtonColor: 'rgb(251, 98, 53)',
       confirmButtonText: 'OK',
     });
-    this.props.toggleMenuDisplay('show');
+    this.props.toggleMenuDisplay('show', this.props.fixture);
   }
 
   public handleUserInput(e) {
@@ -309,7 +309,7 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
               <div className={verticalAlign}>Place a bet</div>
             </div>
             <div className={cancelBox}>
-              <div onClick={() => this.props.toggleMenuDisplay('show')} className={exText}>
+              <div onClick={() => this.props.toggleMenuDisplay('show', this.props.fixture)} className={exText}>
                 X
               </div>
             </div>

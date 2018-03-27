@@ -40,6 +40,7 @@ interface IProps {
   addBetComponentToState(newComponent: IComponent);
   toggleStatsBar(currentState: string, id: number);
   expandBetMenu(teamname: string, currentIFixture: IFixture);
+  updateFixtures(array: IFixture[]);
 }
 
 export class ListOfBettingComponents extends React.Component<IProps, {}> {
