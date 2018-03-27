@@ -15,6 +15,7 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
+import { fetchAvailableBets } from '../stores/contract';
 
 export interface IFixture {
   homeTeamName: string;
@@ -84,6 +85,10 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     this.selectTeamToBetOn = this.selectTeamToBetOn.bind(this);
     this.toggleValidUserInput = this.toggleValidUserInput.bind(this);
     this.updateInputValue = this.updateInputValue.bind(this);
+  }
+
+  public componentDidMount() {
+    fetchAvailableBets();
   }
 
   public updateComponentsInList(array: IFixture[]) {
@@ -219,6 +224,7 @@ const mapStateToProps = state => {
     betComponent: state.ListOfBettingComponentReducer,
     betComponentStatus: state.ListOfBettingComponentReducer.components,
     menu: state.betMenuReducer,
+    availableBets: state.contract.availableBets,
   };
 };
 

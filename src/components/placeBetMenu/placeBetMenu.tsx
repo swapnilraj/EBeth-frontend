@@ -40,6 +40,12 @@ interface IProps {
 }
 
 export class PlaceBetMenu extends React.Component<IProps, {}> {
+  constructor(props) {
+    super(props);
+    this.handleUserInput = this.handleUserInput.bind(this);
+    this.makeBet = this.makeBet.bind(this);
+  }
+
   public makeBet() {
     let outcome = '';
 
@@ -83,9 +89,9 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
       left: '15%',
       boxShadow: '2px 4px 50px -5px rgba(0, 0, 0, 1)',
       borderRadius: '2px',
-      // "WebkitUserSelect": "none",
-      // "MozUserSelect": "none",
-      // "MsUserSelect": "none"
+      '-moz-user-select': 'none',
+      '-webkit-user-select': 'none',
+      '-ms-user-select': 'none',
     });
 
     const dynamicBackdropStyle = {
