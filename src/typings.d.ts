@@ -7,3 +7,8 @@ interface IWebpackModule extends NodeModule {
 interface IReduxDevToolsEnabledWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 }
+
+declare module '*.json' {
+  const value: any;
+  export default value;
+}

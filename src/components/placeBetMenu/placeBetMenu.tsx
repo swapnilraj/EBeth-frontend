@@ -28,30 +28,6 @@ interface IFixture {
   time: string;
 }
 
-const selected = {
-  betInputValue: 'string',
-  selectTeam: 'string',
-  selectedTab: 'string',
-  validBetAmount: false,
-};
-
-const fixture = {
-  awayBets: 0,
-  awayTeamName: 'Arsenal',
-  date: '2',
-  drawBets: 3,
-  homeBets: 21,
-  homeTeamName: 'Manchester United',
-  potValue: 0,
-  time: '1pm',
-};
-
-const menuStats = {
-  display: 'string',
-  fixture,
-  selected,
-};
-
 interface IProps {
   menuState: ImenuStats;
 
