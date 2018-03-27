@@ -34,12 +34,12 @@ const fixture3 = new Fixtures('Stoke City', 'Newcastle United', 'Saturday | 21st
 const fixture4 = new Fixtures('Liverpool', 'Everton', 'Sunday | 28th March', '4pm', 169, 82, 120, 2.0);
 const fixture5 = new Fixtures('Huddersfield United', 'West Brom', 'Sunday | 28th March', '5.30pm', 169, 82, 120, 1.12);
 
-const fixture6 = new Fixtures('West Ham United', 'Southampton', 'Saturday | 31st March', '3pm', 40, 40, 60, 1.2);
+// const fixture6 = new Fixtures('West Ham United', 'Southampton', 'Saturday | 31st March', '3pm', 40, 40, 60, 1.2);
 const fixture7 = new Fixtures('Brighton', 'Leicester City', 'Saturday | 31st March', '3pm', 100, 45, 92, 0.45);
 const fixture8 = new Fixtures('Chelsea FC', 'Tottenham Hotspur', 'Sunday | 1st April', '4pm', 169, 82, 120, 2.0);
 const fixture9 = new Fixtures('Everton', 'Manchester City', 'Saturday | 31st March', '5.30pm', 169, 82, 120, 1.12);
 
-const array = [fixture1, fixture2, fixture3, fixture4, fixture5, fixture6, fixture7, fixture8, fixture9];
+const array = [fixture1, fixture2, fixture3, fixture4, fixture5, fixture7, fixture8, fixture9];
 
 const PlaceBets = () => (
   <div>
