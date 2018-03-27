@@ -53,17 +53,19 @@ export function toggleStatsBarFunc(currentState, barId) {
 // ***********************__ACTIONS__*****************************
 // ***********************__REDUCERS__*****************************
 
-interface IStateListOfBettingComponent {
+export type BettingComponentActions = IUpdateBetFixture | IAddBetComponent | IToggleStateBar;
+
+export interface IListOfBettingComponentState {
   fixture: any;
   components: any[];
 }
 
-export const defaultListOfBettingComponent: IStateListOfBettingComponent = {
+export const defaultListOfBettingComponentState: IListOfBettingComponentState = {
   fixture: [],
   components: [],
 };
 
-export const ListOfBettingComponentReducer = (state = defaultListOfBettingComponent, action) => {
+export const ListOfBettingComponentReducer = (state = defaultListOfBettingComponentState, action) => {
   switch (action.type) {
     case updateFixtureList:
       const replace = { fixture: action.payload.componentList, components: [] };
