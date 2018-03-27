@@ -34,7 +34,7 @@
 
 
 
-*Defined in [ethereum/contract-interaction.ts:193](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L193)*
+*Defined in [ethereum/contract-interaction.ts:201](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L201)*
 
 
 
@@ -68,7 +68,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:302](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L302)*
+*Defined in [ethereum/contract-interaction.ts:310](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L310)*
 
 
 
@@ -95,7 +95,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:217](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L217)*
+*Defined in [ethereum/contract-interaction.ts:225](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L225)*
 
 
 
@@ -122,7 +122,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:233](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L233)*
+*Defined in [ethereum/contract-interaction.ts:241](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L241)*
 
 
 
@@ -157,7 +157,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:247](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L247)*
+*Defined in [ethereum/contract-interaction.ts:255](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L255)*
 
 
 
@@ -192,7 +192,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:330](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L330)*
+*Defined in [ethereum/contract-interaction.ts:338](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L338)*
 
 
 
@@ -227,7 +227,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:203](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L203)*
+*Defined in [ethereum/contract-interaction.ts:211](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L211)*
 
 
 
@@ -254,7 +254,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:289](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L289)*
+*Defined in [ethereum/contract-interaction.ts:297](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L297)*
 
 
 
@@ -281,7 +281,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:261](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L261)*
+*Defined in [ethereum/contract-interaction.ts:269](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L269)*
 
 
 
@@ -316,7 +316,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:274](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L274)*
+*Defined in [ethereum/contract-interaction.ts:282](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L282)*
 
 
 
@@ -343,7 +343,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:179](https://github.com/swapnilraj/EBeth-frontend/blob/d9ed455/src/ethereum/contract-interaction.ts#L179)*
+*Defined in [ethereum/contract-interaction.ts:187](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L187)*
 
 
 

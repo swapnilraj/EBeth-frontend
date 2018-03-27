@@ -7,7 +7,7 @@ const managerContractJSON = require('./BetManager.json');
 
 const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
 const managerContract = new web3.eth.Contract(managerContractJSON.abi);
-const managerAddress = '0x4Db7C8bC88742FcCEE254e530aC8588C26093268';
+const managerAddress = '0x8ab07c51028d09d564fb4a55e537c5983373eea1';
 
 managerContract.options.address = managerAddress;
 
@@ -36,6 +36,10 @@ export interface IBetInfo {
   teamTwoScore: number;
   /** Kickoff time of the match. */
   kickOffTime: Date;
+  /** Fid of the match. */
+  fid: string;
+  /** Index of the match in the api. */
+  jsonIndex: string;
 }
 
 export interface IUserBetInfo {
@@ -132,6 +136,8 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
   const winningIndex = await bettingContract.methods.winningIndex().call({ from: account });
   const teamOneScore = await bettingContract.methods.teamOneScore().call({ from: account });
   const teamTwoScore = await bettingContract.methods.teamTwoScore().call({ from: account });
+  const fid = await bettingContract.methods.fid().call({ from: account });
+  const jsonIndex = await bettingContract.methods.jsonIndex().call({ from: account });
 
   const betInfo: IBetInfo = {
     kickOffTime,
@@ -146,6 +152,8 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
     winningIndex,
     teamOneScore,
     teamTwoScore,
+    fid,
+    jsonIndex,
   };
   return betInfo;
 };
