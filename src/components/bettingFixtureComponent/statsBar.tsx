@@ -14,7 +14,7 @@ interface IFixture {
 }
 
 interface IProps {
-  fixture: Fixture;
+  fixture: IFixture;
 }
 
 export class StatsBar extends React.Component<IProps, {}> {

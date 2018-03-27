@@ -22,21 +22,21 @@ interface IFixture {
 interface IProps {
   marginLeft: string;
   fixture: IFixture;
-  status: Status;
+  status: IStatus;
   width: string;
   toggleStatsBar(currentStatus: string, id: number);
-  expandBetMenu(currentState: string, currentFixture: Fixture);
+  expandBetMenu(currentState: string, currentFixture: IFixture);
 }
 
 interface IStatus {
   id: number;
-  fixture: Fixture;
+  fixture: IFixture;
   message: string;
   potValue: number;
   status: string;
 }
 
-export class BettingFixtureComponent extends React.Component<Props, {}> {
+export class BettingFixtureComponent extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
     this.handler = this.handler.bind(this);

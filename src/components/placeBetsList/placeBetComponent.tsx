@@ -28,7 +28,7 @@ interface IProps {
   fixture: IFixture;
   status: IStatus;
   toggleStatsBar(currentState: string, id: number);
-  expandBetMenu(teamname: string, currentFixture: Fixture);
+  expandBetMenu(teamname: string, currentFixture: IFixture);
 }
 
 export class PlaceBetComponent extends React.Component<IProps, {}> {

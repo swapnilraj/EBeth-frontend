@@ -53,7 +53,7 @@ const menuStats = {
 };
 
 interface IProps {
-  menuState: menuStats;
+  menuState: ImenuStats;
 
   display: string;
   fixture: IFixture;

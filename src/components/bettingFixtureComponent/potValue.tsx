@@ -16,7 +16,7 @@ interface IProps {
   fixture: IFixture;
 }
 
-export class PotValue extends React.Component<Props, {}> {
+export class PotValue extends React.Component<IProps, {}> {
   public render() {
     const centerText = style({
       margin: 0,
