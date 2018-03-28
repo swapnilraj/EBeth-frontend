@@ -7,6 +7,17 @@ import { getAvailableBets, getUserAccount, placeBet as ethPlaceBet } from '../et
 import { Actions, IState } from './root';
 
 /**
+ * Action noop
+ */
+interface INoopAction {
+  type: 'NO_OP';
+}
+const NO_OP: INoopAction['type'] = 'NO_OP';
+export const noop = () => ({
+  type: NO_OP,
+});
+
+/**
  * Action to issue a fetch request for all available bets
  */
 interface IFetchAvailableBets {
@@ -79,7 +90,10 @@ export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
 
 export const placeBetEpic: Epic<Actions, IState> = action$ =>
-  action$.ofType(PLACE_BET).do((action: IPlaceBet) => ethPlaceBet(action.betEvent, action.outcomeIndex, action.value));
+  action$
+    .ofType(PLACE_BET)
+    .do((action: IPlaceBet) => ethPlaceBet(action.betEvent, action.outcomeIndex, action.value))
+    .map(noop);
 
 export const fetchUserAccountEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_USER_ACCOUNT).mergeMap(() => fromPromise(getUserAccount()).map(sucessUserAccount));
@@ -89,7 +103,8 @@ export type ContractActions =
   | ISuccessAvailableBets
   | IPlaceBet
   | ISucessUserAccount
-  | IFetchUserAccount;
+  | IFetchUserAccount
+  | INoopAction;
 
 export interface IContractsState {
   availableBets: string[];
