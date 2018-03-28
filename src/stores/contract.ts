@@ -70,7 +70,7 @@ interface IFetchUserAccount {
 }
 export const FETCH_USER_ACCOUNT: IFetchUserAccount['type'] = 'FETCH_USER_ACCOUNT';
 export const fetchUserAccount = () => ({
-  type: FETCH_AVAILABLE_BETS,
+  type: FETCH_USER_ACCOUNT,
 });
 
 /**

@@ -11,7 +11,7 @@ import { IState } from '../stores/root';
 
 import RoundImg from '../components/RoundImg';
 
-const mapState = (state: IState) => state.contract.userAccount;
+const mapState = (state: IState) => state.contract;
 
 const mapDispatch = (dispatch: Dispatch<IState>) =>
   bindActionCreators(
