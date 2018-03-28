@@ -7,7 +7,7 @@ const managerContractJSON = require('./BetManager.json');
 
 const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
 const managerContract = new web3.eth.Contract(managerContractJSON.abi);
-const managerAddress = '0x8ab07c51028d09d564fb4a55e537c5983373eea1';
+const managerAddress = '0x19ab6a9e79288f22e3a8536684991f0c2656d3fe';
 
 managerContract.options.address = managerAddress;
 
@@ -27,10 +27,10 @@ export interface IBetInfo {
   /** Overall total pool, sum of all other pools. */
   totalPool: number;
   /** Current state of the Betting Event.
-   * 0: Accpeting Bets
+   * 0: Accepting Bets
    * 1: Match started, no longer accepting bets
    * 2: Match ended
-   * 3: Match ended, final results fetched
+   * 3: Match ended, final results fetched.
    */
   state: number;
   /** Index of the outcome that won. */
@@ -94,7 +94,7 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
   const placedBets: string[] = [];
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
-    const betIndex = await bettingContract.methods.betttingIndices(account).call({ from: account });
+    const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
     if (betIndex !== '0') {
       placedBets.push(betEvent);
     }
@@ -175,8 +175,8 @@ const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUser
   const info = await bettingContract.methods.bets(betIndex).call({ from: account });
   const userBetInfo: IUserBetInfo = {
     amount: info.amount,
-    paid: info.paid,
-    outcomeIndex: info.outcomeIndex,
+    paid: web3.utils.fromWei('' + info.paid + '', 'ether'),
+    outcomeIndex: web3.utils.fromWei('' + info.outcomeIndex + '', 'ether'),
     winnings: info.winnings,
     address: betEvent,
   };
@@ -188,25 +188,37 @@ const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUser
  * @param betEvent Address of the Betting contract.
  * @param outcomeIndex Index of the outcome that the user is betting on.
  * @param value Amount of Ether the user is betting.
+ * @returns Boolean indicating if the method was successful.
  */
-export const placeBet = async (betEvent: string, outcomeIndex: number, value: string) => {
-  bettingContract.options.address = betEvent;
-  const accounts = await web3.eth.getAccounts();
-  bettingContract.methods.placeBet(outcomeIndex).send({
-    from: accounts[0],
-    value: web3.utils.toWei(value, 'ether'),
-  });
+export const placeBet = async (betEvent: string, outcomeIndex: number, value: string): Promise<boolean> => {
+  try {
+    bettingContract.options.address = betEvent;
+    const accounts = await web3.eth.getAccounts();
+    await bettingContract.methods.placeBet(outcomeIndex).send({
+      from: accounts[0],
+      value: web3.utils.toWei(value, 'ether'),
+    });
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 /**
  * Allows a user to change a bet that they have placed.
  * @param betEvent Address of the Betting contract.
  * @param outcomeIndex Index of the outcome that the user is changing their bet to.
+ * @returns Boolean indicating if the method was successful.
  */
-export const changeBet = async (betEvent: string, outcomeIndex: number) => {
-  bettingContract.options.address = betEvent;
-  const accounts = await web3.eth.getAccounts();
-  bettingContract.methods.changeBet(outcomeIndex).send({ from: accounts[0] });
+export const changeBet = async (betEvent: string, outcomeIndex: number): Promise<boolean> => {
+  try {
+    bettingContract.options.address = betEvent;
+    const accounts = await web3.eth.getAccounts();
+    bettingContract.methods.changeBet(outcomeIndex).send({ from: accounts[0] });
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 /**
