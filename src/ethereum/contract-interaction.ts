@@ -26,7 +26,12 @@ export interface IBetInfo {
   poolThree: number;
   /** Overall total pool, sum of all other pools. */
   totalPool: number;
-  /** Current state of the Betting Event. */
+  /** Current state of the Betting Event.
+   * 0: Accpeting Bets
+   * 1: Match started, no longer accepting bets
+   * 2: Match ended
+   * 3: Match ended, final results fetched
+   */
   state: number;
   /** Index of the outcome that won. */
   winningIndex: number;
