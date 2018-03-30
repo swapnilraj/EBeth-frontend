@@ -12,6 +12,8 @@ import {
   ListOfBettingComponentReducer,
 } from '../reducers/listOfBettingComponentsReducer';
 
+import { IListOfResultsComponentState, ResultComponentActions, ResultsReducer } from '../reducers/resultsReducer';
+
 import {
   contract,
   ContractActions,
@@ -24,7 +26,12 @@ import { ISidebarState, sidebar, SidebarActions } from './sidebar';
 /**
  * Combined application actions interface
  */
-export type Actions = SidebarActions | ContractActions | BetMenuActions | BettingComponentActions;
+export type Actions =
+  | SidebarActions
+  | ContractActions
+  | BetMenuActions
+  | BettingComponentActions
+  | ResultComponentActions;
 
 /**
  * Combined application state interface
@@ -34,6 +41,7 @@ export interface IState {
   sidebar: ISidebarState;
   contract: IContractsState;
   betMenu: IBetMenuState;
+  resultState: IListOfResultsComponentState;
 }
 
 const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic, placeBetEpic, fetchUserAccountEpic].filter(
@@ -47,4 +55,5 @@ export const rootReducer = combineReducers<IState>({
   contract,
   betMenuReducer,
   ListOfBettingComponentReducer,
+  ResultsReducer,
 });

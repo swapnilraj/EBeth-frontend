@@ -4,6 +4,7 @@ import { style } from 'typestyle';
 import { types } from 'typestyle';
 import { PlaceBetMenu } from '../components/placeBetMenu/placeBetMenu';
 import { ListOfBettingComponents } from '../components/placeBetsList/listOfBettingComponents';
+import { getBetInfo, /*getUserBetInfo , */ IBetInfo } from '../ethereum/contract-interaction';
 import {
   onSelectTeam,
   onToggleBetMenuDisplay,
@@ -16,7 +17,9 @@ import {
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
 import { fetchAvailableBets } from '../stores/contract';
-
+// import {formatDate , IFormatDate} from '../utils/formatDates'
+import { numToMonth, numToWeekDay } from '../utils/formatDates';
+import { renderIf } from '../utils/render-if-else';
 export interface IFixture {
   homeTeamName: string;
   awayTeamName: string;
@@ -61,6 +64,8 @@ interface IProps {
   menu: IMenu;
   betComponent: IBetComponent;
   betComponentStatus: IComponent[];
+  availableBets: string[];
+  fetchAvailableBets();
   onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
   onStatsBarToggle(currentState: string, id: number);
@@ -87,8 +92,54 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     this.updateInputValue = this.updateInputValue.bind(this);
   }
 
-  public componentDidMount() {
-    fetchAvailableBets();
+  public componentWillMount() {
+    if (this.props.availableBets.length === 0) {
+      fetchAvailableBets();
+    }
+  }
+
+  public async componentWillReceiveProps(nextProps) {
+    // tslint:disable-next-line:no-console
+    if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
+      const promises = nextProps.availableBets.map(await getBetInfo);
+      const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
+
+      const fixtureArray: IFixture[] = [];
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < APIfixtures.length; i++) {
+        const tempFixture = {
+          homeTeamName: '',
+          awayTeamName: '',
+          date: '',
+          time: '',
+          homeBets: 0,
+          awayBets: 0,
+          drawBets: 0,
+          potValue: 0,
+        };
+        const APIDate: Date = APIfixtures[i].kickOffTime;
+        tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
+        tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
+        tempFixture.homeBets = APIfixtures[i].poolOne;
+        tempFixture.awayBets = APIfixtures[i].poolTwo;
+        tempFixture.drawBets = APIfixtures[i].poolThree;
+        tempFixture.potValue = APIfixtures[i].totalPool;
+        tempFixture.date =
+          numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
+        const time = APIDate.getHours();
+        let formattedTime;
+        if (time > 12) {
+          formattedTime = (time % 12).toString() + ' pm';
+        } else {
+          formattedTime = time.toString() + ' am';
+        }
+        tempFixture.time = formattedTime;
+        fixtureArray.push(tempFixture);
+      }
+      if (nextProps.betComponent.fixture[0] !== fixtureArray[0]) {
+        this.updateComponentsInList(fixtureArray);
+      }
+    }
   }
 
   public updateComponentsInList(array: IFixture[]) {
@@ -119,12 +170,6 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
 
   public updateInputValue(newInput: string) {
     this.props.onUpdateBetValueInput(newInput);
-  }
-
-  public componentWillReceiveProps(nextProps) {
-    if (nextProps.fixtureList) {
-      this.updateComponentsInList(this.props.fixtureList);
-    }
   }
 
   public render() {
@@ -174,11 +219,8 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         width: '100%',
       });
 
-    if (this.props.fixtureList) {
-      this.updateComponentsInList(this.props.fixtureList);
-    }
-
-    return (
+    return renderIf(
+      this.props.availableBets.length > 0,
       <div className={placeBetsWrapper()}>
         <div>
           <div className={header()} onClick={() => this.toggleValidUserInput()}>
@@ -204,7 +246,8 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             updateInputValue={this.updateInputValue}
           />
         </div>
-      </div>
+      </div>,
+      <h1>loading...</h1>,
     );
   }
 }
@@ -217,6 +260,7 @@ const mapDispatchToProps = {
   onSelectTeam,
   onToggleValidInput,
   onUpdateBetValueInput,
+  fetchAvailableBets,
 };
 
 const mapStateToProps = state => {

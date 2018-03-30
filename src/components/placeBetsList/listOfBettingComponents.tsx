@@ -91,15 +91,6 @@ export class ListOfBettingComponents extends React.Component<IProps, {}> {
 
   public componentWillReceiveProps(nextProps) {
     if (nextProps.fixtures && nextProps.fixtures[0] !== this.props.fixtures[0]) {
-      // var newIFixtures = nextProps.fixtures;
-      // 	for(var i = nextProps.fixtures-1;i>0;i--)
-      // 	{
-      // 		if(nextProps.fixtures[i].date == newIFixtures[i-1].date )
-      // 		{
-      // 			newIFixtures[i].date = "";
-      // 		}
-      // 	}
-
       if (nextProps.fixtures) {
         for (let i = 0; i < nextProps.fixtures.length; i++) {
           const newComponent = {

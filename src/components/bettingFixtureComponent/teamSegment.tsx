@@ -1,15 +1,50 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 
+export interface IResult {
+  homeTeamName: string;
+  awayTeamName: string;
+  winningTeamStatus: string; // should be Home Away Draw
+  date: string;
+  score: string;
+  resultForUser: string;
+  amountWon: number;
+  potValue: number;
+  homeTeamBets: number;
+  awayTeamBets: number;
+  drawBets: number;
+  yourBetValue: number;
+}
+
 interface IProps {
   crest: string;
   teamName: string;
   status: string;
+  screen: string;
+  result: IResult;
   team: string; // specifies whether team is home or away
 }
 
 export class TeamSegment extends React.Component<IProps, {}> {
   public render() {
+    const loadScreenSpecificComponents = () => {
+      if (this.props.screen === 'PLACE_BETS') {
+        return (
+          <div className={textWrapper()}>
+            <div className={centerText()}>{this.props.teamName}</div>
+            <div className={homeOrAwayText()}>{this.props.team}</div>
+          </div>
+        );
+      } else if (this.props.screen === 'RESULTS') {
+        return (
+          <div className={textWrapper()}>
+            <div className={centerText()}>{this.props.teamName}</div>
+            <div className={homeOrAwayText()}>{this.props.team}</div>
+          </div>
+        );
+      }
+    };
+
     const teamWrapper = style({
       height: '100%',
       width: '30%',
@@ -122,15 +157,14 @@ export class TeamSegment extends React.Component<IProps, {}> {
         position: 'relative',
       });
 
+    const dynamicComponents = loadScreenSpecificComponents();
+
     return (
       <div className={teamWrapper}>
         <div className={crestWrapper()}>
           <img alt="Crest" className={crestStyle} src={this.props.crest} />
         </div>
-        <div className={textWrapper()}>
-          <div className={centerText()}>{this.props.teamName}</div>
-          <div className={homeOrAwayText()}>{this.props.team}</div>
-        </div>
+        {dynamicComponents}
       </div>
     );
   }

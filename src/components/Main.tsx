@@ -9,6 +9,7 @@ import { style } from 'typestyle';
 
 import { Dimens } from '../utils/constants';
 import PlaceBets from './PlaceBets';
+import Results from './Results';
 
 import About from './About';
 
@@ -30,6 +31,7 @@ const Main = () => (
     <Switch>
       <Route exact path="/about" component={About} />
       <Route exact path="/place_bets" component={PlaceBets} />
+      <Route exact path="/results" component={Results} />
       <Route component={NoMatch} />
     </Switch>
   </div>

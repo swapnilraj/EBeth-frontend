@@ -1,49 +1,33 @@
 import * as React from 'react';
-import { style } from 'typestyle';
 import { types } from 'typestyle';
+import { style } from 'typestyle';
 import * as crests from '../../Crests.json';
-import { BetButtonSegment } from './betButtonSegment';
-import { PotValue } from './potValue';
-import { StatsBar } from './statsBar';
-import { TeamSegment } from './teamSegment';
-import { TimeSegment } from './timeSegment';
-
-interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
+import { BetButtonSegment } from '../bettingFixtureComponent/betButtonSegment';
+import { PotValue } from '../bettingFixtureComponent/potValue';
+import { StatsBar } from '../bettingFixtureComponent/statsBar';
+import { TeamSegment } from '../bettingFixtureComponent/teamSegment';
+import { TimeSegment } from '../bettingFixtureComponent/timeSegment';
+import { IFixture } from '../PlaceBets';
+import { IResult, IResultComponent } from '../Results';
 
 interface IProps {
   marginLeft: string;
   fixture: IFixture;
-  status: IStatus;
+  status: IResultComponent;
   width: string;
-  toggleStatsBar(currentStatus: string, id: number);
+  result: IResult;
+  toggleStatsBar(id: number);
   expandBetMenu(currentState: string, currentFixture: IFixture);
 }
 
-interface IStatus {
-  id: number;
-  fixture: IFixture;
-  message: string;
-  potValue: number;
-  status: string;
-}
-
-export class BettingFixtureComponent extends React.Component<IProps, {}> {
+export class ResultComponent extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
     this.handler = this.handler.bind(this);
   }
 
   public handler() {
-    this.props.toggleStatsBar(this.props.status.status, this.props.status.id);
+    this.props.toggleStatsBar(this.props.status.id);
   }
 
   public render() {
@@ -111,48 +95,33 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
       position: 'relative',
     });
 
-    const defaultResult = {
-      homeTeamName: '',
-      awayTeamName: '',
-      winningTeamStatus: '',
-      date: '',
-      score: '',
-      resultForUser: '',
-      amountWon: 0,
-      potValue: 0,
-      homeTeamBets: 0,
-      awayTeamBets: 0,
-      drawBets: 0,
-      yourBetValue: 0,
-    };
-
     return (
       <div>
         <div className={bettingFixtureComponent()}>
           <TeamSegment
-            teamName={this.props.fixture.homeTeamName}
-            crest={'./images' + crests[this.props.fixture.homeTeamName]}
+            teamName={this.props.result.homeTeamName}
+            crest={'./images' + crests[this.props.result.homeTeamName]}
             team="Home"
             status={this.props.status.status}
-            screen="PLACE_BETS"
-            result={defaultResult}
+            screen="RESULTS"
+            result={this.props.result}
           />
-          <TimeSegment startTime={this.props.fixture.time} screen="PLACE_BETS" result={defaultResult} />
+          <TimeSegment startTime={this.props.fixture.time} screen="RESULTS" result={this.props.result} />
           <TeamSegment
-            teamName={this.props.fixture.awayTeamName}
-            crest={'./images' + crests[this.props.fixture.awayTeamName]}
+            teamName={this.props.result.awayTeamName}
+            crest={'./images' + crests[this.props.result.awayTeamName]}
             team="Away"
             status={this.props.status.status}
-            screen="PLACE_BETS"
-            result={defaultResult}
+            screen="RESULTS"
+            result={this.props.result}
           />
           <BetButtonSegment
             message={this.props.status.message}
             showMore={this.handler}
             fixture={this.props.fixture}
             expandBetMenu={this.props.expandBetMenu}
-            screen="PLACE_BETS"
-            result={defaultResult}
+            screen="RESULTS"
+            result={this.props.result}
           />
         </div>
         <div className={stats()}>
