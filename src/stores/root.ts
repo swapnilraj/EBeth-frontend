@@ -18,6 +18,7 @@ import {
   contract,
   ContractActions,
   fetchAvailableEpic,
+  fetchPlacedBetsEpic,
   fetchUserAccountEpic,
   IContractsState,
   placeBetEpic,
@@ -44,9 +45,12 @@ export interface IState {
   resultState: IListOfResultsComponentState;
 }
 
-const epics: Array<Epic<Actions, IState, any>> = [fetchAvailableEpic, placeBetEpic, fetchUserAccountEpic].filter(
-  epic => epic !== null,
-) as Array<Epic<Actions, IState, any>>;
+const epics: Array<Epic<Actions, IState, any>> = [
+  fetchAvailableEpic,
+  placeBetEpic,
+  fetchUserAccountEpic,
+  fetchPlacedBetsEpic,
+].filter(epic => epic !== null) as Array<Epic<Actions, IState, any>>;
 
 export const rootEpic = combineEpics<Actions, IState>(...epics);
 

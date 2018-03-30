@@ -3,7 +3,12 @@
  */
 import { Epic } from 'redux-observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { getAvailableBets, getUserAccount, placeBet as ethPlaceBet } from '../ethereum/contract-interaction';
+import {
+  getAvailableBets,
+  getPlacedBets,
+  getUserAccount,
+  placeBet as ethPlaceBet,
+} from '../ethereum/contract-interaction';
 import { Actions, IState } from './root';
 
 /**
@@ -86,6 +91,32 @@ export const sucessUserAccount = (userAccount: ISucessUserAccount['userAccount']
   userAccount,
 });
 
+/**
+ * Fetch action for placed bets by a user
+ */
+interface IFetchPlacedBets {
+  type: 'FETCH_PLACED_BETS';
+  userAccount: string;
+}
+export const FETCH_PLACED_BETS: IFetchPlacedBets['type'] = 'FETCH_PLACED_BETS';
+export const fetchPlacedBets = (userAccount: IFetchPlacedBets['userAccount']): IFetchPlacedBets => ({
+  type: FETCH_PLACED_BETS,
+  userAccount,
+});
+
+/**
+ * Sucess action for placedBets
+ */
+interface ISucessPlacedBets {
+  type: 'SUCESS_PLACED_BETS';
+  placedBets: string[];
+}
+export const SUCESS_PLACED_BETS: ISucessPlacedBets['type'] = 'SUCESS_PLACED_BETS';
+export const sucessPlacedBets = (placedBets: ISucessPlacedBets['placedBets']) => ({
+  type: SUCESS_PLACED_BETS,
+  placedBets,
+});
+
 export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
 
@@ -98,12 +129,17 @@ export const placeBetEpic: Epic<Actions, IState> = action$ =>
 export const fetchUserAccountEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_USER_ACCOUNT).mergeMap(() => fromPromise(getUserAccount()).map(sucessUserAccount));
 
+export const fetchPlacedBetsEpic: Epic<Actions, IState> = action$ =>
+  action$.ofType(FETCH_PLACED_BETS).mergeMap(() => fromPromise(getPlacedBets()).map(sucessPlacedBets));
+
 export type ContractActions =
   | IFetchAvailableBets
   | ISuccessAvailableBets
   | IPlaceBet
   | ISucessUserAccount
   | IFetchUserAccount
+  | IFetchPlacedBets
+  | ISucessPlacedBets
   | INoopAction;
 
 export interface IContractsState {
@@ -126,6 +162,8 @@ export const contract = (state: IContractsState = defaultContractsState, action:
       return { ...state, placedBets: state.placedBets.concat(action.betEvent) };
     case SUCESS_USER_ACCOUNT:
       return { ...state, userAccount: action.userAccount };
+    case SUCESS_PLACED_BETS:
+      return { ...state, placedBets: state.placedBets.concat(action.placedBets) };
     default:
       return state;
   }
