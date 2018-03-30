@@ -114,7 +114,7 @@ const sampleResult4 = {
 
 const array = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
 
-export type ResultComponentActions = IAddResultsComponentToState | IToggleStatsBar;
+export type ResultComponentActions = IUpdateBetFixture | IAddResultsComponentToState | IToggleStatsBar;
 
 export interface IListOfResultsComponentState {
   results: IResult[];
@@ -130,14 +130,7 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
   let replace;
   switch (action.type) {
     case addResultsComponentToState:
-      replace = Object.assign({}, state);
-      if (action.payload.componentList.id === 0) {
-        for (let i = 0; i < replace.components.length; i++) {
-          replace.components[i] = null;
-        }
-      }
-      replace.components.push(action.payload.componentList);
-      return Object.assign({}, state, replace);
+      return { ...state, components: state.components.concat(action.payload.componentList) };
 
     case onToggleStatsBar:
       replace = Object.assign({}, state);
