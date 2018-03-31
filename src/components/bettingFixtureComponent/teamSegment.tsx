@@ -8,6 +8,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string;
+  teamOfUser: string; //Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;
@@ -39,6 +40,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
         return (
           <div className={textWrapper()}>
             <div className={centerText()}>{this.props.teamName}</div>
+            <div className={myBetBox}>your bet: {this.props.result.yourBetValue} ETH</div> 
             <div className={homeOrAwayText()}>{this.props.team}</div>
           </div>
         );
@@ -63,26 +65,13 @@ export class TeamSegment extends React.Component<IProps, {}> {
       textAlign: 'center',
     });
 
-    const dynamicCenterText = {
-      Home: {
-        position: 'absolute',
-        top: '50%',
-        left: '5%',
-        marginRight: '-50%',
-        transform: 'translate(0%, -50%)',
-      },
-      Away: {
-        margin: 0,
-        position: 'absolute',
-        top: '50%',
-        right: '5%',
-        marginRight: '0%',
-        transform: 'translate(0%, -50%)',
-      },
-      none: {},
-    };
+    const displayBet = (this.props.team == this.props.result.teamOfUser)? 'true':'false';
 
-    const centerText = () => style(dynamicCenterText[this.props.team]);
+    const centerText = () => {
+      if(displayBet == 'true'){
+        return style({fontWeight: 'bold' as 'bold'});
+      }
+    }
 
     const homeOrAway = {
       Home: {
@@ -100,7 +89,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
     };
     const expandedOrContracted = {
       expanded: {
-        display: 'inherit',
+        display: 'inline',
       },
       contracted: {
         display: 'none',
@@ -113,27 +102,72 @@ export class TeamSegment extends React.Component<IProps, {}> {
     const dynamicHomeAwayText = {
       Home: {
         color: 'rgb(140, 140, 140)',
-        position: 'absolute',
-        top: '75%',
-        left: '5%',
-        marginRight: '-50%',
-        transform: 'translate(0%, -50%)',
+        // position: 'absolute',
+        // top: '75%',
+        // left: '5%',
+        // marginRight: '-50%',
+        // transform: 'translate(0%, -50%)',
         fontSize: '.8em',
+        marginTop: '3%',
       },
       Away: {
         color: 'rgb(140, 140, 140)',
-        margin: 0,
-        position: 'absolute',
-        top: '75%',
-        right: '5%',
-        marginRight: '0%',
-        transform: 'translate(0%, -50%)',
+        // margin: 0,
+        // position: 'absolute',
+        // top: '75%',
+        // right: '5%',
+        // marginRight: '0%',
+        // transform: 'translate(0%, -50%)',
         fontSize: '.8em',
+        marginTop: '3%',
       },
       none: {},
     };
 
-    const homeOrAwayText = () => style(dynamicHomeAwayText[this.props.team], expandedOrContracted[this.props.status]);
+    const homeOrAwayText = () => style(
+      dynamicHomeAwayText[this.props.team], 
+      expandedOrContracted[this.props.status]
+    );
+
+    const dynamicMyBetBoxColor = {
+      win: {
+        backgroundColor: '#00c000'
+      },
+      lose: {
+        backgroundColor: '#ff0000'
+      },
+      pending: {
+        backgroundColor: '#fb6235'
+      },
+    };
+
+    const myBetBoxStyle = {
+      Default:{
+        padding: '0.25em',
+        paddingRight: '0.4em',
+        paddingLeft: '0.4em',
+        color: 'white',
+        fontSize: '.6em',
+        letterSpacing: '0.08em',
+        fontWeight: 'bold' as 'bold',
+        marginTop: '3%',
+      },
+      Away: {
+        marginLeft: 'auto'
+      },
+      Home: {}
+    };
+    const dynamicUserBetDisplay = {
+      false: {display: 'none' as 'none'},  
+      true: {display: 'inline-table' as 'inline-table'}
+    };
+
+    const myBetBox = style(
+      dynamicUserBetDisplay[displayBet],       
+      myBetBoxStyle.Default,
+      myBetBoxStyle[this.props.team],
+      dynamicMyBetBoxColor[this.props.result.resultForUser],
+      );
 
     const crestWrapper = () =>
       style({
@@ -152,9 +186,12 @@ export class TeamSegment extends React.Component<IProps, {}> {
       style({
         height: '100%',
         float: homeOrAway[this.props.team].float,
-        width: '60%',
-        marginLeft: '2%',
-        position: 'relative',
+        textAlign: homeOrAway[this.props.team].float,
+        marginLeft: '5%',
+        marginRight: '5%',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
       });
 
     const dynamicComponents = loadScreenSpecificComponents();
@@ -169,3 +206,4 @@ export class TeamSegment extends React.Component<IProps, {}> {
     );
   }
 }
+

@@ -118,6 +118,7 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
       date: '',
       score: '',
       resultForUser: '',
+      teamOfUser: '',
       amountWon: 0,
       potValue: 0,
       homeTeamBets: 0,

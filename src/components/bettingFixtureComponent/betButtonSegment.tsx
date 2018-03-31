@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { style } from 'typestyle';
-import * as assets from '../../assets.json';
+import * as assets from '../../Assets.json';
 
 interface IFixture {
   homeTeamName: string;
@@ -19,7 +19,8 @@ export interface IResult {
   winningTeamStatus: string; // should be Home Away Draw
   date: string;
   score: string;
-  resultForUser: string;
+  resultForUser: string; // win lose
+  teamOfUser: string; //Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;

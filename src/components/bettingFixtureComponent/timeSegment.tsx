@@ -8,6 +8,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string;
+  teamOfUser: string; //Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;

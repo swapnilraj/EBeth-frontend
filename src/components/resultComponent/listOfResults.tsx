@@ -32,6 +32,7 @@ export const defaultResult = {
   date: '',
   score: '',
   resultForUser: '',
+  teamOfUser: '', 
   amountWon: 0,
   potValue: 0,
   homeTeamBets: 0,
