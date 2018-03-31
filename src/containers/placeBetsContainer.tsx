@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { style } from 'typestyle';
-import { types } from 'typestyle';
+import { bindActionCreators, Dispatch } from 'redux';
+import { style, types } from 'typestyle';
 import { PlaceBetMenu } from '../components/placeBetMenu/placeBetMenu';
 import { ListOfBettingComponents } from '../components/placeBetsList/listOfBettingComponents';
 import { getBetInfo, /*getUserBetInfo , */ IBetInfo } from '../ethereum/contract-interaction';
@@ -17,6 +17,7 @@ import {
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
 import { fetchAvailableBets } from '../stores/contract';
+import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
@@ -251,18 +252,22 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
   }
 }
 
-const mapDispatchToProps = {
-  onUpdateList: updateBetFixtureList,
-  onNewBetComponentMade: addBetComponentToState,
-  onStatsBarToggle: toggleStatsBarFunc,
-  onToggleBetMenuDisplay,
-  onSelectTeam,
-  onToggleValidInput,
-  onUpdateBetValueInput,
-  fetchAvailableBets,
-};
+const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
+  bindActionCreators(
+    {
+      onUpdateList: updateBetFixtureList,
+      onNewBetComponentMade: addBetComponentToState,
+      onStatsBarToggle: toggleStatsBarFunc,
+      onToggleBetMenuDisplay,
+      onSelectTeam,
+      onToggleValidInput,
+      onUpdateBetValueInput,
+      fetchAvailableBets,
+    },
+    dispatch,
+  );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IState) => {
   return {
     betComponent: state.ListOfBettingComponentReducer,
     betComponentStatus: state.ListOfBettingComponentReducer.components,
