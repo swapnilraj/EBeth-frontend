@@ -128,20 +128,33 @@ const _getAvailableBets = async (account: string, betEvents: string[]): Promise<
  */
 const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo> => {
   bettingContract.options.address = betEvent;
+  const outcomeOne = await bettingContract.methods.outcomeOne().call({ from: account });
+  bettingContract.options.address = betEvent;
   const kickOff = await bettingContract.methods.kickOffTime().call({ from: account });
   const kickOffTime = new Date(parseInt(kickOff, 10));
-  const outcomeOne = await bettingContract.methods.outcomeOne().call({ from: account });
+  bettingContract.options.address = betEvent;
   const outcomeTwo = await bettingContract.methods.outcomeTwo().call({ from: account });
+  bettingContract.options.address = betEvent;
   const outcomeThree = await bettingContract.methods.outcomeThree().call({ from: account });
+  bettingContract.options.address = betEvent;
   const poolOne = await bettingContract.methods.totalPools(0).call({ from: account });
+  bettingContract.options.address = betEvent;
   const poolTwo = await bettingContract.methods.totalPools(1).call({ from: account });
+  bettingContract.options.address = betEvent;
   const poolThree = await bettingContract.methods.totalPools(2).call({ from: account });
+  bettingContract.options.address = betEvent;
   const totalPool = await bettingContract.methods.totalPools(3).call({ from: account });
+  bettingContract.options.address = betEvent;
   const state = await bettingContract.methods.state().call({ from: account });
+  bettingContract.options.address = betEvent;
   const winningIndex = await bettingContract.methods.winningIndex().call({ from: account });
+  bettingContract.options.address = betEvent;
   const teamOneScore = await bettingContract.methods.teamOneScore().call({ from: account });
+  bettingContract.options.address = betEvent;
   const teamTwoScore = await bettingContract.methods.teamTwoScore().call({ from: account });
+  bettingContract.options.address = betEvent;
   const fid = await bettingContract.methods.fid().call({ from: account });
+  bettingContract.options.address = betEvent;
   const jsonIndex = await bettingContract.methods.jsonIndex().call({ from: account });
 
   const betInfo: IBetInfo = {
