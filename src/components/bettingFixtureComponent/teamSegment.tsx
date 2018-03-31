@@ -8,7 +8,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string;
-  teamOfUser: string; //Home|Away|Draw
+  teamOfUser: string; // Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;
@@ -40,7 +40,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
         return (
           <div className={textWrapper()}>
             <div className={centerText()}>{this.props.teamName}</div>
-            <div className={myBetBox}>your bet: {this.props.result.yourBetValue} ETH</div> 
+            <div className={myBetBox}>your bet: {this.props.result.yourBetValue} ETH</div>
             <div className={homeOrAwayText()}>{this.props.team}</div>
           </div>
         );
@@ -65,13 +65,14 @@ export class TeamSegment extends React.Component<IProps, {}> {
       textAlign: 'center',
     });
 
-    const displayBet = (this.props.team == this.props.result.teamOfUser)? 'true':'false';
+    const displayUserBet = this.props.team === this.props.result.teamOfUser ? 'true' : 'false';
 
     const centerText = () => {
-      if(displayBet == 'true'){
-        return style({fontWeight: 'bold' as 'bold'});
+      if (displayUserBet === 'true') {
+        // bold teamText if user betted on it
+        return style({ fontWeight: 'bold' as 'bold' });
       }
-    }
+    };
 
     const homeOrAway = {
       Home: {
@@ -102,47 +103,33 @@ export class TeamSegment extends React.Component<IProps, {}> {
     const dynamicHomeAwayText = {
       Home: {
         color: 'rgb(140, 140, 140)',
-        // position: 'absolute',
-        // top: '75%',
-        // left: '5%',
-        // marginRight: '-50%',
-        // transform: 'translate(0%, -50%)',
         fontSize: '.8em',
         marginTop: '3%',
       },
       Away: {
         color: 'rgb(140, 140, 140)',
-        // margin: 0,
-        // position: 'absolute',
-        // top: '75%',
-        // right: '5%',
-        // marginRight: '0%',
-        // transform: 'translate(0%, -50%)',
         fontSize: '.8em',
         marginTop: '3%',
       },
       none: {},
     };
 
-    const homeOrAwayText = () => style(
-      dynamicHomeAwayText[this.props.team], 
-      expandedOrContracted[this.props.status]
-    );
+    const homeOrAwayText = () => style(dynamicHomeAwayText[this.props.team], expandedOrContracted[this.props.status]);
 
     const dynamicMyBetBoxColor = {
       win: {
-        backgroundColor: '#00c000'
+        backgroundColor: '#00c000',
       },
       lose: {
-        backgroundColor: '#ff0000'
+        backgroundColor: '#ff0000',
       },
       pending: {
-        backgroundColor: '#fb6235'
+        backgroundColor: '#fb6235',
       },
     };
 
     const myBetBoxStyle = {
-      Default:{
+      Default: {
         padding: '0.25em',
         paddingRight: '0.4em',
         paddingLeft: '0.4em',
@@ -153,21 +140,21 @@ export class TeamSegment extends React.Component<IProps, {}> {
         marginTop: '3%',
       },
       Away: {
-        marginLeft: 'auto'
+        marginLeft: 'auto',
       },
-      Home: {}
+      Home: {},
     };
     const dynamicUserBetDisplay = {
-      false: {display: 'none' as 'none'},  
-      true: {display: 'inline-table' as 'inline-table'}
+      false: { display: 'none' as 'none' },
+      true: { display: 'inline-table' as 'inline-table' },
     };
 
     const myBetBox = style(
-      dynamicUserBetDisplay[displayBet],       
+      dynamicUserBetDisplay[displayUserBet],
       myBetBoxStyle.Default,
       myBetBoxStyle[this.props.team],
       dynamicMyBetBoxColor[this.props.result.resultForUser],
-      );
+    );
 
     const crestWrapper = () =>
       style({
@@ -206,4 +193,3 @@ export class TeamSegment extends React.Component<IProps, {}> {
     );
   }
 }
-
