@@ -5,7 +5,6 @@ const web3 = new Web3(Web3.givenProvider);
 const bettingContractJSON = require('./Betting.json');
 const managerContractJSON = require('./BetManager.json');
 
-const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
 const managerContract = new web3.eth.Contract(managerContractJSON.abi);
 const managerAddress = '0x19ab6a9e79288f22e3a8536684991f0c2656d3fe';
 
@@ -92,6 +91,7 @@ const _getAllBets = async (account: string): Promise<string[]> => {
  */
 const _getPlacedBets = async (account: string, betEvents: string[]): Promise<string[]> => {
   const placedBets: string[] = [];
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
     const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
@@ -110,6 +110,7 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
  */
 const _getAvailableBets = async (account: string, betEvents: string[]): Promise<string[]> => {
   const availableBets: string[] = [];
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
     const state = await bettingContract.methods.state().call({ from: account });
@@ -127,6 +128,7 @@ const _getAvailableBets = async (account: string, betEvents: string[]): Promise<
  * @returns Information about a bet event.
  */
 const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo> => {
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   bettingContract.options.address = betEvent;
   const kickOff = await bettingContract.methods.kickOffTime().call({ from: account });
   const kickOffTime = new Date(parseInt(kickOff, 10));
@@ -170,6 +172,7 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
  * @returns Information about a bet a user placed.
  */
 const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUserBetInfo> => {
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   bettingContract.options.address = betEvent;
   const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
   const info = await bettingContract.methods.bets(betIndex).call({ from: account });
@@ -192,6 +195,7 @@ const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUser
  */
 export const placeBet = async (betEvent: string, outcomeIndex: number, value: string): Promise<boolean> => {
   try {
+    const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
     bettingContract.options.address = betEvent;
     const accounts = await web3.eth.getAccounts();
     await bettingContract.methods.placeBet(outcomeIndex).send({
@@ -212,6 +216,7 @@ export const placeBet = async (betEvent: string, outcomeIndex: number, value: st
  */
 export const changeBet = async (betEvent: string, outcomeIndex: number): Promise<boolean> => {
   try {
+    const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
     bettingContract.options.address = betEvent;
     const accounts = await web3.eth.getAccounts();
     bettingContract.methods.changeBet(outcomeIndex).send({ from: accounts[0] });
@@ -355,6 +360,7 @@ export const getAllClubs = (): string[] => [
 export const getGamesByClub = async (club: string): Promise<string[]> => {
   const gamesByClub: string[] = [];
   try {
+    const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
     for (const betEvent of bets) {
