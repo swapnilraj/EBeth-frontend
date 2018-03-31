@@ -163,6 +163,10 @@ class ResultsComponent extends React.Component<IProps, {}> {
       position: 'relative',
     });
 
+    // tslint:disable-next-line:no-console
+    console.log('THE DADDY');
+    // tslint:disable-next-line:no-console
+    console.log(this.props);
     return (
       <div>
         <div className={header}>

@@ -17,6 +17,13 @@ interface IProps {
 }
 
 export class ResultWithDate extends React.Component<IProps, {}> {
+  public componentWillMount() {
+    // tslint:disable-next-line:no-console
+    console.log('James Blunt');
+    // tslint:disable-next-line:no-console
+    console.log(this.props);
+  }
+
   public render() {
     const dynamicMargin = {
       true: {

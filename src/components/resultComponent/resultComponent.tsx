@@ -116,7 +116,7 @@ export class ResultComponent extends React.Component<IProps, {}> {
             result={this.props.result}
           />
           <BetButtonSegment
-            message={this.props.status.message}
+            message={this.props.status !== undefined ? this.props.status.message : 'none'}
             showMore={this.handler}
             fixture={this.props.fixture}
             expandBetMenu={this.props.expandBetMenu}

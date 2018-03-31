@@ -1,21 +1,6 @@
-import { IResult } from '../components/Results';
+import { IResult, IResultComponent } from '../components/Results';
 
 // ***********************__ACTIONS__*****************************
-interface IUpdateBetFixture {
-  type: 'updateFixtureList';
-  payload: {
-    componentList: any;
-  };
-}
-export const updateFixtureList: IUpdateBetFixture['type'] = 'updateFixtureList';
-export const updateBetFixtureList = (_array: IUpdateBetFixture['payload']['componentList']) => {
-  return {
-    type: updateFixtureList,
-    payload: {
-      componentList: _array,
-    },
-  };
-};
 
 interface IAddResultsComponentToState {
   type: 'addResultsComponentToState';
@@ -40,7 +25,9 @@ interface IToggleStatsBar {
   };
 }
 export const onToggleStatsBar: IToggleStatsBar['type'] = 'onToggleStatsBar';
-export const toggleStatsBar = (componentId: IToggleStatsBar['payload']['id']) => {
+export const toggleStatsBar = componentId => {
+  // tslint:disable-next-line:no-console
+
   return {
     type: onToggleStatsBar,
     payload: {
@@ -114,35 +101,36 @@ const sampleResult4 = {
 
 const array = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
 
-export type ResultComponentActions = IUpdateBetFixture | IAddResultsComponentToState | IToggleStatsBar;
+export type ResultComponentActions = IAddResultsComponentToState | IToggleStatsBar;
 
 export interface IListOfResultsComponentState {
   results: IResult[];
-  components: any[];
+  components: IResultComponent[];
+  tab: string;
 }
 
 export const defaultListOfResultComponentState: IListOfResultsComponentState = {
   results: array,
   components: [],
+  tab: 'myBets',
 };
 
 export const ResultsReducer = (state = defaultListOfResultComponentState, action) => {
-  let replace;
   switch (action.type) {
     case addResultsComponentToState:
       return { ...state, components: state.components.concat(action.payload.componentList) };
 
     case onToggleStatsBar:
-      replace = Object.assign({}, state);
-      const components = replace.components;
-      if (components[action.payload.id].status === 'expanded') {
-        components[action.payload.id].status = 'contracted';
+      const currentStateOfBars = Object.assign({}, state);
+      const copyOfComponentsArray = currentStateOfBars.components.concat();
+      const replacement = { components: copyOfComponentsArray };
+      if (replacement.components[action.payload.id].status === 'expanded') {
+        replacement.components[action.payload.id].status = 'contracted';
       } else {
-        components[action.payload.id].status = 'expanded';
+        replacement.components[action.payload.id].status = 'expanded';
       }
 
-      replace.components = components;
-      return Object.assign({}, state, replace);
+      return Object.assign({}, state, replacement);
     default:
       return state;
   }
