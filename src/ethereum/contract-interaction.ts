@@ -135,10 +135,22 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
   const outcomeOne = getFullClubName(await bettingContract.methods.outcomeOne().call({ from: account }));
   const outcomeTwo = await bettingContract.methods.outcomeTwo().call({ from: account });
   const outcomeThree = getFullClubName(await bettingContract.methods.outcomeThree().call({ from: account }));
-  const poolOne = await bettingContract.methods.totalPools(0).call({ from: account });
-  const poolTwo = await bettingContract.methods.totalPools(1).call({ from: account });
-  const poolThree = await bettingContract.methods.totalPools(2).call({ from: account });
-  const totalPool = await bettingContract.methods.totalPools(3).call({ from: account });
+  const poolOne = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(0).call({ from: account })) + '',
+    'ether',
+  );
+  const poolTwo = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(1).call({ from: account })) + '',
+    'ether',
+  );
+  const poolThree = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(2).call({ from: account })) + '',
+    'ether',
+  );
+  const totalPool = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(3).call({ from: account })) + '',
+    'ether',
+  );
   const state = await bettingContract.methods.state().call({ from: account });
   const winningIndex = await bettingContract.methods.winningIndex().call({ from: account });
   const teamOneScore = await bettingContract.methods.teamOneScore().call({ from: account });
