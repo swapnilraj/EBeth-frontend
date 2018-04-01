@@ -68,4 +68,27 @@ const Text = {
   `.trim(),
 };
 
+// const ClubNames = {
+//   Aresenal_short: 'Arsenal',
+//   Bournemouth_short: 'Bournemouth',
+//   'Brighton',
+//   'Burnley',
+//   'Chelsea',
+//   'Crystal Palace',
+//   'Everton',
+//   'Huddersfield',
+//   'Leicester',
+//   'Liverpool',
+//   'Man City',
+//   'Man Utd',
+//   'Newcastle',
+//   'Southampton',
+//   'Stoke',
+//   'Swansea',
+//   'Spurs',
+//   'Watford',
+//   'West Brom',
+//   'West Ham',
+// };
+
 export { Colors, Dimens, Text };
