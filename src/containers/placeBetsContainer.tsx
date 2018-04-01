@@ -13,6 +13,7 @@ import {
 } from '../reducers/betMenuReducer';
 import {
   addBetComponentToState,
+  IListOfBettingComponentState,
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
@@ -53,17 +54,17 @@ interface IComponent {
   message: string;
 }
 
-interface IBetComponent {
-  fixture: IFixture[];
-  components: IComponent[];
-}
+// interface IBetComponent {
+//   fixture: IFixture[];
+//   components: IComponent[];
+// }
 
 interface IProps {
   fixtureList: IFixture[];
   width: string;
   marginLeft: string;
   menu: IMenu;
-  betComponent: IBetComponent;
+  betComponent: IListOfBettingComponentState;
   betComponentStatus: IComponent[];
   availableBets: string[];
   fetchAvailableBets();

@@ -1,3 +1,5 @@
+import { IFixture } from '../containers/resultsContainer';
+
 // ***********************__ACTIONS__*****************************
 interface IUpdateBetFixture {
   type: 'updateFixtureList';
@@ -55,7 +57,7 @@ export function toggleStatsBarFunc(currentState, barId) {
 export type BettingComponentActions = IUpdateBetFixture | IAddBetComponent | IToggleStateBar;
 
 export interface IListOfBettingComponentState {
-  fixture: any;
+  fixture: IFixture[];
   components: any[];
 }
 

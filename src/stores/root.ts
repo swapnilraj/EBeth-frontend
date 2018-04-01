@@ -38,10 +38,10 @@ export type Actions =
  * Combined application state interface
  */
 export interface IState {
-  listBettingComponent: IListOfBettingComponentState;
+  ListOfBettingComponentReducer: IListOfBettingComponentState;
   sidebar: ISidebarState;
   contract: IContractsState;
-  betMenu: IBetMenuState;
+  betMenuReducer: IBetMenuState;
   resultState: IListOfResultsComponentState;
 }
 

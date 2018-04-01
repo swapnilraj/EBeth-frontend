@@ -15,6 +15,11 @@ export interface IFixture {
   drawBets: number;
   potValue: number;
 }
+export interface ITabState {
+  message: string;
+  color: string;
+  expanded: boolean;
+}
 
 export interface IResult {
   homeTeamName: string;
@@ -23,7 +28,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string;
-  teamOfUser: string; //Home|Away|Draw
+  teamOfUser: string; // Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;

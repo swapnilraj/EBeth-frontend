@@ -4,20 +4,8 @@ import { style } from 'typestyle';
 
 import { ListOfResults } from '../components/resultComponent/listOfResults';
 import { ResultToggleButton } from '../components/resultComponent/resultToggleButton';
-import { IResult, IResultComponent } from '../components/Results';
-// import {
-//   onSelectTeam,
-//   onToggleBetMenuDisplay,
-//   onToggleValidInput,
-//   onUpdateBetValueInput,
-// } from '../reducers/betMenuReducer';
-// import {
-//   addBetComponentToState,
-//   toggleStatsBarFunc,
-//   updateBetFixtureList,
-// } from '../reducers/listOfBettingComponentsReducer';
-import { toggleStatsBar, updateResultsComponentList } from '../reducers/resultsReducer';
-// import { fetchAvailableBets } from '../stores/contract';
+import { IResult, IResultComponent, ITabState } from '../components/Results';
+import { onSwitchTab, toggleStatsBar, updateResultsComponentList } from '../reducers/resultsReducer';
 
 export interface IFixture {
   homeTeamName: string;
@@ -65,6 +53,7 @@ interface IProps {
   betComponentStatus: IComponent[];
   results: IResult[];
   components: IResultComponent[];
+  tabState: ITabState;
   onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
   onStatsBarToggle(currentState: string, id: number);
@@ -74,6 +63,7 @@ interface IProps {
   onUpdateBetValueInput(newInput: string);
   onUpdateResultsComponentList(component: IResultComponent);
   onToggleStatsBar(id: number);
+  onSwitchTab(tabState: ITabState);
 }
 class ResultsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -92,6 +82,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.toggleValidUserInput = this.toggleValidUserInput.bind(this);
     this.updateInputValue = this.updateInputValue.bind(this);
     this.updateResultsComponentList = this.updateResultsComponentList.bind(this);
+    this.switchTab = this.switchTab.bind(this);
   }
 
   public updateComponentsInList(array: IFixture[]) {
@@ -131,6 +122,10 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.props.onUpdateBetValueInput(newInput);
   }
 
+  public switchTab(tabState: ITabState) {
+    this.props.onSwitchTab(tabState);
+  }
+
   public render() {
     const header = style({
       marginLeft: '0',
@@ -163,10 +158,6 @@ class ResultsComponent extends React.Component<IProps, {}> {
       position: 'relative',
     });
 
-    // tslint:disable-next-line:no-console
-    console.log('THE DADDY');
-    // tslint:disable-next-line:no-console
-    console.log(this.props);
     return (
       <div>
         <div className={header}>
@@ -175,7 +166,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
               <div className={centerText}>Results</div>
             </div>
           </div>
-          <ResultToggleButton currentDisplay="" />
+          <ResultToggleButton tabState={this.props.tabState} currentDisplay="" switchTab={this.switchTab} />
         </div>
         <ListOfResults
           width="95%"
@@ -195,12 +186,14 @@ class ResultsComponent extends React.Component<IProps, {}> {
 const mapDispatchToProps = {
   onUpdateResultsComponentList: updateResultsComponentList,
   onToggleStatsBar: toggleStatsBar,
+  onSwitchTab,
 };
 
 const mapStateToProps = state => {
   return {
     results: state.ResultsReducer.results,
     components: state.ResultsReducer.components,
+    tabState: state.ResultsReducer.tabState,
   };
 };
 

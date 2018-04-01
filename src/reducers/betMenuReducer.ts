@@ -93,7 +93,7 @@ export interface IBetMenuState {
   };
 }
 
-export const defaultBetMenuState = {
+export const defaultBetMenuState: IBetMenuState = {
   display: 'hide',
   fixture: {
     homeTeamName: 'arsenal',

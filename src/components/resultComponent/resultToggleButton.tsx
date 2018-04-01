@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { style } from 'typestyle';
+import { style, types } from 'typestyle';
+import { ITabState } from '../Results';
 
 interface IProps {
   currentDisplay: string;
+  tabState: ITabState;
+  switchTab(tabState: ITabState);
 }
 
 export class ResultToggleButton extends React.Component<IProps, {}> {
+  public changeTab() {
+    this.props.switchTab(this.props.tabState);
+  }
+
   public render() {
     const resultsToggleButtonSection = style({
       height: '100%',
@@ -15,14 +22,18 @@ export class ResultToggleButton extends React.Component<IProps, {}> {
       position: 'relative',
     });
 
-    const resultsToggleButtonStyle = style({
-      height: '60%',
-      width: '100%',
-      backgroundColor: 'rgb(251, 98, 53)',
-      position: 'relative',
-      cursor: 'pointer',
-      boxShadow: '0 2px 5px -1px rgba(0, 0, 0, 0.31)',
-    });
+    const dynamicColoring = {
+      backgroundColor: this.props.tabState.color,
+    };
+    const resultsToggleButtonStyle = () =>
+      style({
+        height: '60%',
+        width: '100%',
+        backgroundColor: dynamicColoring.backgroundColor,
+        position: 'relative',
+        cursor: 'pointer',
+        boxShadow: '0 2px 5px -1px rgba(0, 0, 0, 0.31)',
+      });
 
     const buttonTextWrapper = style({
       height: '100%',
@@ -43,6 +54,16 @@ export class ResultToggleButton extends React.Component<IProps, {}> {
       fontSize: '.8em',
     });
 
+    const centerTextDropDown = style({
+      margin: 0,
+      position: 'absolute',
+      top: '50%',
+      marginRight: '-50%',
+      transform: 'translate(0%, -50%)',
+      fontSize: '.8em',
+      color: 'black',
+    });
+
     const arrowIcon = style({
       height: '100%',
       width: '20%',
@@ -59,14 +80,47 @@ export class ResultToggleButton extends React.Component<IProps, {}> {
       height: '20%',
     });
 
+    const dynamicDropDown = {
+      true: {
+        display: 'initial',
+      },
+      false: {
+        display: 'none',
+      },
+    };
+
+    const dropDownStyle = () =>
+      style({
+        height: '60%',
+        width: '100%',
+        backgroundColor: 'white',
+        float: 'left',
+        position: 'relative',
+        cursor: 'pointer',
+        boxShadow: '0 2px 5px -1px rgba(0, 0, 0, 0.31)',
+        display: dynamicDropDown[this.props.tabState.expanded ? 'true' : 'false'].display as types.CSSDisplay,
+      });
+
     return (
       <div className={resultsToggleButtonSection}>
-        <div className={resultsToggleButtonStyle}>
+        <div className={resultsToggleButtonStyle()} onClick={() => this.changeTab()}>
           <div className={buttonTextWrapper}>
-            <div className={centerText}>My results</div>
+            <div className={centerText}>{this.props.tabState.message}</div>
           </div>
           <div className={arrowIcon}>
-            <img className={tabArrowStyle} src="./images/tabmenu-arrow-down@2x.png" />
+            <img
+              className={tabArrowStyle}
+              src={
+                this.props.tabState.expanded === true ? './images/assets@2x.png' : './images/tabmenu-arrow-down@2x.png'
+              }
+            />
+          </div>
+        </div>
+        <div className={dropDownStyle()}>
+          <div className={buttonTextWrapper}>
+            <div className={centerTextDropDown}>
+              {this.props.tabState.message === 'My results' ? 'All results' : 'My results'}
+            </div>
           </div>
         </div>
       </div>

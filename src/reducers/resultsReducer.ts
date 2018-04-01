@@ -1,4 +1,4 @@
-import { IResult, IResultComponent } from '../components/Results';
+import { IResult, IResultComponent, ITabState } from '../components/Results';
 
 // ***********************__ACTIONS__*****************************
 
@@ -32,6 +32,42 @@ export const toggleStatsBar = componentId => {
     type: onToggleStatsBar,
     payload: {
       id: componentId,
+    },
+  };
+};
+
+interface ISwitchTab {
+  type: 'switchTab';
+  payload: {
+    tabState: ISwitchTab;
+  };
+}
+export const switchTab: ISwitchTab['type'] = 'switchTab';
+export const onSwitchTab = (tabState: ISwitchTab) => {
+  // tslint:disable-next-line:no-console
+
+  return {
+    type: switchTab,
+    payload: {
+      tabState,
+    },
+  };
+};
+
+interface ILoadSpecifiedResults {
+  type: 'loadResults';
+  payload: {
+    tabState: ILoadSpecifiedResults;
+  };
+}
+export const loadResults: ILoadSpecifiedResults['type'] = 'loadResults';
+export const onLoadResults = (currentScreen: string) => {
+  // tslint:disable-next-line:no-console
+
+  return {
+    type: loadResults,
+    payload: {
+      currentScreen,
     },
   };
 };
@@ -105,18 +141,24 @@ const sampleResult4 = {
 
 const array = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
 
+const defaultTabState: ITabState = {
+  message: 'My results',
+  color: '#F8623E',
+  expanded: false,
+};
+
 export type ResultComponentActions = IAddResultsComponentToState | IToggleStatsBar;
 
 export interface IListOfResultsComponentState {
   results: IResult[];
   components: IResultComponent[];
-  tab: string;
+  tabState: ITabState;
 }
 
 export const defaultListOfResultComponentState: IListOfResultsComponentState = {
   results: array,
   components: [],
-  tab: 'myBets',
+  tabState: defaultTabState,
 };
 
 export const ResultsReducer = (state = defaultListOfResultComponentState, action) => {
@@ -133,8 +175,16 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
       } else {
         replacement.components[action.payload.id].status = 'expanded';
       }
-
       return Object.assign({}, state, replacement);
+
+    case switchTab:
+      const currentTabStatus = Object.assign({}, state.tabState);
+      currentTabStatus.expanded = !currentTabStatus.expanded;
+      const tabReplacement = { tabState: currentTabStatus };
+      return Object.assign({}, state, tabReplacement);
+
+    case loadResults:
+
     default:
       return state;
   }
