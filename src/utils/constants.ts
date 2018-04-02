@@ -56,39 +56,15 @@ const Text = {
   profileAltTitle: 'Profile photo',
   aboutTitle: 'About Ebeth',
   aboutPaneHeading: 'Ebeth',
-  loremTextLeft: `
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+  loremTextLeft: `Orange Tribe is  a dutch innovator and incubator of new and exciting ideas, that specialise in being a creator of elite and elegant mobile applications. In the past they have collaborated with brands such as Microsoft, Sony Music and Web Summit to create customised solutions for their global consumer base and their focus on media, entertainment and lifestyle, enables them to develop products that are easy on the eye and easy in use.
   `.trim(),
-  loremTextRight: `
-  Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+  loremTextRight: `The objective of EBeth as a project is to demonstrate the potential cryptocurrency has in the near future to thrive in area of the online betting industry. What makes our project unique is that it:
+  Is immutable
+  Has transparent odds
   `.trim(),
   aboutBottomPaneHeading: 'Placing a bet',
-  aboutBottomPaneLorem: `
-  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+  aboutBottomPaneLorem: `Essentially, by utilizing blockchain and its inherent trust establishing nature, in conjunction with the discarding of the trust based model which exists in current online offerings, we plan to offer a new outlook on the online betting industry. We want to display a method which future cryptocurrency companies can use to compete with traditional online bookmakers and  ultimately disrupt the industry. Placing a bet is as simple as clicking the place bet button and choosing the details of the your bet, which include your team and the amount of Ether you want to bet. Once you press the Place Bet button you need to finalise the transaction with the Metmask extension
   `.trim(),
 };
-
-// const ClubNames = {
-//   Aresenal_short: 'Arsenal',
-//   Bournemouth_short: 'Bournemouth',
-//   'Brighton',
-//   'Burnley',
-//   'Chelsea',
-//   'Crystal Palace',
-//   'Everton',
-//   'Huddersfield',
-//   'Leicester',
-//   'Liverpool',
-//   'Man City',
-//   'Man Utd',
-//   'Newcastle',
-//   'Southampton',
-//   'Stoke',
-//   'Swansea',
-//   'Spurs',
-//   'Watford',
-//   'West Brom',
-//   'West Ham',
-// };
 
 export { Colors, Dimens, Text };
