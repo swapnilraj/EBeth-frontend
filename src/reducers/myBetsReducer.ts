@@ -1,4 +1,4 @@
-import { IFixture } from '../containers/resultsContainer';
+import { IFixture } from '../components/Results';
 
 // ***********************__ACTIONS__*****************************
 interface IUpdateBetFixture {
@@ -66,7 +66,7 @@ export const secondFixture: IFixture = {
   potValue: 8.05,
   awayBets: 5,
   homeBets: 5,
-  awayTeamName: 'Watford City',
+  awayTeamName: 'Watford',
   date: 'Sunday  |  1st April',
   drawBets: 3,
   homeTeamName: 'Arsenal',
@@ -77,7 +77,7 @@ export const thirdFixture: IFixture = {
   potValue: 8.05,
   awayBets: 5,
   homeBets: 5,
-  awayTeamName: 'Spurs',
+  awayTeamName: 'Tottenham Hotspur',
   date: 'Sunday  |  1st April',
   drawBets: 3,
   homeTeamName: 'West Ham United',
