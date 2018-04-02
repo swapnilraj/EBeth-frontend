@@ -92,7 +92,6 @@ const _getAllBets = async (account: string): Promise<string[]> => {
 const _getPlacedBets = async (account: string, betEvents: string[]): Promise<string[]> => {
   const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   const placedBets: string[] = [];
-  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
     const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
@@ -112,7 +111,6 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
 const _getAvailableBets = async (account: string, betEvents: string[]): Promise<string[]> => {
   const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   const availableBets: string[] = [];
-  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
     bettingContract.options.address = betEvent;
     const state = await bettingContract.methods.state().call({ from: account });
