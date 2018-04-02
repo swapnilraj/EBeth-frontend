@@ -90,6 +90,7 @@ const _getAllBets = async (account: string): Promise<string[]> => {
  * @returns Array of addresses of Betting contracts that user placed bet on.
  */
 const _getPlacedBets = async (account: string, betEvents: string[]): Promise<string[]> => {
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   const placedBets: string[] = [];
   const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
@@ -109,6 +110,7 @@ const _getPlacedBets = async (account: string, betEvents: string[]): Promise<str
  * @returns Array of bets for which the event is not over.
  */
 const _getAvailableBets = async (account: string, betEvents: string[]): Promise<string[]> => {
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   const availableBets: string[] = [];
   const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
   for (const betEvent of betEvents) {
@@ -132,13 +134,25 @@ const _getBetInfo = async (account: string, betEvent: string): Promise<IBetInfo>
   bettingContract.options.address = betEvent;
   const kickOff = await bettingContract.methods.kickOffTime().call({ from: account });
   const kickOffTime = new Date(parseInt(kickOff, 10));
-  const outcomeOne = await bettingContract.methods.outcomeOne().call({ from: account });
+  const outcomeOne = getFullClubName(await bettingContract.methods.outcomeOne().call({ from: account }));
   const outcomeTwo = await bettingContract.methods.outcomeTwo().call({ from: account });
-  const outcomeThree = await bettingContract.methods.outcomeThree().call({ from: account });
-  const poolOne = await bettingContract.methods.totalPools(0).call({ from: account });
-  const poolTwo = await bettingContract.methods.totalPools(1).call({ from: account });
-  const poolThree = await bettingContract.methods.totalPools(2).call({ from: account });
-  const totalPool = await bettingContract.methods.totalPools(3).call({ from: account });
+  const outcomeThree = getFullClubName(await bettingContract.methods.outcomeThree().call({ from: account }));
+  const poolOne = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(0).call({ from: account })) + '',
+    'ether',
+  );
+  const poolTwo = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(1).call({ from: account })) + '',
+    'ether',
+  );
+  const poolThree = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(2).call({ from: account })) + '',
+    'ether',
+  );
+  const totalPool = web3.utils.fromWei(
+    '' + (await bettingContract.methods.totalPools(3).call({ from: account })) + '',
+    'ether',
+  );
   const state = await bettingContract.methods.state().call({ from: account });
   const winningIndex = await bettingContract.methods.winningIndex().call({ from: account });
   const teamOneScore = await bettingContract.methods.teamOneScore().call({ from: account });
@@ -326,7 +340,7 @@ export const getUserAccount = async (): Promise<string> => {
 };
 
 /**
- * Returns an array of club names that are in our system.
+ * Returns an array of club names used by the contracts.
  * @returns An array with club names that are in our system.
  */
 export const getAllClubs = (): string[] => [
@@ -353,6 +367,33 @@ export const getAllClubs = (): string[] => [
 ];
 
 /**
+ * Returns an array of fulllength club names that are in our system.
+ * @returns An array with club names that are in our system.
+ */
+export const getAllClubsFull = (): string[] => [
+  'Arsenal',
+  'AFC Bournemouth',
+  'Brighton and Hove Albion',
+  'Burnley',
+  'Chelsea',
+  'Crystal Palace',
+  'Everton',
+  'Huddersfield Town',
+  'Leicester City',
+  'Liverpool',
+  'Manchester City',
+  'Manchester United',
+  'Newcastle United',
+  'Southampton',
+  'Stoke City',
+  'Swansea City',
+  'Tottenham Hotspur',
+  'Watford',
+  'West Bromwich Albion',
+  'West Ham United',
+];
+
+/**
  * Returns an array of bets for a specific club.
  * @param club The name of the club.
  * @returns An array of the bets for a specific club.
@@ -365,8 +406,8 @@ export const getGamesByClub = async (club: string): Promise<string[]> => {
     const bets = await _getAllBets(accounts[0]);
     for (const betEvent of bets) {
       bettingContract.options.address = betEvent;
-      const teamOne = await bettingContract.methods.outcomeOne().call({ from: accounts[0] });
-      const teamTwo = await bettingContract.methods.outcomeThree().call({ from: accounts[0] });
+      const teamOne = getFullClubName(await bettingContract.methods.outcomeOne().call({ from: accounts[0] }));
+      const teamTwo = getFullClubName(await bettingContract.methods.outcomeThree().call({ from: accounts[0] }));
 
       if (teamOne === club || teamTwo === club) {
         gamesByClub.push(betEvent);
@@ -374,4 +415,40 @@ export const getGamesByClub = async (club: string): Promise<string[]> => {
     }
   } catch {}
   return gamesByClub;
+};
+
+/**
+ * Get full club name (for display & crests)
+ * @param club contract club name
+ * @returns full name of club
+ */
+export const getFullClubName = (club: string): string => {
+  switch (club) {
+    case 'Brighton':
+      return 'Brighton and Hove Albion';
+    case 'Bournemouth':
+      return 'AFC Bournemouth';
+    case 'Huddersfield':
+      return 'Huddersfield Town';
+    case 'Leicester':
+      return 'Leicester City';
+    case 'Man City':
+      return 'Manchester City';
+    case 'Man Utd':
+      return 'Manchester United';
+    case 'Newcastle':
+      return 'Newcastle United';
+    case 'Stoke':
+      return 'Stoke City';
+    case 'Spurs':
+      return 'Tottenham Hotspur';
+    case 'Swansea':
+      return 'Swansea City';
+    case 'West Brom':
+      return 'West Bromwich Albion';
+    case 'West Ham':
+      return 'West Ham United';
+    default:
+      return club;
+  }
 };

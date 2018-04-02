@@ -1,24 +1,24 @@
 {
   "Arsenal": "/arsenal@2x.png",
-  "BourneMouth":"/afc-bournemouth@2x.png",
-  "Brighton":"/brighton-hove@2x.png",
+  "AFC Bournemouth":"/afc-bournemouth@2x.png",
+  "Brighton and Hove Albion":"/brighton-hove@2x.png",
   "Burnley":"/burnley@2x.png",
   "Chelsea":"/chelsea@2x.png",
   "Crystal Palace":"/crystal-palace@2x.png",
   "Everton":"/everton@2x.png",
-  "Huddersfield United":"/huddersfield-town@2x.png",
+  "Huddersfield Town":"/huddersfield-town@2x.png",
   "Leicester City":"/leicester-city@2x.png",
   "Liverpool":"/liverpool@2x.png",
   "Manchester City":"/machester-city@2x.png",
   "Manchester United":"/machester-united@2x.png",
   "Newcastle United":"/newcastle-united@2x.png",
-  "Southhampton":"/southhamption@2x.png",
+  "Southampton":"/southhamption@2x.png",
   "Stoke City":"/stoke-the-potters@2x.png",
-  "Spurs":"/totem@2x.png",
-  "Watford City":"/watford@2x.png",
-  "West Brom":"/west-bromwich-albion@2x.png",
+  "Swansea City": "TODO",
+  "Tottenham Hotspur":"/totem@2x.png",
+  "Watford":"/watford@2x.png",
+  "West Bromwich Albion":"/west-bromwich-albion@2x.png",
   "West Ham United":"/west-ham-united@2x.png",
-
 
 "Draw":"/draw-graphic-inactive@3x.png"
 }
