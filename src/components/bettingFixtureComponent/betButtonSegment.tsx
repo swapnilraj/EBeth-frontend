@@ -1,17 +1,7 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 import * as assets from '../../Assets.json';
-
-interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
+import { IFixture } from '../Results';
 
 export interface IResult {
   homeTeamName: string;

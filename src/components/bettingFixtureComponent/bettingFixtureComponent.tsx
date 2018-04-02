@@ -1,24 +1,14 @@
 import * as React from 'react';
-import { style } from 'typestyle';
 import { types } from 'typestyle';
+import { style } from 'typestyle';
 import * as crests from '../../Crests.json';
 import { defaultMyBet } from '../../reducers/myBetsReducer';
+import { IFixture } from '../Results';
 import { BetButtonSegment } from './betButtonSegment';
 import { PotValue } from './potValue';
 import { StatsBar } from './statsBar';
 import { TeamSegment } from './teamSegment';
 import { TimeSegment } from './timeSegment';
-
-interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
 
 interface IProps {
   marginLeft: string;

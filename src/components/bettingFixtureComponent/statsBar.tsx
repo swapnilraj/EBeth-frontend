@@ -1,17 +1,7 @@
 import * as React from 'react';
 import { style } from 'typestyle';
+import { IFixture } from '../Results';
 import { BetPercentage } from './betPercentage';
-
-interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
 
 interface IProps {
   fixture: IFixture;

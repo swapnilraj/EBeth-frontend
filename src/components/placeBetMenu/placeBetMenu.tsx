@@ -2,6 +2,7 @@ import * as React from 'react';
 import swal from 'sweetalert2';
 import { style } from 'typestyle';
 import { types } from 'typestyle';
+import { IFixture } from '../Results';
 import { SelectionPanel } from './selectionPanel';
 
 interface ISelected {
@@ -15,17 +16,6 @@ interface ImenuStats {
   display: string;
   fixture: IFixture;
   selected: ISelected;
-}
-
-interface IFixture {
-  awayBets: number;
-  awayTeamName: string;
-  date: string;
-  drawBets: number;
-  homeBets: number;
-  homeTeamName: string;
-  potValue: number;
-  time: string;
 }
 
 interface IProps {

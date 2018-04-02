@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 import { types } from 'typestyle';
-import { IFixture } from '../PlaceBets';
+
 // import { BettingFixtureComponent } from '../bettingFixtureComponent/bettingFixtureComponent';
 import { ResultComponent } from '../resultComponent/resultComponent';
-import { IResult, IResultComponent } from '../Results';
+import { IFixture, IResult, IResultComponent } from '../Results';
 
 interface IProps {
   marginLeft: string;

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { style } from 'typestyle';
 import { types } from 'typestyle';
 import { IMyBets } from '../../reducers/myBetsReducer';
-import { IFixture } from '../PlaceBets';
+
 import { defaultResult } from '../resultComponent/listOfResults';
 // import { BettingFixtureComponent } from '../bettingFixtureComponent/bettingFixtureComponent';
-import { /*IResult,*/ IResultComponent } from '../Results';
+import { /*IResult,*/ IFixture, IResultComponent } from '../Results';
 import { MyBetsComponent } from './myBetsComponent';
 
 interface IProps {

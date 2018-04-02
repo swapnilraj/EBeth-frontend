@@ -8,9 +8,9 @@ import { PotValue } from '../bettingFixtureComponent/potValue';
 import { StatsBar } from '../bettingFixtureComponent/statsBar';
 import { TeamSegment } from '../bettingFixtureComponent/teamSegment';
 import { TimeSegment } from '../bettingFixtureComponent/timeSegment';
-import { IFixture } from '../PlaceBets';
+
 import { defaultResult } from '../resultComponent/listOfResults';
-import { IResult, IResultComponent } from '../Results';
+import { IFixture, IResult, IResultComponent } from '../Results';
 
 interface IProps {
   marginLeft: string;

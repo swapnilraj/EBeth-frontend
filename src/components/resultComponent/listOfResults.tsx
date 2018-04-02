@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { IFixture } from '../PlaceBets';
-import { IResult, IResultComponent } from '../Results';
+import { IFixture, IResult, IResultComponent } from '../Results';
 import { ResultWithDate } from './resultWithDate';
 
 interface IProps {
@@ -32,7 +31,7 @@ export const defaultResult = {
   date: '',
   score: '',
   resultForUser: '',
-  teamOfUser: '', 
+  teamOfUser: '',
   amountWon: 0,
   potValue: 0,
   homeTeamBets: 0,

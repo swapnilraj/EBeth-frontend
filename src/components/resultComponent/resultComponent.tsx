@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { style } from 'typestyle';
 import { types } from 'typestyle';
+import { style } from 'typestyle';
 import * as crests from '../../Crests.json';
 import { defaultMyBet } from '../../reducers/myBetsReducer';
 import { BetButtonSegment } from '../bettingFixtureComponent/betButtonSegment';
@@ -8,8 +8,7 @@ import { PotValue } from '../bettingFixtureComponent/potValue';
 import { StatsBar } from '../bettingFixtureComponent/statsBar';
 import { TeamSegment } from '../bettingFixtureComponent/teamSegment';
 import { TimeSegment } from '../bettingFixtureComponent/timeSegment';
-import { IFixture } from '../PlaceBets';
-import { IResult, IResultComponent } from '../Results';
+import { IFixture, IResult, IResultComponent } from '../Results';
 
 interface IProps {
   marginLeft: string;

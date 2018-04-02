@@ -1,20 +1,6 @@
 import * as React from 'react';
+import { IFixture } from '../Results';
 import { PlaceBetComponent } from './placeBetComponent';
-
-interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
-
-// interface IFixtureArray {
-//     [index: number]: IFixture;
-// }
 
 interface IComponent {
   fixture: IFixture;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { IComponent } from '../../containers/myBetsContainer';
 import { IMyBets, IMyBetsState } from '../../reducers/myBetsReducer';
-import { IFixture } from '../PlaceBets';
-import { /*IResult,*/ IResultComponent } from '../Results';
+
+import { /*IResult,*/ IFixture, IResultComponent } from '../Results';
 import { MyBetWithDate } from './myBetWithDate';
 
 interface IProps {

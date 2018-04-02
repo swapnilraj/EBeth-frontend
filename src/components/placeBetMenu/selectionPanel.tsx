@@ -1,17 +1,7 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 import * as crests from '../../Crests.json';
-
-interface IFixture {
-  awayBets: number;
-  awayTeamName: string;
-  date: string;
-  drawBets: number;
-  homeBets: number;
-  homeTeamName: string;
-  potValue: number;
-  time: string;
-}
+import { IFixture } from '../Results';
 
 interface ISelected {
   betInputValue: string;
