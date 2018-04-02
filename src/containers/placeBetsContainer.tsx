@@ -98,7 +98,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     // tslint:disable-next-line:no-console
     console.log(this.props);
     if (this.props.availableBets.length === 0) {
-      fetchAvailableBets();
+      this.props.fetchAvailableBets();
     }
   }
 
