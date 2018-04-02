@@ -4,6 +4,7 @@
 import { Epic } from 'redux-observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import {
+  changeBet as ethChangeBet,
   getAvailableBets,
   getPlacedBets,
   getUserAccount,
@@ -117,6 +118,21 @@ export const sucessPlacedBets = (placedBets: ISucessPlacedBets['placedBets']) =>
   placedBets,
 });
 
+/**
+ * Action to change bet for an already placed bet
+ */
+interface IChangeBet {
+  type: 'CHANGE_BET';
+  betEvent: string;
+  outcomeIndex: number;
+}
+export const CHANGE_BET: IChangeBet['type'] = 'CHANGE_BET';
+export const changeBet = (betEvent: IChangeBet['betEvent'], outcomeIndex: IChangeBet['outcomeIndex']) => ({
+  type: CHANGE_BET,
+  betEvent,
+  outcomeIndex,
+});
+
 export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
 
@@ -124,6 +140,12 @@ export const placeBetEpic: Epic<Actions, IState> = action$ =>
   action$
     .ofType(PLACE_BET)
     .do((action: IPlaceBet) => ethPlaceBet(action.betEvent, action.outcomeIndex, action.value))
+    .map(noop);
+
+export const changeBetEpic: Epic<Actions, IState> = action$ =>
+  action$
+    .ofType(CHANGE_BET)
+    .do((action: IChangeBet) => ethChangeBet(action.betEvent, action.outcomeIndex))
     .map(noop);
 
 export const fetchUserAccountEpic: Epic<Actions, IState> = action$ =>
@@ -140,6 +162,7 @@ export type ContractActions =
   | IFetchUserAccount
   | IFetchPlacedBets
   | ISucessPlacedBets
+  | IChangeBet
   | INoopAction;
 
 export interface IContractsState {

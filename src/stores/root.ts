@@ -15,6 +15,7 @@ import { IMyBetsState, MyBetsReducer } from '../reducers/myBetsReducer';
 import { IListOfResultsComponentState, ResultComponentActions, ResultsReducer } from '../reducers/resultsReducer';
 
 import {
+  changeBetEpic,
   contract,
   ContractActions,
   fetchAvailableEpic,
@@ -51,6 +52,7 @@ const epics: Array<Epic<Actions, IState, any>> = [
   placeBetEpic,
   fetchUserAccountEpic,
   fetchPlacedBetsEpic,
+  changeBetEpic,
 ].filter(epic => epic !== null) as Array<Epic<Actions, IState, any>>;
 
 export const rootEpic = combineEpics<Actions, IState>(...epics);
