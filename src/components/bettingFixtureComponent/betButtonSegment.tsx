@@ -20,7 +20,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string; // win lose
-  teamOfUser: string; //Home|Away|Draw
+  teamOfUser: string; // Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;
@@ -34,11 +34,24 @@ interface IProps {
   fixture: IFixture;
   screen: string;
   result: IResult;
+  live: boolean;
   showMore();
   expandBetMenu(currentState: string, currentFixture: IFixture);
 }
 
 export class BetButtonSegment extends React.Component<IProps, {}> {
+  public constructor(props) {
+    super(props);
+
+    this.expandBettingMenu = this.expandBettingMenu.bind(this);
+  }
+
+  public expandBettingMenu() {
+    if (this.props.live === false) {
+      this.props.expandBetMenu('hide', this.props.fixture);
+    }
+  }
+
   public render() {
     const loadScreenSpecificComponents = () => {
       if (this.props.screen === 'PLACE_BETS') {
@@ -59,6 +72,12 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
             <div className={winnings}>
               <div className={centerText}>ETH: {this.props.result.amountWon}</div>
             </div>
+          </div>
+        );
+      } else if (this.props.screen === 'MY_BETS') {
+        return (
+          <div onClick={() => this.expandBettingMenu()} className={betButtonMyBets}>
+            <div className={centerText}>EDIT</div>
           </div>
         );
       }
@@ -115,7 +134,6 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
       left: '50%',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      cursor: 'pointer',
     });
 
     const betButton = style({
@@ -130,13 +148,30 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
       cursor: 'pointer',
     });
 
+    const betButtonMyBets = style({
+      height: '40%',
+      width: '70%',
+      borderRadius: '15px',
+      backgroundColor: 'white',
+      position: 'absolute',
+      top: '50%',
+      color: this.props.live ? 'rgb(170, 170, 170)' : 'rgb(251, 98, 53)',
+      transform: 'translate(0%, -50%)',
+      cursor: this.props.live ? 'default' : 'pointer',
+      border: this.props.live ? 'solid 1px rgb(170, 170, 170)' : 'solid 1px rgb(251, 98, 53)',
+    });
+
+    const clickable = style({
+      cursor: 'pointer',
+    });
+
     const dynamicComponents = loadScreenSpecificComponents();
 
     return (
       <div className={betButtonWrapper}>
         <div className={container}>
           <div className={centerText} onClick={this.props.showMore}>
-            {this.props.message}
+            <div className={clickable}>{this.props.message}</div>
           </div>
         </div>
         <div className={container}>{dynamicComponents}</div>

@@ -2,15 +2,15 @@
  * Redux store root entities
  */
 
+import { combineReducers } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 import { BetMenuActions, betMenuReducer, IBetMenuState } from '../reducers/betMenuReducer';
-
-import { combineReducers } from 'redux';
 import {
   BettingComponentActions,
   IListOfBettingComponentState,
   ListOfBettingComponentReducer,
 } from '../reducers/listOfBettingComponentsReducer';
+import { IMyBetsState, MyBetsReducer } from '../reducers/myBetsReducer';
 
 import { IListOfResultsComponentState, ResultComponentActions, ResultsReducer } from '../reducers/resultsReducer';
 
@@ -43,6 +43,7 @@ export interface IState {
   contract: IContractsState;
   betMenuReducer: IBetMenuState;
   resultState: IListOfResultsComponentState;
+  MyBetsReducer: IMyBetsState;
 }
 
 const epics: Array<Epic<Actions, IState, any>> = [
@@ -60,4 +61,5 @@ export const rootReducer = combineReducers<IState>({
   betMenuReducer,
   ListOfBettingComponentReducer,
   ResultsReducer,
+  MyBetsReducer,
 });

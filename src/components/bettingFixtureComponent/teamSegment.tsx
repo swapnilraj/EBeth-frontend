@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { style } from 'typestyle';
+import { style, types } from 'typestyle';
+import { IMyBets } from '../../reducers/myBetsReducer';
 
 export interface IResult {
   homeTeamName: string;
@@ -23,7 +24,9 @@ interface IProps {
   status: string;
   screen: string;
   result: IResult;
+  bet: IMyBets;
   team: string; // specifies whether team is home or away
+  liveMatch: boolean;
 }
 
 export class TeamSegment extends React.Component<IProps, {}> {
@@ -45,16 +48,38 @@ export class TeamSegment extends React.Component<IProps, {}> {
           </div>
         );
       }
+
+      if (this.props.screen === 'MY_BETS') {
+        return (
+          <div className={textWrapper()}>
+            <div className={centerText()}>{this.props.teamName}</div>
+            <div className={myBetBox}>your bet: {this.props.bet.betValue} ETH</div>
+            <div className={homeOrAwayText()}>{this.props.team}</div>
+          </div>
+        );
+      }
     };
 
-    const teamWrapper = style({
-      height: '100%',
-      width: '30%',
-      float: 'left',
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      position: 'relative',
-    });
+    const teamWrapper = () => style(liveMatchStyle[this.props.liveMatch ? 'true' : 'false']);
+
+    const liveMatchStyle = {
+      true: {
+        height: '100%' as types.CSSGlobalValues,
+        width: '27.5%' as types.CSSGlobalValues,
+        float: 'left' as types.CSSGlobalValues,
+        display: 'inline-block' as types.CSSDisplay,
+        verticalAlign: 'middle' as types.CSSGlobalValues,
+        position: 'relative' as types.CSSGlobalValues,
+      },
+      false: {
+        height: '100%' as types.CSSGlobalValues,
+        width: '30%' as types.CSSGlobalValues,
+        float: 'left' as types.CSSGlobalValues,
+        display: 'inline-block' as types.CSSDisplay,
+        verticalAlign: 'middle' as types.CSSGlobalValues,
+        position: 'relative' as types.CSSGlobalValues,
+      },
+    };
 
     const crestStyle = style({
       height: '100%',
@@ -65,7 +90,11 @@ export class TeamSegment extends React.Component<IProps, {}> {
       textAlign: 'center',
     });
 
-    const displayUserBet = this.props.team === this.props.result.teamOfUser ? 'true' : 'false';
+    const displayUserBet =
+      this.props.team === this.props.result.teamOfUser ||
+      (this.props.bet.live && this.props.bet.betPlacedOn === this.props.team)
+        ? 'true'
+        : 'false';
 
     const centerText = () => {
       if (displayUserBet === 'true') {
@@ -153,7 +182,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
       dynamicUserBetDisplay[displayUserBet],
       myBetBoxStyle.Default,
       myBetBoxStyle[this.props.team],
-      dynamicMyBetBoxColor[this.props.result.resultForUser],
+      dynamicMyBetBoxColor[this.props.bet.live ? 'pending' : this.props.result.resultForUser],
     );
 
     const crestWrapper = () =>
@@ -184,7 +213,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
     const dynamicComponents = loadScreenSpecificComponents();
 
     return (
-      <div className={teamWrapper}>
+      <div className={teamWrapper()}>
         <div className={crestWrapper()}>
           <img alt="Crest" className={crestStyle} src={this.props.crest} />
         </div>

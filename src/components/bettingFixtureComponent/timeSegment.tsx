@@ -8,7 +8,7 @@ export interface IResult {
   date: string;
   score: string;
   resultForUser: string;
-  teamOfUser: string; //Home|Away|Draw
+  teamOfUser: string; // Home|Away|Draw
   amountWon: number;
   potValue: number;
   homeTeamBets: number;
@@ -21,12 +21,13 @@ interface IProps {
   startTime: string;
   screen: string;
   result: IResult;
+  liveMatch: boolean;
 }
 
 export class TimeSegment extends React.Component<IProps, {}> {
   public render() {
     const loadScreenSpecificComponents = () => {
-      if (this.props.screen === 'PLACE_BETS') {
+      if (this.props.screen === 'PLACE_BETS' || this.props.screen === 'MY_BETS') {
         return <div className={centerText}>{this.props.startTime}</div>;
       } else if (this.props.screen === 'RESULTS') {
         return (

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { style } from 'typestyle';
 import { types } from 'typestyle';
 import * as crests from '../../Crests.json';
+import { defaultMyBet } from '../../reducers/myBetsReducer';
 import { BetButtonSegment } from './betButtonSegment';
 import { PotValue } from './potValue';
 import { StatsBar } from './statsBar';
@@ -137,8 +138,15 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
             status={this.props.status.status}
             screen="PLACE_BETS"
             result={defaultResult}
+            liveMatch={false}
+            bet={defaultMyBet}
           />
-          <TimeSegment startTime={this.props.fixture.time} screen="PLACE_BETS" result={defaultResult} />
+          <TimeSegment
+            startTime={this.props.fixture.time}
+            screen="PLACE_BETS"
+            result={defaultResult}
+            liveMatch={false}
+          />
           <TeamSegment
             teamName={this.props.fixture.awayTeamName}
             crest={'./images' + crests[this.props.fixture.awayTeamName]}
@@ -146,6 +154,8 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
             status={this.props.status.status}
             screen="PLACE_BETS"
             result={defaultResult}
+            liveMatch={false}
+            bet={defaultMyBet}
           />
           <BetButtonSegment
             message={this.props.status.message}
@@ -154,6 +164,7 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
             expandBetMenu={this.props.expandBetMenu}
             screen="PLACE_BETS"
             result={defaultResult}
+            live={false}
           />
         </div>
         <div className={stats()}>

@@ -2,8 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { style, types } from 'typestyle';
+import { ListOfMyBets } from '../components/myBets/listOfMyBets';
 import { PlaceBetMenu } from '../components/placeBetMenu/placeBetMenu';
-import { ListOfBettingComponents } from '../components/placeBetsList/listOfBettingComponents';
+import { IFixture } from '../components/Results';
 import { getBetInfo, /*getUserBetInfo , */ IBetInfo } from '../ethereum/contract-interaction';
 import {
   onSelectTeam,
@@ -17,21 +18,14 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
+import { IMyBets, toggleStatsStatus } from '../reducers/myBetsReducer';
+// import { onToggleStatsBar } from '../reducers/resultsReducer';
 import { fetchAvailableBets } from '../stores/contract';
 import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
-import { renderIf } from '../utils/render-if-else';
-export interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
+
+// import { renderIf } from '../utils/render-if-else';
 
 interface ISelected {
   selectTeam: string;
@@ -46,7 +40,7 @@ interface IMenu {
   fixture: IFixture;
 }
 
-interface IComponent {
+export interface IComponent {
   fixture: IFixture;
   id: number;
   status: string;
@@ -67,6 +61,7 @@ interface IProps {
   betComponent: IListOfBettingComponentState;
   betComponentStatus: IComponent[];
   availableBets: string[];
+  userBets: IMyBets[];
   fetchAvailableBets();
   onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
@@ -75,8 +70,9 @@ interface IProps {
   onSelectTeam(homeTeamName: string, panelType: string);
   onToggleValidInput();
   onUpdateBetValueInput(newInput: string);
+  onToggleStatus(id: number);
 }
-class PlaceBetsComponent extends React.Component<IProps, {}> {
+class MyBetsComponent extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
 
@@ -155,8 +151,9 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     this.props.onNewBetComponentMade(betComponent);
   }
 
-  public toggleStatsBar(currentState: string, id: number) {
-    this.props.onStatsBarToggle(currentState, id);
+  // tslint:disable-next-line:no-empty
+  public toggleStatsBar(id: number) {
+    this.props.onToggleStatus(id);
   }
 
   public expandBetMenu(currentState: string, fixture: IFixture) {
@@ -210,10 +207,10 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
       },
     };
 
-    const placeBetsWrapper = () =>
+    const myBetsWrapper = () =>
       style({
         position: 'absolute',
-        top: '0',
+        top: '4%',
         bottom: '0',
         left: '0',
         right: '0',
@@ -222,22 +219,22 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         width: '100%',
       });
 
-    return renderIf(
-      this.props.availableBets.length > 0,
-      <div className={placeBetsWrapper()}>
+    // const array:IFixture[] = []
+    return (
+      <div className={myBetsWrapper()}>
         <div>
           <div className={header()} onClick={() => this.toggleValidUserInput()}>
-            <div className={heading}>Place Bets</div>
+            <div className={heading}>My Bets</div>
           </div>
-          <ListOfBettingComponents
+          <ListOfMyBets
             width={this.props.width}
-            fixtures={this.props.betComponent.fixture}
             addBetComponentToState={this.addBetComponentToState}
-            componentStatus={this.props.betComponentStatus}
+            componentStatus={[]}
             toggleStatsBar={this.toggleStatsBar}
             expandBetMenu={this.expandBetMenu}
             updateFixtures={this.updateComponentsInList}
             marginLeft={this.props.marginLeft}
+            myBets={this.props.userBets}
           />
           <PlaceBetMenu
             display={this.props.menu.display}
@@ -249,8 +246,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             updateInputValue={this.updateInputValue}
           />
         </div>
-      </div>,
-      <h1>loading...</h1>,
+      </div>
     );
   }
 }
@@ -266,17 +262,19 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
       onToggleValidInput,
       onUpdateBetValueInput,
       fetchAvailableBets,
+      onToggleStatus: toggleStatsStatus,
     },
     dispatch,
   );
 
 const mapStateToProps = (state: IState) => {
   return {
-    betComponent: state.ListOfBettingComponentReducer,
+    availableBets: state.contract.availableBets,
+    betComponent: state.MyBetsReducer,
     betComponentStatus: state.ListOfBettingComponentReducer.components,
     menu: state.betMenuReducer,
-    availableBets: state.contract.availableBets,
+    userBets: state.MyBetsReducer.userBets,
   };
 };
 
-export const PlaceBetsContainer = connect(mapStateToProps, mapDispatchToProps)(PlaceBetsComponent);
+export const MyBetsContainer = connect(mapStateToProps, mapDispatchToProps)(MyBetsComponent);
