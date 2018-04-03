@@ -47,7 +47,7 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
       outcome = ' ' + this.props.menuState.fixture.awayTeamName + ' will win';
     }
     swal({
-      title: 'You Placed A Bet!',
+      title: 'Your Bet is being processed!',
       text: 'You have bet ' + this.props.menuState.selected.betInputValue + ' ETH, that' + outcome,
       type: 'success',
       confirmButtonColor: 'rgb(251, 98, 53)',

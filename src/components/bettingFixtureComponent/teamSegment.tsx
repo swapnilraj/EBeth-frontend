@@ -182,7 +182,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
       dynamicUserBetDisplay[displayUserBet],
       myBetBoxStyle.Default,
       myBetBoxStyle[this.props.team],
-      dynamicMyBetBoxColor[this.props.bet.live ? 'pending' : this.props.result.resultForUser],
+      dynamicMyBetBoxColor[this.props.screen === 'MY_BETS' ? 'pending' : this.props.result.resultForUser],
     );
 
     const crestWrapper = () =>
