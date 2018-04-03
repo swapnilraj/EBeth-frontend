@@ -122,6 +122,25 @@ const _getAvailableBets = async (account: string, betEvents: string[]): Promise<
 };
 
 /**
+ * Returns an array of bets for which the event is over.
+ * @param account Address of the user account.
+ * @param betEvents Array of addresses of Betting contracts.
+ * @returns Array of bets for which the event is over.
+ */
+const _getPastBets = async (account: string, betEvents: string[]): Promise<string[]> => {
+  const bettingContract = new web3.eth.Contract(bettingContractJSON.abi);
+  const availableBets: string[] = [];
+  for (const betEvent of betEvents) {
+    bettingContract.options.address = betEvent;
+    const state = await bettingContract.methods.state().call({ from: account });
+    if (state >= 3) {
+      availableBets.push(betEvent);
+    }
+  }
+  return availableBets;
+};
+
+/**
  * Returns Information about a bet event.
  * @param account Account the address of the user account.
  * @param betEvent Address of the Betting contract.
@@ -262,6 +281,20 @@ export const getAvailableBets = async (): Promise<string[]> => {
     const accounts = await web3.eth.getAccounts();
     const bets = await _getAllBets(accounts[0]);
     availableBets = await _getAvailableBets(accounts[0], bets);
+  } catch {}
+  return availableBets;
+};
+
+/**
+ * Returns an array of bets for which the event is over.
+ * @returns Array of bets for which the event is over.
+ */
+export const getPastBets = async (): Promise<string[]> => {
+  let availableBets: string[] = [];
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const bets = await _getAllBets(accounts[0]);
+    availableBets = await _getPastBets(accounts[0], bets);
   } catch {}
   return availableBets;
 };
