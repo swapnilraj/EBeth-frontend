@@ -142,9 +142,9 @@ interface ISucessChangeBet {
   changeBetStatus: boolean;
 }
 export const SUCESS_CHANGE_BET: ISucessChangeBet['type'] = 'SUCESS_CHANGE_BET';
-export const sucessChangeBet = (status: ISucessChangeBet['changeBetStatus']) => ({
+export const sucessChangeBet = (changeBetStatus: ISucessChangeBet['changeBetStatus']) => ({
   type: SUCESS_CHANGE_BET,
-  status,
+  changeBetStatus,
 });
 
 /**
@@ -183,8 +183,9 @@ export const placeBetEpic: Epic<Actions, IState> = action$ =>
 export const changeBetEpic: Epic<Actions, IState> = action$ =>
   action$
     .ofType(CHANGE_BET)
-    .do((action: IChangeBet) => ethChangeBet(action.betEvent, action.outcomeIndex))
-    .map(noop);
+    .mergeMap((action: IChangeBet) =>
+      fromPromise(ethChangeBet(action.betEvent, action.outcomeIndex)).map(sucessChangeBet),
+    );
 
 export const fetchUserAccountEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_USER_ACCOUNT).mergeMap(() => fromPromise(getUserAccount()).map(sucessUserAccount));
@@ -214,6 +215,7 @@ export interface IContractsState {
   placedBets: string[];
   resultBets: string[];
   userAccount: string;
+  changeBetStatus: boolean;
 }
 
 export const defaultContractsState: IContractsState = {
@@ -221,6 +223,7 @@ export const defaultContractsState: IContractsState = {
   placedBets: [],
   resultBets: [],
   userAccount: '',
+  changeBetStatus: true,
 };
 
 export const contract = (state: IContractsState = defaultContractsState, action: ContractActions): IContractsState => {
@@ -235,6 +238,8 @@ export const contract = (state: IContractsState = defaultContractsState, action:
       return { ...state, placedBets: state.placedBets.concat(action.placedBets) };
     case SUCESS_RESULTS_BET:
       return { ...state, resultBets: action.results };
+    case SUCESS_CHANGE_BET:
+      return { ...state, changeBetStatus: action.changeBetStatus };
     default:
       return state;
   }
