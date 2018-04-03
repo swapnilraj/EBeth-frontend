@@ -135,6 +135,19 @@ export const changeBet = (betEvent: IChangeBet['betEvent'], outcomeIndex: IChang
 });
 
 /**
+ * Sucess action for change bet action
+ */
+interface ISucessChangeBet {
+  type: 'SUCESS_CHANGE_BET';
+  changeBetStatus: boolean;
+}
+export const SUCESS_CHANGE_BET: ISucessChangeBet['type'] = 'SUCESS_CHANGE_BET';
+export const sucessChangeBet = (status: ISucessChangeBet['changeBetStatus']) => ({
+  type: SUCESS_CHANGE_BET,
+  status,
+});
+
+/**
  * Action to fetch bets which have already ended
  */
 interface IFetchResultsBet {
@@ -191,6 +204,7 @@ export type ContractActions =
   | IFetchPlacedBets
   | ISucessPlacedBets
   | IChangeBet
+  | ISucessChangeBet
   | IFetchResultsBet
   | ISucessResultsBet
   | INoopAction;
