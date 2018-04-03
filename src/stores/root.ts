@@ -20,6 +20,7 @@ import {
   ContractActions,
   fetchAvailableEpic,
   fetchPlacedBetsEpic,
+  fetchResultBetsEpic,
   fetchUserAccountEpic,
   IContractsState,
   placeBetEpic,
@@ -53,6 +54,7 @@ const epics: Array<Epic<Actions, IState, any>> = [
   fetchUserAccountEpic,
   fetchPlacedBetsEpic,
   changeBetEpic,
+  fetchResultBetsEpic,
 ].filter(epic => epic !== null) as Array<Epic<Actions, IState, any>>;
 
 export const rootEpic = combineEpics<Actions, IState>(...epics);

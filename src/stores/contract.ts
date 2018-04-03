@@ -6,6 +6,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import {
   changeBet as ethChangeBet,
   getAvailableBets,
+  getPastBets,
   getPlacedBets,
   getUserAccount,
   placeBet as ethPlaceBet,
@@ -133,6 +134,30 @@ export const changeBet = (betEvent: IChangeBet['betEvent'], outcomeIndex: IChang
   outcomeIndex,
 });
 
+/**
+ * Action to fetch bets which have already ended
+ */
+interface IFetchResultsBet {
+  type: 'FETCH_RESULTS_BET';
+}
+export const FETCH_RESULTS_BET: IFetchResultsBet['type'] = 'FETCH_RESULTS_BET';
+export const fetchResultsBet = () => ({
+  type: FETCH_RESULTS_BET,
+});
+
+/**
+ * Sucess action to for fetch results bet
+ */
+interface ISucessResultsBet {
+  type: 'SUCESS_RESULTS_BET';
+  results: string[];
+}
+export const SUCESS_RESULTS_BET: ISucessResultsBet['type'] = 'SUCESS_RESULTS_BET';
+export const sucessResultsBet = (results: ISucessResultsBet['results']) => ({
+  type: SUCESS_RESULTS_BET,
+  results,
+});
+
 export const fetchAvailableEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_AVAILABLE_BETS).mergeMap(() => fromPromise(getAvailableBets()).map(sucessAvailableBets));
 
@@ -154,6 +179,9 @@ export const fetchUserAccountEpic: Epic<Actions, IState> = action$ =>
 export const fetchPlacedBetsEpic: Epic<Actions, IState> = action$ =>
   action$.ofType(FETCH_PLACED_BETS).mergeMap(() => fromPromise(getPlacedBets()).map(sucessPlacedBets));
 
+export const fetchResultBetsEpic: Epic<Actions, IState> = action$ =>
+  action$.ofType(FETCH_RESULTS_BET).mergeMap(() => fromPromise(getPastBets()).map(sucessResultsBet));
+
 export type ContractActions =
   | IFetchAvailableBets
   | ISuccessAvailableBets
@@ -163,17 +191,21 @@ export type ContractActions =
   | IFetchPlacedBets
   | ISucessPlacedBets
   | IChangeBet
+  | IFetchResultsBet
+  | ISucessResultsBet
   | INoopAction;
 
 export interface IContractsState {
   availableBets: string[];
   placedBets: string[];
+  resultBets: string[];
   userAccount: string;
 }
 
 export const defaultContractsState: IContractsState = {
   availableBets: [],
   placedBets: [],
+  resultBets: [],
   userAccount: '',
 };
 
@@ -187,6 +219,8 @@ export const contract = (state: IContractsState = defaultContractsState, action:
       return { ...state, userAccount: action.userAccount };
     case SUCESS_PLACED_BETS:
       return { ...state, placedBets: state.placedBets.concat(action.placedBets) };
+    case SUCESS_RESULTS_BET:
+      return { ...state, resultBets: action.results };
     default:
       return state;
   }
