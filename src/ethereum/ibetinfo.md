@@ -8,7 +8,7 @@
 
 **●  fid**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:40](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L40)*
+*Defined in [ethereum/contract-interaction.ts:44](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L44)*
 
 
 
@@ -25,7 +25,7 @@ ___
 
 **●  jsonIndex**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:42](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L42)*
+*Defined in [ethereum/contract-interaction.ts:46](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L46)*
 
 
 
@@ -42,7 +42,7 @@ ___
 
 **●  kickOffTime**:  *`Date`* 
 
-*Defined in [ethereum/contract-interaction.ts:38](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L38)*
+*Defined in [ethereum/contract-interaction.ts:42](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L42)*
 
 
 
@@ -59,7 +59,7 @@ ___
 
 **●  outcomeOne**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:16](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L16)*
+*Defined in [ethereum/contract-interaction.ts:15](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L15)*
 
 
 
@@ -76,7 +76,7 @@ ___
 
 **●  outcomeThree**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:20](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L20)*
+*Defined in [ethereum/contract-interaction.ts:19](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L19)*
 
 
 
@@ -93,7 +93,7 @@ ___
 
 **●  outcomeTwo**:  *`string`* 
 
-*Defined in [ethereum/contract-interaction.ts:18](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L18)*
+*Defined in [ethereum/contract-interaction.ts:17](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L17)*
 
 
 
@@ -110,7 +110,7 @@ ___
 
 **●  poolOne**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:22](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L22)*
+*Defined in [ethereum/contract-interaction.ts:21](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L21)*
 
 
 
@@ -127,7 +127,7 @@ ___
 
 **●  poolThree**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:26](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L26)*
+*Defined in [ethereum/contract-interaction.ts:25](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L25)*
 
 
 
@@ -144,7 +144,7 @@ ___
 
 **●  poolTwo**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:24](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L24)*
+*Defined in [ethereum/contract-interaction.ts:23](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L23)*
 
 
 
@@ -161,11 +161,11 @@ ___
 
 **●  state**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:30](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L30)*
+*Defined in [ethereum/contract-interaction.ts:34](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L34)*
 
 
 
-Current state of the Betting Event.
+Current state of the Betting Event. 0: Accepting Bets 1: Match started, no longer accepting bets 2: Match ended 3: Match ended, final results fetched.
 
 
 
@@ -178,7 +178,7 @@ ___
 
 **●  teamOneScore**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:34](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L34)*
+*Defined in [ethereum/contract-interaction.ts:38](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L38)*
 
 
 
@@ -195,7 +195,7 @@ ___
 
 **●  teamTwoScore**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:36](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L36)*
+*Defined in [ethereum/contract-interaction.ts:40](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L40)*
 
 
 
@@ -212,7 +212,7 @@ ___
 
 **●  totalPool**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:28](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L28)*
+*Defined in [ethereum/contract-interaction.ts:27](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L27)*
 
 
 
@@ -229,7 +229,7 @@ ___
 
 **●  winningIndex**:  *`number`* 
 
-*Defined in [ethereum/contract-interaction.ts:32](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L32)*
+*Defined in [ethereum/contract-interaction.ts:36](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L36)*
 
 
 

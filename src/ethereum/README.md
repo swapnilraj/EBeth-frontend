@@ -1,4 +1,4 @@
-# Contract Interaction
+# Contract-Interaction
 
 ## Index
 
@@ -12,10 +12,13 @@
 
 * [changeBet](README.md#changebet)
 * [getAllClubs](README.md#getallclubs)
+* [getAllClubsFull](README.md#getallclubsfull)
 * [getAvailableBets](README.md#getavailablebets)
 * [getAvailableBetsFromList](README.md#getavailablebetsfromlist)
 * [getBetInfo](README.md#getbetinfo)
+* [getFullClubName](README.md#getfullclubname)
 * [getGamesByClub](README.md#getgamesbyclub)
+* [getPastBets](README.md#getpastbets)
 * [getPlacedBets](README.md#getplacedbets)
 * [getUserAccount](README.md#getuseraccount)
 * [getUserBetInfo](README.md#getuserbetinfo)
@@ -30,11 +33,11 @@
 
 ### «Const» changeBet
 
-► **changeBet**(betEvent: *`string`*, outcomeIndex: *`number`*): `Promise`.<`void`>
+► **changeBet**(betEvent: *`string`*, outcomeIndex: *`number`*): `Promise`.<`boolean`>
 
 
 
-*Defined in [ethereum/contract-interaction.ts:201](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L201)*
+*Defined in [ethereum/contract-interaction.ts:248](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L248)*
 
 
 
@@ -52,7 +55,9 @@ Allows a user to change a bet that they have placed.
 
 
 
-**Returns:** `Promise`.<`void`>
+**Returns:** `Promise`.<`boolean`>
+Boolean indicating if the method was successful.
+
 
 
 
@@ -68,11 +73,38 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:310](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L310)*
+*Defined in [ethereum/contract-interaction.ts:377](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L377)*
 
 
 
-Returns an array of club names that are in our system.
+Returns an array of club names used by the contracts.
+
+
+
+
+**Returns:** `string`[]
+An array with club names that are in our system.
+
+
+
+
+
+
+___
+
+<a id="getallclubsfull"></a>
+
+### «Const» getAllClubsFull
+
+► **getAllClubsFull**(): `string`[]
+
+
+
+*Defined in [ethereum/contract-interaction.ts:404](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L404)*
+
+
+
+Returns an array of fulllength club names that are in our system.
 
 
 
@@ -95,7 +127,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:225](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L225)*
+*Defined in [ethereum/contract-interaction.ts:278](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L278)*
 
 
 
@@ -122,7 +154,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:241](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L241)*
+*Defined in [ethereum/contract-interaction.ts:308](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L308)*
 
 
 
@@ -157,7 +189,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:255](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L255)*
+*Defined in [ethereum/contract-interaction.ts:322](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L322)*
 
 
 
@@ -184,6 +216,41 @@ Information about a match that a bet is a available for.
 
 ___
 
+<a id="getfullclubname"></a>
+
+### «Const» getFullClubName
+
+► **getFullClubName**(club: *`string`*): `string`
+
+
+
+*Defined in [ethereum/contract-interaction.ts:456](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L456)*
+
+
+
+Get full club name (for display & crests)
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| club | `string`   |  contract club name |
+
+
+
+
+
+**Returns:** `string`
+full name of club
+
+
+
+
+
+
+___
+
 <a id="getgamesbyclub"></a>
 
 ### «Const» getGamesByClub
@@ -192,7 +259,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:338](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L338)*
+*Defined in [ethereum/contract-interaction.ts:432](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L432)*
 
 
 
@@ -219,6 +286,33 @@ An array of the bets for a specific club.
 
 ___
 
+<a id="getpastbets"></a>
+
+### «Const» getPastBets
+
+► **getPastBets**(): `Promise`.<`string`[]>
+
+
+
+*Defined in [ethereum/contract-interaction.ts:292](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L292)*
+
+
+
+Returns an array of bets for which the event is over.
+
+
+
+
+**Returns:** `Promise`.<`string`[]>
+Array of bets for which the event is over.
+
+
+
+
+
+
+___
+
 <a id="getplacedbets"></a>
 
 ### «Const» getPlacedBets
@@ -227,7 +321,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:211](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L211)*
+*Defined in [ethereum/contract-interaction.ts:264](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L264)*
 
 
 
@@ -254,7 +348,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:297](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L297)*
+*Defined in [ethereum/contract-interaction.ts:364](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L364)*
 
 
 
@@ -281,7 +375,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:269](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L269)*
+*Defined in [ethereum/contract-interaction.ts:336](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L336)*
 
 
 
@@ -316,7 +410,7 @@ ___
 
 
 
-*Defined in [ethereum/contract-interaction.ts:282](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L282)*
+*Defined in [ethereum/contract-interaction.ts:349](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L349)*
 
 
 
@@ -339,11 +433,11 @@ ___
 
 ### «Const» placeBet
 
-► **placeBet**(betEvent: *`string`*, outcomeIndex: *`number`*, value: *`string`*): `Promise`.<`void`>
+► **placeBet**(betEvent: *`string`*, outcomeIndex: *`number`*, value: *`string`*): `Promise`.<`boolean`>
 
 
 
-*Defined in [ethereum/contract-interaction.ts:187](https://github.com/swapnilraj/EBeth-frontend/blob/a927790/src/ethereum/contract-interaction.ts#L187)*
+*Defined in [ethereum/contract-interaction.ts:227](https://github.com/swapnilraj/EBeth-frontend/blob/4b57453/src/ethereum/contract-interaction.ts#L227)*
 
 
 
@@ -362,7 +456,9 @@ Allows a user to place a bet.
 
 
 
-**Returns:** `Promise`.<`void`>
+**Returns:** `Promise`.<`boolean`>
+Boolean indicating if the method was successful.
+
 
 
 
