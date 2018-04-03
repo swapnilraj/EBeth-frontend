@@ -5,6 +5,7 @@ This is a repo for the Front-End of the EBeth betting app.
 
 * Contracts deployed on your preference of network
 * node
+* [Metamask](https://metamask.io/)
 
 # How to run?
 
