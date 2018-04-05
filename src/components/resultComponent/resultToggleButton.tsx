@@ -6,11 +6,16 @@ interface IProps {
   currentDisplay: string;
   tabState: ITabState;
   switchTab(tabState: ITabState);
+  loadNewResults(currentState: string);
 }
 
 export class ResultToggleButton extends React.Component<IProps, {}> {
   public changeTab() {
     this.props.switchTab(this.props.tabState);
+  }
+
+  public changeResultsScreen() {
+    this.props.loadNewResults(this.props.tabState.message);
   }
 
   public render() {
@@ -116,7 +121,7 @@ export class ResultToggleButton extends React.Component<IProps, {}> {
             />
           </div>
         </div>
-        <div className={dropDownStyle()}>
+        <div className={dropDownStyle()} onClick={() => this.changeResultsScreen()}>
           <div className={buttonTextWrapper}>
             <div className={centerTextDropDown}>
               {this.props.tabState.message === 'My results' ? 'All results' : 'My results'}

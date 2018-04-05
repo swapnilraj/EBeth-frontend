@@ -4,6 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { style, types } from 'typestyle';
 import { PlaceBetMenu } from '../components/placeBetMenu/placeBetMenu';
 import { ListOfBettingComponents } from '../components/placeBetsList/listOfBettingComponents';
+import { IFixture } from '../components/Results';
 import { getBetInfo, /*getUserBetInfo , */ IBetInfo } from '../ethereum/contract-interaction';
 import {
   onSelectTeam,
@@ -22,16 +23,6 @@ import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
-export interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
 
 interface ISelected {
   selectTeam: string;
@@ -119,6 +110,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
           awayBets: 0,
           drawBets: 0,
           potValue: 0,
+          betEvent: '',
         };
         const APIDate: Date = APIfixtures[i].kickOffTime;
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;

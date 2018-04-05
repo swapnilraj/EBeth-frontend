@@ -77,7 +77,7 @@ export const onLoadResults = (currentScreen: string) => {
 
 const sampleResult1 = {
   homeTeamName: 'Arsenal',
-  awayTeamName: 'Watford City',
+  awayTeamName: 'Watford',
   winningTeamStatus: 'Away',
   date: 'Wednesday | December 18th',
   score: '2  -  3',
@@ -93,7 +93,7 @@ const sampleResult1 = {
 
 const sampleResult2 = {
   homeTeamName: 'Newcastle United',
-  awayTeamName: 'Spurs',
+  awayTeamName: 'Tottenham Hotspur',
   winningTeamStatus: 'Draw',
   date: 'Thursday | December 19th',
   score: '1  -  1',
@@ -184,6 +184,22 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
       return Object.assign({}, state, tabReplacement);
 
     case loadResults:
+      const currentToggleButtonDisplay = Object.assign({}, state.tabState);
+      if (currentToggleButtonDisplay.message === 'My results') {
+        currentToggleButtonDisplay.message = 'All results';
+        currentToggleButtonDisplay.expanded = false;
+        // call fetch results here?
+      } else {
+        currentToggleButtonDisplay.message = 'My results';
+        currentToggleButtonDisplay.expanded = false;
+        // call fetch results here?
+      }
+
+      const replacementToggleButtonDisplay = {
+        tabState: currentToggleButtonDisplay,
+      };
+
+      return Object.assign({}, state, replacementToggleButtonDisplay);
 
     default:
       return state;

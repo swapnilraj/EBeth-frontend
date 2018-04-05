@@ -14,6 +14,7 @@ export interface IFixture {
   awayBets: number;
   drawBets: number;
   potValue: number;
+  betEvent: string;
 }
 export interface ITabState {
   message: string;

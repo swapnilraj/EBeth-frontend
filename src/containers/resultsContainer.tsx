@@ -4,19 +4,8 @@ import { style } from 'typestyle';
 
 import { ListOfResults } from '../components/resultComponent/listOfResults';
 import { ResultToggleButton } from '../components/resultComponent/resultToggleButton';
-import { IResult, IResultComponent, ITabState } from '../components/Results';
-import { onSwitchTab, toggleStatsBar, updateResultsComponentList } from '../reducers/resultsReducer';
-
-export interface IFixture {
-  homeTeamName: string;
-  awayTeamName: string;
-  date: string;
-  time: string;
-  homeBets: number;
-  awayBets: number;
-  drawBets: number;
-  potValue: number;
-}
+import { IFixture, IResult, IResultComponent, ITabState } from '../components/Results';
+import { onLoadResults, onSwitchTab, toggleStatsBar, updateResultsComponentList } from '../reducers/resultsReducer';
 
 interface ISelected {
   selectTeam: string;
@@ -64,6 +53,7 @@ interface IProps {
   onUpdateResultsComponentList(component: IResultComponent);
   onToggleStatsBar(id: number);
   onSwitchTab(tabState: ITabState);
+  onLoadResults(currentState: string);
 }
 class ResultsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -83,6 +73,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.updateInputValue = this.updateInputValue.bind(this);
     this.updateResultsComponentList = this.updateResultsComponentList.bind(this);
     this.switchTab = this.switchTab.bind(this);
+    this.changeResultScreen = this.changeResultScreen.bind(this);
   }
 
   public updateComponentsInList(array: IFixture[]) {
@@ -126,6 +117,10 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.props.onSwitchTab(tabState);
   }
 
+  public changeResultScreen(currentState: string) {
+    this.props.onLoadResults(currentState);
+  }
+
   public render() {
     const header = style({
       marginLeft: '0',
@@ -166,7 +161,12 @@ class ResultsComponent extends React.Component<IProps, {}> {
               <div className={centerText}>Results</div>
             </div>
           </div>
-          <ResultToggleButton tabState={this.props.tabState} currentDisplay="" switchTab={this.switchTab} />
+          <ResultToggleButton
+            tabState={this.props.tabState}
+            currentDisplay=""
+            switchTab={this.switchTab}
+            loadNewResults={this.props.onLoadResults}
+          />
         </div>
         <ListOfResults
           width="95%"
@@ -187,6 +187,7 @@ const mapDispatchToProps = {
   onUpdateResultsComponentList: updateResultsComponentList,
   onToggleStatsBar: toggleStatsBar,
   onSwitchTab,
+  onLoadResults,
 };
 
 const mapStateToProps = state => {

@@ -60,6 +60,7 @@ export const defaultIFixture: IFixture = {
   drawBets: 0,
   homeTeamName: 'Manchester City',
   time: '3pm',
+  betEvent: '',
 };
 
 export const secondFixture: IFixture = {
@@ -71,6 +72,7 @@ export const secondFixture: IFixture = {
   drawBets: 3,
   homeTeamName: 'Arsenal',
   time: '3pm',
+  betEvent: '',
 };
 
 export const thirdFixture: IFixture = {
@@ -82,6 +84,7 @@ export const thirdFixture: IFixture = {
   drawBets: 3,
   homeTeamName: 'West Ham United',
   time: '5pm',
+  betEvent: '',
 };
 
 export const fourthFixture: IFixture = {
@@ -93,6 +96,7 @@ export const fourthFixture: IFixture = {
   drawBets: 3,
   homeTeamName: 'Manchester United',
   time: '5pm',
+  betEvent: '',
 };
 
 export const defaultMyBet: IMyBets = {

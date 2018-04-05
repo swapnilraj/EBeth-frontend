@@ -1,4 +1,4 @@
-import { IFixture } from '../containers/resultsContainer';
+import { IFixture } from '../components/Results';
 
 // ***********************__ACTIONS__*****************************
 interface IUpdateBetFixture {

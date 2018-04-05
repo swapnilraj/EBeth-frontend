@@ -57,6 +57,7 @@ export class ListOfBettingComponents extends React.Component<IProps, {}> {
           awayBets: 0,
           drawBets: 0,
           potValue: 0,
+          betEvent: '',
         };
         const defaultStatus = { fixture: emptyIFixture, id: 0, message: '', potValue: 0, status: 'contracted' };
         return fixtures.map(fixture => (

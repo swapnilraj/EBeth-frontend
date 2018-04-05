@@ -25,6 +25,7 @@ const defaultFixture = {
   awayBets: 0,
   drawBets: 0,
   potValue: 0,
+  betEvent: '',
 };
 
 export const defaultResult = {
