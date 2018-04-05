@@ -5,7 +5,13 @@ import { style } from 'typestyle';
 import { ListOfResults } from '../components/resultComponent/listOfResults';
 import { ResultToggleButton } from '../components/resultComponent/resultToggleButton';
 import { IFixture, IResult, IResultComponent, ITabState } from '../components/Results';
-import { onLoadResults, onSwitchTab, toggleStatsBar, updateResultsComponentList } from '../reducers/resultsReducer';
+import {
+  onLoadResults,
+  onReplaceResults,
+  onSwitchTab,
+  toggleStatsBar,
+  updateResultsComponentList,
+} from '../reducers/resultsReducer';
 
 interface ISelected {
   selectTeam: string;
@@ -54,6 +60,7 @@ interface IProps {
   onToggleStatsBar(id: number);
   onSwitchTab(tabState: ITabState);
   onLoadResults(currentState: string);
+  replaceResults(newResults: IResult[]);
 }
 class ResultsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -73,7 +80,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.updateInputValue = this.updateInputValue.bind(this);
     this.updateResultsComponentList = this.updateResultsComponentList.bind(this);
     this.switchTab = this.switchTab.bind(this);
-    this.changeResultScreen = this.changeResultScreen.bind(this);
+    this.loadNewResults = this.loadNewResults.bind(this);
   }
 
   public updateComponentsInList(array: IFixture[]) {
@@ -119,6 +126,14 @@ class ResultsComponent extends React.Component<IProps, {}> {
 
   public changeResultScreen(currentState: string) {
     this.props.onLoadResults(currentState);
+  }
+
+  public loadNewResults(newResults: IResult[]) {
+    // tslint:disable-next-line:no-console
+    console.log('Spirit');
+    // tslint:disable-next-line:no-console
+    console.log(this.props);
+    this.props.replaceResults(newResults);
   }
 
   public render() {
@@ -177,6 +192,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
           toggleStatsBar={this.toggleStatsBar}
           expandBetMenu={this.expandBetMenu}
           updateResults={this.updateResults}
+          replaceResults={this.loadNewResults}
         />
       </div>
     );
@@ -188,6 +204,7 @@ const mapDispatchToProps = {
   onToggleStatsBar: toggleStatsBar,
   onSwitchTab,
   onLoadResults,
+  replaceResults: onReplaceResults,
 };
 
 const mapStateToProps = state => {

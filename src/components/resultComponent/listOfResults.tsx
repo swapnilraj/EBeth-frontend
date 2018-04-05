@@ -11,6 +11,7 @@ interface IProps {
   toggleStatsBar(id: number);
   expandBetMenu(teamname: string, currentIFixture: IFixture);
   updateResults();
+  replaceResults(newResults: IResult[]);
 }
 
 const defaultFixture = {
@@ -47,6 +48,7 @@ export const defaultIResultComponent: IResultComponent = {
   potValue: 0,
   message: '',
 };
+
 export class ListOfResults extends React.Component<IProps, {}> {
   public renderBettingComponents(results: IResult[]) {
     if (this.props.componentStatus[0] === undefined || this.props.results[0] !== this.props.componentStatus[0].result) {

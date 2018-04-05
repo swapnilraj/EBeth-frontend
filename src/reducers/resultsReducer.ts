@@ -72,6 +72,24 @@ export const onLoadResults = (currentScreen: string) => {
   };
 };
 
+interface IReplaceResults {
+  type: 'replaceResults';
+  payload: {
+    replacementResults: IReplaceResults;
+  };
+}
+export const replaceResults: IReplaceResults['type'] = 'replaceResults';
+export const onReplaceResults = (newResults: IResult[]) => {
+  // tslint:disable-next-line:no-console
+
+  return {
+    type: replaceResults,
+    payload: {
+      newResults,
+    },
+  };
+};
+
 // ***********************__ACTIONS__*****************************
 // ***********************__REDUCERS__*****************************
 
@@ -198,8 +216,13 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
       const replacementToggleButtonDisplay = {
         tabState: currentToggleButtonDisplay,
       };
-
       return Object.assign({}, state, replacementToggleButtonDisplay);
+
+    case replaceResults:
+      // pass array of results to this function to display on front end
+      // important you incorporate control flow in order to avoid infinite reloading
+      const replacementResults = { results: action.payload.newResults };
+      return Object.assign({}, state, replacementResults);
 
     default:
       return state;
