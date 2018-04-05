@@ -165,7 +165,12 @@ const defaultTabState: ITabState = {
   expanded: false,
 };
 
-export type ResultComponentActions = IAddResultsComponentToState | IToggleStatsBar;
+export type ResultComponentActions =
+  | IAddResultsComponentToState
+  | IToggleStatsBar
+  | ISwitchTab
+  | ILoadSpecifiedResults
+  | IReplaceResults;
 
 export interface IListOfResultsComponentState {
   results: IResult[];

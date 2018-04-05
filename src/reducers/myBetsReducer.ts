@@ -1,21 +1,6 @@
 import { IFixture } from '../components/Results';
 
 // ***********************__ACTIONS__*****************************
-interface IUpdateBetFixture {
-  type: 'updateFixtureList';
-  payload: {
-    componentList: any;
-  };
-}
-export const updateFixtureList: IUpdateBetFixture['type'] = 'updateFixtureList';
-export const updateBetFixtureList = (_array: IUpdateBetFixture['payload']['componentList']) => {
-  return {
-    type: updateFixtureList,
-    payload: {
-      componentList: _array,
-    },
-  };
-};
 
 interface IToggleStats {
   type: 'toggleStatus';
@@ -33,6 +18,22 @@ export const toggleStatsStatus = (id: number) => {
   };
 };
 
+interface IPopulateMyBets {
+  type: 'populateMyBets';
+  payload: {
+    newBets: IMyBets[];
+  };
+}
+export const populateMyBets: IPopulateMyBets['type'] = 'populateMyBets';
+export const onPopulateMyBets = (newBets: IMyBets[]) => {
+  return {
+    type: populateMyBets,
+    payload: {
+      newBets,
+    },
+  };
+};
+
 // ***********************__ACTIONS__*****************************
 // ***********************__REDUCERS__*****************************
 
@@ -44,7 +45,7 @@ export interface IMyBets {
   live: boolean;
 }
 
-export type BettingComponentActions = IUpdateBetFixture;
+export type BettingComponentActions = IToggleStats;
 
 export interface IMyBetsState {
   fixture: IFixture[];
@@ -145,6 +146,11 @@ export const MyBetsReducer = (state: IMyBetsState = defaultMyBetState, action) =
       userBetsState[action.payload.id].expanded = !userBetsState[action.payload.id].expanded;
       const replacementStatsBarState = { userBets: userBetsState };
       return Object.assign({}, state, replacementStatsBarState);
+
+    case populateMyBets:
+      const replacementBets = { userBets: action.payload.newBets, fixture: [] };
+      return Object.assign({}, state, replacementBets);
+
     default:
       return state;
   }
