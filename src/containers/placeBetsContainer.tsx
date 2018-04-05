@@ -18,7 +18,7 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
-import { fetchAvailableBets } from '../stores/contract';
+import { fetchAvailableBets, placeBet } from '../stores/contract';
 import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
@@ -66,6 +66,7 @@ interface IProps {
   onSelectTeam(homeTeamName: string, panelType: string);
   onToggleValidInput();
   onUpdateBetValueInput(newInput: string);
+  placeBet(betEvent: string, outcomeIndex: number, value: string);
 }
 class PlaceBetsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -87,7 +88,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
 
   public componentWillMount() {
     // tslint:disable-next-line:no-console
-    console.log(this.props);
+
     if (this.props.availableBets.length === 0) {
       this.props.fetchAvailableBets();
     }
@@ -119,6 +120,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         tempFixture.awayBets = APIfixtures[i].poolTwo;
         tempFixture.drawBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
+        tempFixture.betEvent = this.props.availableBets[i];
         tempFixture.date =
           numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
         const time = APIDate.getHours();
@@ -239,6 +241,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             selectPanel={this.selectTeamToBetOn}
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
+            placeBet={this.props.placeBet}
           />
         </div>
       </div>,
@@ -258,6 +261,7 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
       onToggleValidInput,
       onUpdateBetValueInput,
       fetchAvailableBets,
+      placeBet,
     },
     dispatch,
   );

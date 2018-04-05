@@ -92,7 +92,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
 
   public componentWillMount() {
     // tslint:disable-next-line:no-console
-    console.log(this.props);
+
     if (this.props.availableBets.length === 0) {
       fetchAvailableBets();
     }
@@ -245,6 +245,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
             selectPanel={this.selectTeamToBetOn}
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
+            placeBet={() => 0}
           />
         </div>
       </div>

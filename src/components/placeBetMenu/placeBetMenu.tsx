@@ -27,6 +27,7 @@ interface IProps {
   toggleMenuDisplay(currentState: string, fixture: IFixture);
   updateInputValue(newInput: string);
   toggleValidUserInput();
+  placeBet(betEVent: string, outcomeIndex: number, value: string);
 }
 
 export class PlaceBetMenu extends React.Component<IProps, {}> {
@@ -54,6 +55,18 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
       confirmButtonText: 'OK',
     });
     this.props.toggleMenuDisplay('show', this.props.fixture);
+
+    let outcomeIndex: number = 0;
+    switch (this.props.menuState.selected.selectTeam) {
+      case 'HOME':
+        outcomeIndex = 0;
+      case 'Draw':
+        outcomeIndex = 1;
+      case 'AWAY':
+        outcomeIndex = 2;
+    }
+
+    this.props.placeBet(this.props.fixture.betEvent, outcomeIndex, this.props.menuState.selected.betInputValue);
   }
 
   public handleUserInput(e) {
