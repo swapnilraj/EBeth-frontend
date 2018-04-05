@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { style, types } from 'typestyle';
+import { classes, style, types } from 'typestyle';
 import { IMyBets } from '../../reducers/myBetsReducer';
+import { Colors, Dimens } from '../../utils/constants';
 
 export interface IResult {
   homeTeamName: string;
@@ -32,19 +33,24 @@ interface IProps {
 export class TeamSegment extends React.Component<IProps, {}> {
   public render() {
     const loadScreenSpecificComponents = () => {
+      const isContracted = this.props.status === 'contracted';
+      const displayUserBet =
+        this.props.team === this.props.result.teamOfUser || this.props.bet.betPlacedOn === this.props.team;
       if (this.props.screen === 'PLACE_BETS') {
         return (
           <div className={textWrapper()}>
-            <div className={centerText()}>{this.props.teamName}</div>
-            <div className={homeOrAwayText()}>{this.props.team}</div>
+            <div className={centerText(false)}>{this.props.teamName}</div>
+            <div className={homeOrAwayText(isContracted)}>{this.props.team}</div>
           </div>
         );
       } else if (this.props.screen === 'RESULTS') {
         return (
           <div className={textWrapper()}>
-            <div className={centerText()}>{this.props.teamName}</div>
-            <div className={myBetBox}>your bet: {this.props.result.yourBetValue} ETH</div>
-            <div className={homeOrAwayText()}>{this.props.team}</div>
+            <div className={centerText(displayUserBet)}>{this.props.teamName}</div>
+            <div className={classes(myBetBox(displayUserBet), myBetBoxColor(this.props.result.resultForUser))}>
+              your bet: {this.props.result.yourBetValue} ETH
+            </div>
+            <div className={homeOrAwayText(isContracted)}>{this.props.team}</div>
           </div>
         );
       }
@@ -52,34 +58,33 @@ export class TeamSegment extends React.Component<IProps, {}> {
       if (this.props.screen === 'MY_BETS') {
         return (
           <div className={textWrapper()}>
-            <div className={centerText()}>{this.props.teamName}</div>
-            <div className={myBetBox}>your bet: {this.props.bet.betValue} ETH</div>
-            <div className={homeOrAwayText()}>{this.props.team}</div>
+            <div className={centerText(displayUserBet)}>{this.props.teamName}</div>
+            <div className={classes(myBetBox(displayUserBet), myBetBoxColor('pending'))}>
+              your bet: {this.props.bet.betValue} ETH
+            </div>
+            <div className={homeOrAwayText(isContracted)}>{this.props.team}</div>
           </div>
         );
       }
     };
 
-    const teamWrapper = () => style(liveMatchStyle[this.props.liveMatch ? 'true' : 'false']);
+    const liveTeamWrapper = style({
+      height: '100%' as types.CSSGlobalValues,
+      width: '27.5%' as types.CSSGlobalValues,
+      float: 'left' as types.CSSGlobalValues,
+      display: 'inline-block' as types.CSSDisplay,
+      verticalAlign: 'middle' as types.CSSGlobalValues,
+      position: 'relative' as types.CSSGlobalValues,
+    });
 
-    const liveMatchStyle = {
-      true: {
-        height: '100%' as types.CSSGlobalValues,
-        width: '27.5%' as types.CSSGlobalValues,
-        float: 'left' as types.CSSGlobalValues,
-        display: 'inline-block' as types.CSSDisplay,
-        verticalAlign: 'middle' as types.CSSGlobalValues,
-        position: 'relative' as types.CSSGlobalValues,
-      },
-      false: {
-        height: '100%' as types.CSSGlobalValues,
-        width: '30%' as types.CSSGlobalValues,
-        float: 'left' as types.CSSGlobalValues,
-        display: 'inline-block' as types.CSSDisplay,
-        verticalAlign: 'middle' as types.CSSGlobalValues,
-        position: 'relative' as types.CSSGlobalValues,
-      },
-    };
+    const teamWrapper = style({
+      height: '100%' as types.CSSGlobalValues,
+      width: '30%' as types.CSSGlobalValues,
+      float: 'left' as types.CSSGlobalValues,
+      display: 'inline-block' as types.CSSDisplay,
+      verticalAlign: 'middle' as types.CSSGlobalValues,
+      position: 'relative' as types.CSSGlobalValues,
+    });
 
     const crestStyle = style({
       height: '100%',
@@ -90,17 +95,49 @@ export class TeamSegment extends React.Component<IProps, {}> {
       textAlign: 'center',
     });
 
-    const displayUserBet =
-      this.props.team === this.props.result.teamOfUser ||
-      (this.props.bet.live && this.props.bet.betPlacedOn === this.props.team)
-        ? 'true'
-        : 'false';
-
-    const centerText = () => {
-      if (displayUserBet === 'true') {
-        // bold teamText if user betted on it
-        return style({ fontWeight: 'bold' as 'bold' });
+    // bold teamText if user betted on it
+    const centerText = displayUserBet => {
+      if (displayUserBet) {
+        return style({ fontWeight: 'bold' as types.CSSFontWeight });
       }
+    };
+
+    const contracted = style({
+      display: 'none' as types.CSSDisplay,
+    });
+
+    const homeAwayText = style({
+      color: Colors.homeAwayText,
+      fontSize: Dimens.homeAwayFontSize,
+      marginTop: Dimens.myBetBoxMarginTop,
+    });
+
+    const homeOrAwayText = isContracted => {
+      return classes(homeAwayText, isContracted ? contracted : null);
+    };
+
+    const myBetBoxColor = color => {
+      return style({ backgroundColor: Colors[color] });
+    };
+
+    const myBetBoxStyle = style({
+      padding: Dimens.myBetBoxPadding,
+      paddingRight: Dimens.myBetBoxPaddingSides,
+      paddingLeft: Dimens.myBetBoxPaddingSides,
+      color: Colors.myBetBoxText,
+      fontSize: Dimens.myBetBoxFontSize,
+      letterSpacing: Dimens.myBetBoxLetterSpacing,
+      fontWeight: 'bold' as types.CSSFontWeight,
+      marginTop: Dimens.myBetBoxMarginTop,
+      display: 'inline-table' as types.CSSDisplay,
+      marginLeft: Dimens.myBetBoxMarginLeft[this.props.team],
+    });
+
+    const myBetBox = display => {
+      if (display) {
+        return myBetBoxStyle;
+      }
+      return contracted;
     };
 
     const homeOrAway = {
@@ -117,73 +154,6 @@ export class TeamSegment extends React.Component<IProps, {}> {
       },
       none: {},
     };
-    const expandedOrContracted = {
-      expanded: {
-        display: 'inline',
-      },
-      contracted: {
-        display: 'none',
-      },
-      none: {
-        display: 'none',
-      },
-    };
-
-    const dynamicHomeAwayText = {
-      Home: {
-        color: 'rgb(140, 140, 140)',
-        fontSize: '.8em',
-        marginTop: '3%',
-      },
-      Away: {
-        color: 'rgb(140, 140, 140)',
-        fontSize: '.8em',
-        marginTop: '3%',
-      },
-      none: {},
-    };
-
-    const homeOrAwayText = () => style(dynamicHomeAwayText[this.props.team], expandedOrContracted[this.props.status]);
-
-    const dynamicMyBetBoxColor = {
-      win: {
-        backgroundColor: '#00c000',
-      },
-      lose: {
-        backgroundColor: '#ff0000',
-      },
-      pending: {
-        backgroundColor: '#fb6235',
-      },
-    };
-
-    const myBetBoxStyle = {
-      Default: {
-        padding: '0.25em',
-        paddingRight: '0.4em',
-        paddingLeft: '0.4em',
-        color: 'white',
-        fontSize: '.6em',
-        letterSpacing: '0.08em',
-        fontWeight: 'bold' as 'bold',
-        marginTop: '3%',
-      },
-      Away: {
-        marginLeft: 'auto',
-      },
-      Home: {},
-    };
-    const dynamicUserBetDisplay = {
-      false: { display: 'none' as 'none' },
-      true: { display: 'inline-table' as 'inline-table' },
-    };
-
-    const myBetBox = style(
-      dynamicUserBetDisplay[displayUserBet],
-      myBetBoxStyle.Default,
-      myBetBoxStyle[this.props.team],
-      dynamicMyBetBoxColor[this.props.screen === 'MY_BETS' ? 'pending' : this.props.result.resultForUser],
-    );
 
     const crestWrapper = () =>
       style({
@@ -213,7 +183,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
     const dynamicComponents = loadScreenSpecificComponents();
 
     return (
-      <div className={teamWrapper()}>
+      <div className={this.props.liveMatch ? liveTeamWrapper : teamWrapper}>
         <div className={crestWrapper()}>
           <img alt="Crest" className={crestStyle} src={this.props.crest} />
         </div>

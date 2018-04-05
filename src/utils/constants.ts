@@ -10,6 +10,11 @@ const Colors = {
   shadow: '0 2px 27px -5px rgba(0, 0, 0, 0.15)',
   textLight: 'rgba(255, 255, 255, 0.87)',
   activeTab: '#1a232a',
+  win: '#00c000',
+  lose: '#ff0000',
+  pending: '#fb6235',
+  myBetBoxText: 'white',
+  homeAwayText: 'rgb(140, 140, 140)',
 };
 
 /**
@@ -40,6 +45,16 @@ const Dimens = {
   miniTextPaneTopPadding: 38,
   miniTextPaneBottomPadding: 28,
   ytFrameRightMargin: 28,
+  myBetBoxMarginTop: '3%',
+  myBetBoxPadding: '0.25em',
+  myBetBoxPaddingSides: '0.4em',
+  myBetBoxFontSize: '0.6em',
+  myBetBoxLetterSpacing: '0.08em',
+  homeAwayFontSize: '0.8em',
+  myBetBoxMarginLeft: {
+    Home: 'unset',
+    Away: 'auto',
+  },
 };
 
 /**
