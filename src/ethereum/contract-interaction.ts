@@ -6,7 +6,7 @@ const bettingContractJSON = require('./Betting.json');
 const managerContractJSON = require('./BetManager.json');
 
 const managerContract = new web3.eth.Contract(managerContractJSON.abi);
-const managerAddress = '0x19ab6a9e79288f22e3a8536684991f0c2656d3fe';
+const managerAddress = process.env.BETMANAGER_ADDRESS;
 
 managerContract.options.address = managerAddress;
 
