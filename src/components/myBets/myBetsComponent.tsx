@@ -149,6 +149,7 @@ export class MyBetsComponent extends React.Component<IProps, {}> {
             screen="MY_BETS"
             result={defaultResult}
             liveMatch={this.props.bet.live}
+            bet={this.props.bet}
           />
           <TeamSegment
             teamName={this.props.bet.fixture.awayTeamName}

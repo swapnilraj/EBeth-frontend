@@ -136,6 +136,7 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
             screen="PLACE_BETS"
             result={defaultResult}
             liveMatch={false}
+            bet={defaultMyBet}
           />
           <TeamSegment
             teamName={this.props.fixture.awayTeamName}

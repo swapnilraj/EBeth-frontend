@@ -113,6 +113,7 @@ export class ResultComponent extends React.Component<IProps, {}> {
             screen="RESULTS"
             result={this.props.result}
             liveMatch={false}
+            bet={defaultMyBet}
           />
           <TeamSegment
             teamName={this.props.result.awayTeamName}
