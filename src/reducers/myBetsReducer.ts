@@ -126,7 +126,7 @@ export const thirdBet: IMyBets = {
 
 export const fourthBet: IMyBets = {
   betValue: 0.025,
-  betPlacedOn: 'Away',
+  betPlacedOn: 'Draw',
   fixture: fourthFixture,
   expanded: false,
   live: false,

@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { style } from 'typestyle';
+import { classes, style, types } from 'typestyle';
+import { IMyBets } from '../../reducers/myBetsReducer';
+import { Colors, Dimens } from '../../utils/constants';
 
 export interface IResult {
   homeTeamName: string;
@@ -22,44 +24,72 @@ interface IProps {
   screen: string;
   result: IResult;
   liveMatch: boolean;
+  bet: IMyBets;
 }
 
 export class TimeSegment extends React.Component<IProps, {}> {
   public render() {
+    const draw = this.props.result.teamOfUser === 'Draw' || this.props.bet.betPlacedOn === 'Draw';
     const loadScreenSpecificComponents = () => {
       if (this.props.screen === 'PLACE_BETS' || this.props.screen === 'MY_BETS') {
-        return <div className={centerText}>{this.props.startTime}</div>;
+        return (
+          <div className={flexWrapper}>
+            <div>{this.props.startTime}</div>
+            <div className={classes(myBetBox(draw), myBetBoxColor('pending'))}>your bet: 0.05 ETH</div>
+          </div>
+        );
       } else if (this.props.screen === 'RESULTS') {
         return (
-          <div className={scoreWrapper}>
-            <div className={centerText}>{this.props.result.score}</div>
+          <div className={flexWrapper}>
+            <div className={scoreWrapper}>{this.props.result.score}</div>
+            <div className={classes(myBetBox(draw), myBetBoxColor(this.props.result.resultForUser))}>
+              your bet: 0.05 ETH
+            </div>
           </div>
         );
       }
     };
 
+    const myBetBoxStyle = style({
+      fontSize: Dimens.myBetBoxFontSize,
+      letterSpacing: Dimens.myBetBoxLetterSpacing,
+      fontWeight: 'bold' as types.CSSFontWeight,
+      padding: Dimens.myBetBoxPadding,
+      paddingRight: Dimens.myBetBoxPaddingSides,
+      paddingLeft: Dimens.myBetBoxPaddingSides,
+      margin: Dimens.myBetBoxMarginTop,
+      color: Colors.myBetBoxText,
+      flexGrow: 0,
+    });
+
+    const myBetBoxColor = color => {
+      return style({ backgroundColor: Colors[color] });
+    };
+
+    const myBetBox = display => {
+      if (display) {
+        return myBetBoxStyle;
+      }
+      return style({ display: 'none' as types.CSSDisplay });
+    };
+
     const timeWrapper = style({
       height: '100%',
-      width: '15%',
       float: 'left',
-      position: 'relative',
+      width: '15%',
+    });
+
+    const flexWrapper = style({
+      display: 'flex' as types.CSSDisplay,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
     });
 
     const scoreWrapper = style({
-      height: '100%',
-      width: '100%',
-      float: 'left',
-      position: 'relative',
       fontSize: '2em',
-    });
-
-    const centerText = style({
-      margin: 0,
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
     });
 
     const dynamicComponents = loadScreenSpecificComponents();

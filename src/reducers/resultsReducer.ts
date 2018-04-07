@@ -148,7 +148,7 @@ const sampleResult4 = {
   date: 'Friday | December 20th',
   score: '2  -  3',
   resultForUser: 'lose',
-  teamOfUser: 'Home',
+  teamOfUser: 'Draw',
   amountWon: 0.6,
   potValue: 10,
   homeTeamBets: 100,
