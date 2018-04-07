@@ -15,7 +15,7 @@ This is a repo for the Front-End of the EBeth betting app.
 yarn install
 ```
 
-#### Runnigs dev-server
+#### Running dev-server
 ```
 yarn dev
 ```
