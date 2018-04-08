@@ -80,6 +80,22 @@ const Text = {
   aboutBottomPaneHeading: 'Placing a bet',
   aboutBottomPaneLorem: `Essentially, by utilizing blockchain and its inherent trust establishing nature, in conjunction with the discarding of the trust based model which exists in current online offerings, we plan to offer a new outlook on the online betting industry. We want to display a method which future cryptocurrency companies can use to compete with traditional online bookmakers and  ultimately disrupt the industry. Placing a bet is as simple as clicking the place bet button and choosing the details of the your bet, which include your team and the amount of Ether you want to bet. Once you press the Place Bet button you need to finalise the transaction with the Metmask extension
   `.trim(),
+  placeBetMenuTitle: 'Place a bet',
+  placeBetMenuButton: 'Place Bet',
+  placeBetPopUpTitle: 'Your Bet is being processed!',
+  editBetMenuTitle: 'Edit your bet',
+  editBetMenuButton: 'Edit Bet',
+  editBetPopUpTitle: 'Your Bet is being edited!',
+  editBetPopUpText: 'You betted on the outcome, that',
 };
 
-export { Colors, Dimens, Text };
+/**
+ * Outcome constants
+ */
+const Outcome = {
+  HOME: 0,
+  Draw: 1,
+  AWAY: 2,
+};
+
+export { Colors, Dimens, Text, Outcome };

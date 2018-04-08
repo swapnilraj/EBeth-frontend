@@ -238,6 +238,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
             myBets={this.props.userBets}
           />
           <PlaceBetMenu
+            screen="MY_BETS"
             display={this.props.menu.display}
             fixture={this.props.menu.fixture}
             toggleMenuDisplay={this.expandBetMenu}

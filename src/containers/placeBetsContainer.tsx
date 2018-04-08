@@ -234,6 +234,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             marginLeft={this.props.marginLeft}
           />
           <PlaceBetMenu
+            screen="PLACE_BETS"
             display={this.props.menu.display}
             fixture={this.props.menu.fixture}
             toggleMenuDisplay={this.expandBetMenu}

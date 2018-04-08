@@ -1,7 +1,7 @@
 import * as React from 'react';
 import swal from 'sweetalert2';
-import { style } from 'typestyle';
-import { types } from 'typestyle';
+import { style, types } from 'typestyle';
+import { Outcome, Text } from '../../utils/constants';
 import { IFixture } from '../Results';
 import { SelectionPanel } from './selectionPanel';
 
@@ -20,14 +20,14 @@ interface ImenuStats {
 
 interface IProps {
   menuState: ImenuStats;
-
+  screen: string;
   display: string;
   fixture: IFixture;
   selectPanel(homeTeamName: string, panelType: string);
   toggleMenuDisplay(currentState: string, fixture: IFixture);
   updateInputValue(newInput: string);
   toggleValidUserInput();
-  placeBet(betEVent: string, outcomeIndex: number, value: string);
+  placeBet(betEvent: string, outcomeIndex: number, value: string);
 }
 
 export class PlaceBetMenu extends React.Component<IProps, {}> {
@@ -35,11 +35,12 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
     super(props);
     this.handleUserInput = this.handleUserInput.bind(this);
     this.makeBet = this.makeBet.bind(this);
+    this.editBet = this.editBet.bind(this);
+    this.outcomeText = this.outcomeText.bind(this);
   }
 
-  public makeBet() {
+  public outcomeText(): string {
     let outcome = '';
-
     if (this.props.menuState.selected.selectedTab === 'Draw') {
       outcome = ' the match will be a draw.';
     } else if (this.props.menuState.selected.selectTeam === this.props.fixture.homeTeamName) {
@@ -47,24 +48,36 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
     } else {
       outcome = ' ' + this.props.menuState.fixture.awayTeamName + ' will win';
     }
+    return outcome;
+  }
+
+  public editBet() {
+    const outcome = this.outcomeText();
     swal({
-      title: 'Your Bet is being processed!',
-      text: 'You have bet ' + this.props.menuState.selected.betInputValue + ' ETH, that' + outcome,
+      title: Text.editBetPopUpTitle,
+      text: Text.editBetPopUpText + outcome,
       type: 'success',
       confirmButtonColor: 'rgb(251, 98, 53)',
       confirmButtonText: 'OK',
     });
     this.props.toggleMenuDisplay('show', this.props.fixture);
 
-    let outcomeIndex: number = 0;
-    switch (this.props.menuState.selected.selectTeam) {
-      case 'HOME':
-        outcomeIndex = 0;
-      case 'Draw':
-        outcomeIndex = 1;
-      case 'AWAY':
-        outcomeIndex = 2;
-    }
+    // Uncomment after adding changeBet to props
+    // let outcomeIndex = Outcome[this.props.menuState.selected.selectTeam];
+    // this.props.changeBet(this.props.fixture.betEvent, outcomeIndex);
+  }
+
+  public makeBet() {
+    const outcome = this.outcomeText();
+    swal({
+      title: Text.placeBetPopUpTitle,
+      text: 'You have bet ' + this.props.menuState.selected.betInputValue + ' ETH, that' + outcome,
+      type: 'success',
+      confirmButtonColor: 'rgb(251, 98, 53)',
+      confirmButtonText: 'OK',
+    });
+    this.props.toggleMenuDisplay('show', this.props.fixture);
+    const outcomeIndex = Outcome[this.props.menuState.selected.selectTeam];
 
     this.props.placeBet(this.props.fixture.betEvent, outcomeIndex, this.props.menuState.selected.betInputValue);
   }
@@ -310,12 +323,33 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
           .display as types.CSSDisplay,
       });
 
+    const editBet = this.props.screen === 'MY_BETS';
+
+    const inputBox = editBet ? null : (
+      <div className={inputBoxWrapper}>
+        <div className={overlay1()} />
+        <div className={inputQuestionText}>HOW MUCH ETHEREUM ?</div>
+        <div className={fifteenPercentMargin} />
+        <div className={wrapInputBox}>
+          <input
+            value={this.props.menuState.selected.betInputValue}
+            onChange={this.handleUserInput}
+            className={inputStyle}
+            placeholder="0.00"
+          />
+        </div>
+        <div className={currencyTextWrapper}>
+          <div className={currencyText}>ETH</div>
+        </div>
+      </div>
+    );
+
     return (
       <div className={opaqueBackdrop}>
         <div className={betMenu}>
           <div className={header}>
             <div className={heading}>
-              <div className={verticalAlign}>Place a bet</div>
+              <div className={verticalAlign}>{editBet ? Text.editBetMenuTitle : Text.placeBetMenuTitle}</div>
             </div>
             <div className={cancelBox}>
               <div onClick={() => this.props.toggleMenuDisplay('show', this.props.fixture)} className={exText}>
@@ -356,27 +390,12 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
           <div className={betInputWrapper}>
             <div className={centralComponent}>
               <div className={fifteenPercentMargin} />
-              <div className={inputBoxWrapper}>
-                <div className={overlay1()} />
-                <div className={inputQuestionText}>HOW MUCH ETHEREUM ?</div>
-                <div className={fifteenPercentMargin} />
-                <div className={wrapInputBox}>
-                  <input
-                    value={this.props.menuState.selected.betInputValue}
-                    onChange={this.handleUserInput}
-                    className={inputStyle}
-                    placeholder="0.00"
-                  />
-                </div>
-                <div className={currencyTextWrapper}>
-                  <div className={currencyText}>ETH</div>
-                </div>
-              </div>
+              {inputBox}
               <div className={tenPercentMargin} />
               <div className={betButtonWrapper()}>
-                <div className={overlay2()} />
-                <div onClick={this.makeBet} className={betButton}>
-                  <div className={centerText}>Place Bet</div>
+                <div className={editBet ? overlay1() : overlay2()} />
+                <div onClick={editBet ? this.editBet : this.makeBet} className={betButton}>
+                  <div className={centerText}>{editBet ? Text.editBetMenuButton : Text.placeBetMenuButton}</div>
                 </div>
               </div>
             </div>
