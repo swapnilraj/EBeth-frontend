@@ -20,7 +20,7 @@ import {
 } from '../reducers/listOfBettingComponentsReducer';
 import { IMyBets, toggleStatsStatus } from '../reducers/myBetsReducer';
 // import { onToggleStatsBar } from '../reducers/resultsReducer';
-import { fetchAvailableBets } from '../stores/contract';
+import { changeBet, fetchAvailableBets } from '../stores/contract';
 import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
@@ -71,6 +71,7 @@ interface IProps {
   onToggleValidInput();
   onUpdateBetValueInput(newInput: string);
   onToggleStatus(id: number);
+  changeBet(betEvent: string, outcomeIndex: number);
 }
 class MyBetsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -247,6 +248,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
             placeBet={() => 0}
+            changeBet={this.props.changeBet}
           />
         </div>
       </div>
@@ -266,6 +268,7 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
       onUpdateBetValueInput,
       fetchAvailableBets,
       onToggleStatus: toggleStatsStatus,
+      changeBet,
     },
     dispatch,
   );

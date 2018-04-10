@@ -243,6 +243,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
             placeBet={this.props.placeBet}
+            changeBet={() => 0}
           />
         </div>
       </div>,
