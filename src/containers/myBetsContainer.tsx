@@ -122,8 +122,8 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
         tempFixture.homeBets = APIfixtures[i].poolOne;
-        tempFixture.awayBets = APIfixtures[i].poolTwo;
-        tempFixture.drawBets = APIfixtures[i].poolThree;
+        tempFixture.drawBets = APIfixtures[i].poolTwo;
+        tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         tempFixture.date =
           numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
