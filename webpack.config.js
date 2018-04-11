@@ -100,6 +100,7 @@ module.exports = env => {
           // Error logging
           APP_VERSION: `'${version}'`,
           IN_BROWSER: '"true"',
+          BETMANAGER_ADDRESS: `'${process.env.BETMANAGER_ADDRESS}'`,
         },
       }),
       ifProd(
