@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { style } from 'typestyle';
-
+import { bindActionCreators, Dispatch } from 'redux';
+import { fetchResultsBet } from '../stores/contract';
 import { ListOfResults } from '../components/resultComponent/listOfResults';
 import { ResultToggleButton } from '../components/resultComponent/resultToggleButton';
 import { IFixture, IResult, IResultComponent, ITabState } from '../components/Results';
+import { getBetInfo, getUserBetInfo , IBetInfo } from '../ethereum/contract-interaction';
+import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import {
   onLoadResults,
   onReplaceResults,
@@ -12,6 +15,7 @@ import {
   toggleStatsBar,
   updateResultsComponentList,
 } from '../reducers/resultsReducer';
+import { IState } from '../stores/root';
 
 interface ISelected {
   selectTeam: string;
@@ -47,9 +51,11 @@ interface IProps {
   betComponent: IBetComponent;
   betComponentStatus: IComponent[];
   results: IResult[];
+  resultBets: string[],
   components: IResultComponent[];
   tabState: ITabState;
-  onUpdateList(array: IFixture[]);
+  fetchResultsBet();
+  // onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
   onStatsBarToggle(currentState: string, id: number);
   onToggleBetMenuDisplay(currentState: string, fixture: IFixture);
@@ -83,9 +89,71 @@ class ResultsComponent extends React.Component<IProps, {}> {
     this.loadNewResults = this.loadNewResults.bind(this);
   }
 
+  public componentWillMount() {
+    // tslint:disable-next-line:no-console
+    if (this.props.resultBets.length === 0) {
+      this.props.fetchResultsBet();
+    }
+  }
+
+  public async componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.resultBets.length > 0){//} && nextProps.betComponent.fixture.length === 0) {
+      console.log(nextProps.resultBets);
+      const promises = nextProps.resultBets.map(await getBetInfo);
+      const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
+      const promisesUser = nextProps.resultBets.map(await getUserBetInfo);
+      const APIfixturesUser: IBetInfo[] = (await Promise.all(promisesUser)) as any;
+      console.log(APIfixtures);
+      console.log(APIfixturesUser);
+      
+      // const fixtureArray: IFixture[] = [];
+      const resultArray: IResult[] = [];
+      for (let i = 0; i < APIfixtures.length; i++) {
+        const tempFixture = {
+          homeTeamName: '',
+          awayTeamName: '',
+          winningTeamStatus: '',
+          date: '',
+          score: '',
+          homeTeamBets: 0,
+          awayTeamBets: 0,
+          drawBets: 0,
+          potValue: 0,
+          resultForUser: '',
+          teamOfUser: '',
+          yourBetValue: 0,
+          amountWon: 0,
+        };
+        const APIDate: Date = APIfixtures[i].kickOffTime;
+        tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
+        tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
+        tempFixture.homeTeamBets = APIfixtures[i].poolOne;
+        tempFixture.drawBets = APIfixtures[i].poolTwo;
+        tempFixture.awayTeamBets = APIfixtures[i].poolThree;
+        tempFixture.potValue = APIfixtures[i].totalPool;
+        tempFixture.score = APIfixtures[i].teamOneScore + ' - '+APIfixtures[i].teamTwoScore;
+        tempFixture.date =
+          numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
+        // const time = APIDate.getHours();
+        
+        // fixtureArray.push(tempFixture);
+        resultArray.push(tempFixture);
+      }
+     // if (nextProps.betComponent.fixture[0] !== fixtureArray[0]) {
+        // this.updateComponentsInList(fixtureArray);
+        // this.updateResultsComponentList(resultArray);
+        console.log('REPLACE');
+        console.log(resultArray);
+        this.loadNewResults(resultArray);
+      // }
+    }
+  }
+
+
   public updateComponentsInList(array: IFixture[]) {
     if (this.props.betComponent.fixture[0] !== array[0]) {
-      this.props.onUpdateList(array);
+     // this.props.onUpdateList(array);
     }
   }
 
@@ -186,7 +254,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
         <ListOfResults
           width="95%"
           marginLeft="0%"
-          results={this.props.results}
+          results={this.props.results || []}
           componentStatus={this.props.components}
           addResultComponentToState={this.updateResultsComponentList}
           toggleStatsBar={this.toggleStatsBar}
@@ -199,17 +267,21 @@ class ResultsComponent extends React.Component<IProps, {}> {
   }
 }
 
-const mapDispatchToProps = {
-  onUpdateResultsComponentList: updateResultsComponentList,
-  onToggleStatsBar: toggleStatsBar,
-  onSwitchTab,
-  onLoadResults,
-  replaceResults: onReplaceResults,
-};
+const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
+  bindActionCreators({
+    fetchResultsBet,
+    onUpdateResultsComponentList: updateResultsComponentList,
+    onToggleStatsBar: toggleStatsBar,
+    onSwitchTab,
+    onLoadResults,
+    replaceResults: onReplaceResults,
+  },
+    dispatch,
+  );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IState) => {
   return {
-    results: state.ResultsReducer.results,
+    resultBets: state.contract.resultBets,
     components: state.ResultsReducer.components,
     tabState: state.ResultsReducer.tabState,
   };

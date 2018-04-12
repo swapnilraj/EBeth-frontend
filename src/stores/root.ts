@@ -44,7 +44,7 @@ export interface IState {
   sidebar: ISidebarState;
   contract: IContractsState;
   betMenuReducer: IBetMenuState;
-  resultState: IListOfResultsComponentState;
+  ResultsReducer: IListOfResultsComponentState;
   MyBetsReducer: IMyBetsState;
 }
 

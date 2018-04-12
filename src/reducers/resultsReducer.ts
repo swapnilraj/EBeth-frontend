@@ -157,7 +157,9 @@ const sampleResult4 = {
   yourBetValue: 0.12,
 };
 
-const array = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
+const array = [];
+const array2 = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
+console.log(array2);
 
 const defaultTabState: ITabState = {
   message: 'My results',

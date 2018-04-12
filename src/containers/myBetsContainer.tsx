@@ -18,14 +18,17 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
-import { IMyBets, toggleStatsStatus } from '../reducers/myBetsReducer';
+import { IMyBets, toggleStatsStatus, onPopulateMyBets } from '../reducers/myBetsReducer';
 // import { onToggleStatsBar } from '../reducers/resultsReducer';
+<<<<<<< Updated upstream
 import { fetchAvailableBets } from '../stores/contract';
+=======
+import { changeBet, fetchPlacedBets, fetchUserAccount } from '../stores/contract';
+>>>>>>> Stashed changes
 import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
-
-// import { renderIf } from '../utils/render-if-else';
+import { renderIf } from '../utils/render-if-else';
 
 interface ISelected {
   selectTeam: string;
@@ -61,8 +64,12 @@ interface IProps {
   betComponent: IListOfBettingComponentState;
   betComponentStatus: IComponent[];
   availableBets: string[];
+  placedBets: string[];
   userBets: IMyBets[];
-  fetchAvailableBets();
+  userAccount: string;
+  // fetchAvailableBets();
+  fetchUserAccount();
+  fetchPlacedBets(userAccount: string);
   onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
   onStatsBarToggle(currentState: string, id: number);
@@ -71,6 +78,11 @@ interface IProps {
   onToggleValidInput();
   onUpdateBetValueInput(newInput: string);
   onToggleStatus(id: number);
+<<<<<<< Updated upstream
+=======
+  onPopulateMyBets(newBets: IMyBets[]);
+  changeBet(betEvent: string, outcomeIndex: number);
+>>>>>>> Stashed changes
 }
 class MyBetsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -88,22 +100,27 @@ class MyBetsComponent extends React.Component<IProps, {}> {
     this.selectTeamToBetOn = this.selectTeamToBetOn.bind(this);
     this.toggleValidUserInput = this.toggleValidUserInput.bind(this);
     this.updateInputValue = this.updateInputValue.bind(this);
+    this.onPopulateMyBets = this.onPopulateMyBets.bind(this);
   }
 
   public componentWillMount() {
     // tslint:disable-next-line:no-console
 
-    if (this.props.availableBets.length === 0) {
-      fetchAvailableBets();
+    if (this.props.placedBets.length === 0) {
+      this.props.fetchUserAccount();
+      this.props.fetchPlacedBets(this.props.userAccount);
     }
   }
 
   public async componentWillReceiveProps(nextProps) {
-    if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
-      const promises = nextProps.availableBets.map(await getBetInfo);
+    if (nextProps.placedBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
+      const promises = nextProps.placedBets.map(await getBetInfo);
+      console.log(this.props.placedBets);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
+      console.log(APIfixtures);
 
       const fixtureArray: IFixture[] = [];
+      // const myBets: IMyBets[] = [];
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < APIfixtures.length; i++) {
         const tempFixture = {
@@ -135,15 +152,32 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         }
         tempFixture.time = formattedTime;
         fixtureArray.push(tempFixture);
+
+        // const newBet : IMyBets= {
+        //   fixture:tempFixture,
+        //   expanded:false,
+        //   live:false,
+
+        // }
       }
+     
+      console.log(fixtureArray[0]);
+      console.log(nextProps.betComponent.fixture[0]);
       if (nextProps.betComponent.fixture[0] !== fixtureArray[0]) {
+        console.log('called');
         this.updateComponentsInList(fixtureArray);
       }
     }
   }
 
+  public onPopulateMyBets(newBets: IMyBets[]) {
+    this.props.onPopulateMyBets(newBets);
+  }
+
   public updateComponentsInList(array: IFixture[]) {
+    console.log('UPDATE1');
     if (this.props.betComponent.fixture[0] !== array[0]) {
+      console.log('UPDATE2');
       this.props.onUpdateList(array);
     }
   }
@@ -221,7 +255,8 @@ class MyBetsComponent extends React.Component<IProps, {}> {
       });
 
     // const array:IFixture[] = []
-    return (
+    return renderIf(
+      this.props.placedBets.length > 0,
       <div className={myBetsWrapper()}>
         <div>
           <div className={header()} onClick={() => this.toggleValidUserInput()}>
@@ -249,7 +284,8 @@ class MyBetsComponent extends React.Component<IProps, {}> {
             placeBet={() => 0}
           />
         </div>
-      </div>
+      </div>,
+      <h1>loading...</h1>,
     );
   }
 }
@@ -264,15 +300,23 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
       onSelectTeam,
       onToggleValidInput,
       onUpdateBetValueInput,
-      fetchAvailableBets,
+      fetchPlacedBets,
+      fetchUserAccount,
       onToggleStatus: toggleStatsStatus,
+<<<<<<< Updated upstream
+=======
+      onPopulateMyBets: onPopulateMyBets,
+      changeBet,
+>>>>>>> Stashed changes
     },
     dispatch,
   );
 
 const mapStateToProps = (state: IState) => {
   return {
-    availableBets: state.contract.availableBets,
+    // availableBets: state.contract.availableBets,
+    placedBets: state.contract.placedBets,
+    userAccount: state.contract.userAccount,
     betComponent: state.MyBetsReducer,
     betComponentStatus: state.ListOfBettingComponentReducer.components,
     menu: state.betMenuReducer,

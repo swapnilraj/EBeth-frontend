@@ -100,6 +100,7 @@ const getBetInfo = async (account, betEvent) => {
     betInfo['kickOffDate'] = new Date(parseInt(kickOffTime));
     betInfo['teamOneScore'] = await bettingContract.methods.teamOneScore().call({ from: account });
     betInfo['teamTwoScore'] = await bettingContract.methods.teamTwoScore().call({ from: account });
+    console.log(betInfo);
     return betInfo;
 }
 

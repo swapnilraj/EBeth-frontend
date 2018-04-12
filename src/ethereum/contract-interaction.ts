@@ -258,7 +258,7 @@ export const changeBet = async (betEvent: string, outcomeIndex: number): Promise
 };
 
 /**
- * Returns an array of the bet objects for bets placed by a user.
+ * Returns# an array of the bet objects for bets placed by a user.
  * @returns Array of addresses of Betting contracts that user placed bet on.
  */
 export const getPlacedBets = async (): Promise<string[]> => {
@@ -299,7 +299,7 @@ export const getPastBets = async (): Promise<string[]> => {
   return availableBets;
 };
 
-/**
+/**getPas
  * Returns an array of bets for which the event is not over from a
  * list contract addresses.
  * @param betEvents Array of addresses of Betting contracts.
