@@ -148,7 +148,13 @@ export const MyBetsReducer = (state: IMyBetsState = defaultMyBetState, action) =
       return Object.assign({}, state, replacementStatsBarState);
 
     case populateMyBets:
-      const replacementBets = { userBets: action.payload.newBets, fixture: [] };
+    const replace = action.payload.newBets
+    for (let i = replace.length - 1; i > 0; i--) {
+      if (replace[i].fixture.date === replace[i - 1].fixture.date) {
+        replace[i].fixture.date = '';
+      }
+    }
+      const replacementBets = { userBets: replace, fixture: [] };
       return Object.assign({}, state, replacementBets);
 
     default:
