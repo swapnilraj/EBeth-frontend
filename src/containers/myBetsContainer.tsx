@@ -118,6 +118,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
           betEvent: '',
         };
         const APIDate: Date = APIfixtures[i].kickOffTime;
+        tempFixture.betEvent = nextProps.placedBets[i];
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
         tempFixture.homeBets = APIfixtures[i].poolOne;
