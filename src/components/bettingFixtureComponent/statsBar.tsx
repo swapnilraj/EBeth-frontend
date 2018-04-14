@@ -15,9 +15,9 @@ export class StatsBar extends React.Component<IProps, {}> {
   }
 
   public calculateMargin() {
-    const total = this.props.fixture.homeBets + this.props.fixture.drawBets + this.props.fixture.awayBets;
-    const homeBets = this.props.fixture.homeBets / total;
-    const drawBets = this.props.fixture.drawBets / total;
+    const total = +this.props.fixture.homeBets + +this.props.fixture.drawBets + +this.props.fixture.awayBets;
+    const homeBets = +this.props.fixture.homeBets / total;
+    const drawBets = +this.props.fixture.drawBets / total;
 
     if (isNaN(drawBets)) {
       return '50%';
@@ -27,6 +27,10 @@ export class StatsBar extends React.Component<IProps, {}> {
   }
 
   public render() {
+    // tslint:disable-next-line:no-console
+    console.log('WAY TOO GOOD AT GOODBYES');
+    // tslint:disable-next-line:no-console
+    console.log(this.props);
     const statsBar = style({
       height: '20%',
       width: '80%',
@@ -74,10 +78,11 @@ export class StatsBar extends React.Component<IProps, {}> {
       marginLeft: '10%',
     });
 
-    const total = this.props.fixture.homeBets + this.props.fixture.drawBets + this.props.fixture.awayBets;
-    const homeBets = this.props.fixture.homeBets / total;
-    const drawBets = this.props.fixture.drawBets / total;
-    const awayBets = this.props.fixture.awayBets / total;
+    const total = +this.props.fixture.homeBets + +this.props.fixture.drawBets + +this.props.fixture.awayBets;
+
+    const homeBets = +this.props.fixture.homeBets / total;
+    const drawBets = +this.props.fixture.drawBets / total;
+    const awayBets = +this.props.fixture.awayBets / total;
 
     return (
       <div className={wrapper}>
