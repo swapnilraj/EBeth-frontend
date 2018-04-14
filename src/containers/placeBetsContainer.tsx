@@ -95,7 +95,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
   }
 
   public async componentWillReceiveProps(nextProps) {
-    if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
+    if (nextProps.placedBets.length > 0 && nextProps.myBets.length === 0) {
       const promises = nextProps.availableBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
 
@@ -117,8 +117,8 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
         tempFixture.homeBets = APIfixtures[i].poolOne;
-        tempFixture.awayBets = APIfixtures[i].poolTwo;
-        tempFixture.drawBets = APIfixtures[i].poolThree;
+        tempFixture.drawBets = APIfixtures[i].poolTwo;
+        tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         tempFixture.betEvent = this.props.availableBets[i];
         tempFixture.date =
@@ -243,6 +243,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
             placeBet={this.props.placeBet}
+            changeBet={() => 0}
           />
         </div>
       </div>,

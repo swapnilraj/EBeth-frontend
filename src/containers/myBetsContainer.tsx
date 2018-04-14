@@ -5,7 +5,7 @@ import { style, types } from 'typestyle';
 import { ListOfMyBets } from '../components/myBets/listOfMyBets';
 import { PlaceBetMenu } from '../components/placeBetMenu/placeBetMenu';
 import { IFixture } from '../components/Results';
-import { getBetInfo, /*getUserBetInfo , */ IBetInfo } from '../ethereum/contract-interaction';
+import { getBetInfo, getUserBetInfo, IBetInfo, IUserBetInfo } from '../ethereum/contract-interaction';
 import {
   onSelectTeam,
   onToggleBetMenuDisplay,
@@ -18,15 +18,10 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
-import { IMyBets, toggleStatsStatus, onPopulateMyBets } from '../reducers/myBetsReducer';
-// import { onToggleStatsBar } from '../reducers/resultsReducer';
-<<<<<<< Updated upstream
-import { fetchAvailableBets } from '../stores/contract';
-=======
-import { changeBet, fetchPlacedBets, fetchUserAccount } from '../stores/contract';
->>>>>>> Stashed changes
+import { IMyBets, onPopulateMyBets, toggleStatsStatus } from '../reducers/myBetsReducer';
+import { changeBet, fetchPlacedBets } from '../stores/contract';
 import { IState } from '../stores/root';
-// import {formatDate , IFormatDate} from '../utils/formatDates'
+import { Outcome } from '../utils/constants';
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
 
@@ -51,11 +46,6 @@ export interface IComponent {
   message: string;
 }
 
-// interface IBetComponent {
-//   fixture: IFixture[];
-//   components: IComponent[];
-// }
-
 interface IProps {
   fixtureList: IFixture[];
   width: string;
@@ -67,9 +57,8 @@ interface IProps {
   placedBets: string[];
   userBets: IMyBets[];
   userAccount: string;
-  // fetchAvailableBets();
   fetchUserAccount();
-  fetchPlacedBets(userAccount: string);
+  fetchPlacedBets();
   onUpdateList(array: IFixture[]);
   onNewBetComponentMade(betComponent: IComponent);
   onStatsBarToggle(currentState: string, id: number);
@@ -78,11 +67,8 @@ interface IProps {
   onToggleValidInput();
   onUpdateBetValueInput(newInput: string);
   onToggleStatus(id: number);
-<<<<<<< Updated upstream
-=======
   onPopulateMyBets(newBets: IMyBets[]);
   changeBet(betEvent: string, outcomeIndex: number);
->>>>>>> Stashed changes
 }
 class MyBetsComponent extends React.Component<IProps, {}> {
   constructor(props) {
@@ -104,23 +90,20 @@ class MyBetsComponent extends React.Component<IProps, {}> {
   }
 
   public componentWillMount() {
-    // tslint:disable-next-line:no-console
-
     if (this.props.placedBets.length === 0) {
-      this.props.fetchUserAccount();
-      this.props.fetchPlacedBets(this.props.userAccount);
+      this.props.fetchPlacedBets();
     }
   }
 
   public async componentWillReceiveProps(nextProps) {
-    if (nextProps.placedBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
+    if (nextProps.placedBets.length > 0 && nextProps.userBets.length === 0) {
       const promises = nextProps.placedBets.map(await getBetInfo);
-      console.log(this.props.placedBets);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
-      console.log(APIfixtures);
+      const promisesUser = nextProps.placedBets.map(await getUserBetInfo);
+      const userBetInfo: IUserBetInfo[] = (await Promise.all(promisesUser)) as any;
 
       const fixtureArray: IFixture[] = [];
-      // const myBets: IMyBets[] = [];
+      const myBets: IMyBets[] = [];
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < APIfixtures.length; i++) {
         const tempFixture = {
@@ -138,8 +121,8 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
         tempFixture.homeBets = APIfixtures[i].poolOne;
-        tempFixture.awayBets = APIfixtures[i].poolTwo;
-        tempFixture.drawBets = APIfixtures[i].poolThree;
+        tempFixture.drawBets = APIfixtures[i].poolTwo;
+        tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         tempFixture.date =
           numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
@@ -153,19 +136,23 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         tempFixture.time = formattedTime;
         fixtureArray.push(tempFixture);
 
-        // const newBet : IMyBets= {
-        //   fixture:tempFixture,
-        //   expanded:false,
-        //   live:false,
-
-        // }
+        const newBet: IMyBets = {
+          fixture: tempFixture,
+          expanded: false,
+          live: false,
+          betValue: 0,
+          betPlacedOn: '',
+        };
+        newBet.fixture = tempFixture;
+        newBet.betValue = userBetInfo[i].amount;
+        newBet.betPlacedOn = Outcome[userBetInfo[i].outcomeIndex];
+        // TODO check if live
+        myBets.push(newBet);
       }
-     
-      console.log(fixtureArray[0]);
-      console.log(nextProps.betComponent.fixture[0]);
-      if (nextProps.betComponent.fixture[0] !== fixtureArray[0]) {
-        console.log('called');
-        this.updateComponentsInList(fixtureArray);
+
+      if (nextProps.userBets[0] !== myBets[0]) {
+        // this.updateComponentsInList(fixtureArray); REMOVE ??
+        this.onPopulateMyBets(myBets);
       }
     }
   }
@@ -175,9 +162,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
   }
 
   public updateComponentsInList(array: IFixture[]) {
-    console.log('UPDATE1');
     if (this.props.betComponent.fixture[0] !== array[0]) {
-      console.log('UPDATE2');
       this.props.onUpdateList(array);
     }
   }
@@ -254,7 +239,6 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         width: '100%',
       });
 
-    // const array:IFixture[] = []
     return renderIf(
       this.props.placedBets.length > 0,
       <div className={myBetsWrapper()}>
@@ -282,6 +266,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
             toggleValidUserInput={this.toggleValidUserInput}
             updateInputValue={this.updateInputValue}
             placeBet={() => 0}
+            changeBet={this.props.changeBet}
           />
         </div>
       </div>,
@@ -301,13 +286,9 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
       onToggleValidInput,
       onUpdateBetValueInput,
       fetchPlacedBets,
-      fetchUserAccount,
       onToggleStatus: toggleStatsStatus,
-<<<<<<< Updated upstream
-=======
-      onPopulateMyBets: onPopulateMyBets,
+      onPopulateMyBets,
       changeBet,
->>>>>>> Stashed changes
     },
     dispatch,
   );

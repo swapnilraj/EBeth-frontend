@@ -28,6 +28,7 @@ interface IProps {
   updateInputValue(newInput: string);
   toggleValidUserInput();
   placeBet(betEvent: string, outcomeIndex: number, value: string);
+  changeBet(betEvent: string, outcomeIndex: number);
 }
 
 export class PlaceBetMenu extends React.Component<IProps, {}> {
@@ -63,8 +64,8 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
     this.props.toggleMenuDisplay('show', this.props.fixture);
 
     // Uncomment after adding changeBet to props
-    // let outcomeIndex = Outcome[this.props.menuState.selected.selectTeam];
-    // this.props.changeBet(this.props.fixture.betEvent, outcomeIndex);
+    const outcomeIndex = Outcome[this.props.menuState.selected.selectedTab];
+    this.props.changeBet(this.props.fixture.betEvent, outcomeIndex);
   }
 
   public makeBet() {
@@ -77,7 +78,7 @@ export class PlaceBetMenu extends React.Component<IProps, {}> {
       confirmButtonText: 'OK',
     });
     this.props.toggleMenuDisplay('show', this.props.fixture);
-    const outcomeIndex = Outcome[this.props.menuState.selected.selectTeam];
+    const outcomeIndex = Outcome[this.props.menuState.selected.selectedTab];
 
     this.props.placeBet(this.props.fixture.betEvent, outcomeIndex, this.props.menuState.selected.betInputValue);
   }

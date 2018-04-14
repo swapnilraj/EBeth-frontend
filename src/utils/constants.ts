@@ -93,9 +93,12 @@ const Text = {
  * Outcome constants
  */
 const Outcome = {
-  HOME: 0,
+  Home: 0,
   Draw: 1,
-  AWAY: 2,
+  Away: 2,
+  0: 'Home',
+  1: 'Draw',
+  2: 'Away',
 };
 
 export { Colors, Dimens, Text, Outcome };

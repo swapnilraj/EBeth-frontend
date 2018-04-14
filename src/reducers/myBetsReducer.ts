@@ -133,8 +133,8 @@ export const fourthBet: IMyBets = {
 };
 
 export const defaultMyBetState: IMyBetsState = {
-  fixture: [],// [defaultIFixture, defaultIFixture, defaultIFixture],
-  userBets: []// [secondBet, thirdBet, fourthBet, defaultMyBet],
+  fixture: [], // [defaultIFixture, defaultIFixture, defaultIFixture],
+  userBets: [], // [secondBet, thirdBet, fourthBet, defaultMyBet],
 };
 
 export const MyBetsReducer = (state: IMyBetsState = defaultMyBetState, action) => {

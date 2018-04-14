@@ -6,7 +6,7 @@ const bettingContractJSON = require('./Betting.json');
 const managerContractJSON = require('./BetManager.json');
 
 const managerContract = new web3.eth.Contract(managerContractJSON.abi);
-const managerAddress = process.env.BETMANAGER_ADDRESS;
+const managerAddress = process.env.BETMANAGER_ADDRESS || '0x19ab6a9e79288f22e3a8536684991f0c2656d3fe';
 
 managerContract.options.address = managerAddress;
 
@@ -208,10 +208,10 @@ const _getUserBetInfo = async (account: string, betEvent: string): Promise<IUser
   const betIndex = await bettingContract.methods.bettingIndices(account).call({ from: account });
   const info = await bettingContract.methods.bets(betIndex).call({ from: account });
   const userBetInfo: IUserBetInfo = {
-    amount: info.amount,
-    paid: web3.utils.fromWei('' + info.paid + '', 'ether'),
-    outcomeIndex: web3.utils.fromWei('' + info.outcomeIndex + '', 'ether'),
-    winnings: info.winnings,
+    amount: web3.utils.fromWei('' + info.amount + '', 'ether'),
+    paid: info.paid,
+    outcomeIndex: info.outcomeIndex,
+    winnings: web3.utils.fromWei('' + info.winnings + '', 'ether'),
     address: betEvent,
   };
   return userBetInfo;
