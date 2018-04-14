@@ -95,7 +95,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
   }
 
   public async componentWillReceiveProps(nextProps) {
-    if (nextProps.placedBets.length > 0 && nextProps.myBets.length === 0) {
+    if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
       const promises = nextProps.availableBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
 
