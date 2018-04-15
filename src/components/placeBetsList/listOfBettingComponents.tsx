@@ -30,9 +30,36 @@ interface IProps {
 }
 
 export class ListOfBettingComponents extends React.Component<IProps, {}> {
+
+
+  public componentWillMount() {
+    
+  
+        for (let i = 0; i < this.props.fixtures.length; i++) {
+          const newComponent = {
+            fixture: this.props.fixtures[i],
+            id: i,
+            status: 'contracted',
+            potValue: 0.0,
+            message: 'Show More',
+          };
+
+          this.props.addBetComponentToState(newComponent);
+        }
+      
+    
+  }
+
+
   public renderBettingComponents(fixtures) {
-    if (this.props.componentStatus[0] !== undefined) {
+
+    if (this.props.componentStatus.length!==0) {
+      
+    
+
       if (fixtures.length > 0) {
+
+
         return fixtures.map((fixture, index) => (
           <PlaceBetComponent
             marginLeft={this.props.marginLeft}
@@ -76,23 +103,7 @@ export class ListOfBettingComponents extends React.Component<IProps, {}> {
     }
   }
 
-  public componentWillReceiveProps(nextProps) {
-    if (nextProps.fixtures && nextProps.fixtures[0] !== this.props.fixtures[0]) {
-      if (nextProps.fixtures) {
-        for (let i = 0; i < nextProps.fixtures.length; i++) {
-          const newComponent = {
-            fixture: nextProps.fixtures[i],
-            id: i,
-            status: 'contracted',
-            potValue: 0.0,
-            message: 'Show More',
-          };
-
-          this.props.addBetComponentToState(newComponent);
-        }
-      }
-    }
-  }
+ 
 
   public render() {
     const bettingComponents = this.renderBettingComponents(this.props.fixtures);

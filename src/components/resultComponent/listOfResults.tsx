@@ -51,10 +51,10 @@ export const defaultIResultComponent: IResultComponent = {
 
 export class ListOfResults extends React.Component<IProps, {}> {
   public renderBettingComponents(results: IResult[]) {
-    console.log('RESULTS');
-    console.log(results);
+  
     if (this.props.componentStatus[0] === undefined || this.props.results[0] !== this.props.componentStatus[0].result) {
       for (let i = 0; i < results.length; i++) {
+  
         const newComponent = { result: defaultResult, id: 0, message: 'Show More', potValue: 0, status: 'expanded' };
         newComponent.result = results[i];
         newComponent.id = i;
@@ -81,6 +81,8 @@ export class ListOfResults extends React.Component<IProps, {}> {
         return [];
       }
     } else {
+      // tslint:disable-next-line:no-console
+
       return results.map((result, index) => (
         <ResultWithDate
           marginLeft={this.props.marginLeft}

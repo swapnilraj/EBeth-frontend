@@ -46,7 +46,7 @@ export interface IResultComponent {
   message: string;
 }
 
-export const defaultResult = {
+export const defaultResult:IResult = {
   homeTeamName: '',
   awayTeamName: '',
   winningTeamStatus: '',
@@ -59,6 +59,7 @@ export const defaultResult = {
   awayTeamBets: 0,
   drawBets: 0,
   yourBetValue: 0,
+  teamOfUser:'Home'
 };
 export const defaultIResultComponent = {
   result: defaultResult,

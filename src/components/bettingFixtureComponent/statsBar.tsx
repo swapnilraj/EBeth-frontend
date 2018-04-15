@@ -75,7 +75,7 @@ export class StatsBar extends React.Component<IProps, {}> {
     });
 
     const total = +this.props.fixture.homeBets + +this.props.fixture.drawBets + +this.props.fixture.awayBets;
-
+    
     const homeBets = +this.props.fixture.homeBets / total;
     const drawBets = +this.props.fixture.drawBets / total;
     const awayBets = +this.props.fixture.awayBets / total;

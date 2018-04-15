@@ -34,10 +34,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
   public render() {
     const loadScreenSpecificComponents = () => {
       const isContracted = this.props.status === 'contracted';
-      // tslint:disable-next-line:no-console
-      // console.log('renegade');
-      // tslint:disable-next-line:no-console
-      // console.log(this.props);
+
       const displayUserBet =
         (this.props.team === this.props.result.teamOfUser && this.props.screen === 'RESULTS') ||
         (this.props.bet.betPlacedOn === this.props.team && this.props.screen === 'MY_BETS');

@@ -93,76 +93,11 @@ export const onReplaceResults = (newResults: IResult[]) => {
 // ***********************__ACTIONS__*****************************
 // ***********************__REDUCERS__*****************************
 
-const sampleResult1 = {
-  homeTeamName: 'Arsenal',
-  awayTeamName: 'Watford',
-  winningTeamStatus: 'Away',
-  date: 'Wednesday | December 18th',
-  score: '2  -  3',
-  resultForUser: 'win',
-  teamOfUser: 'Away',
-  amountWon: 0.7,
-  potValue: 10,
-  homeTeamBets: 100,
-  awayTeamBets: 200,
-  drawBets: 70,
-  yourBetValue: 0.12,
-};
 
-const sampleResult2 = {
-  homeTeamName: 'Newcastle United',
-  awayTeamName: 'Tottenham Hotspur',
-  winningTeamStatus: 'Draw',
-  date: 'Thursday | December 19th',
-  score: '1  -  1',
-  resultForUser: 'lose',
-  teamOfUser: 'Away',
-  amountWon: 0.222,
-  potValue: 10,
-  homeTeamBets: 100,
-  awayTeamBets: 200,
-  drawBets: 70,
-  yourBetValue: 0.12,
-};
 
-const sampleResult3 = {
-  homeTeamName: 'Manchester United',
-  awayTeamName: 'Manchester City',
-  winningTeamStatus: 'Home',
-  date: 'Thursday | December 19th',
-  score: '4  -  1',
-  resultForUser: 'win',
-  teamOfUser: 'Home',
-  amountWon: 0.8,
-  potValue: 10,
-  homeTeamBets: 100,
-  awayTeamBets: 200,
-  drawBets: 70,
-  yourBetValue: 0.12,
-};
-
-const sampleResult4 = {
-  homeTeamName: 'Crystal Palace',
-  awayTeamName: 'West Ham United',
-  winningTeamStatus: 'Away',
-  date: 'Friday | December 20th',
-  score: '2  -  3',
-  resultForUser: 'lose',
-  teamOfUser: 'Draw',
-  amountWon: 0.6,
-  potValue: 10,
-  homeTeamBets: 100,
-  awayTeamBets: 200,
-  drawBets: 70,
-  yourBetValue: 0.12,
-};
-
-const array = [];
-const array2 = [sampleResult1, sampleResult2, sampleResult3, sampleResult4];
-console.log(array2);
 
 const defaultTabState: ITabState = {
-  message: 'My results',
+  message: 'All results',
   color: '#F8623E',
   expanded: false,
 };
@@ -178,12 +113,16 @@ export interface IListOfResultsComponentState {
   results: IResult[];
   components: IResultComponent[];
   tabState: ITabState;
+  allResults:IResult[];
+  resultsFetched:boolean;
 }
 
 export const defaultListOfResultComponentState: IListOfResultsComponentState = {
-  results: array,
+  allResults:[],
+  results: [],
   components: [],
   tabState: defaultTabState,
+  resultsFetched:false
 };
 
 export const ResultsReducer = (state = defaultListOfResultComponentState, action) => {
@@ -210,25 +149,41 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
 
     case loadResults:
       const currentToggleButtonDisplay = Object.assign({}, state.tabState);
+      const allResultArray = state.allResults
+      const myResults:IResult[] = [];
+      let replacementResultArray:IResult[] = [];
+      // tslint:disable-next-line:prefer-for-of
+      for(let i =0;i< allResultArray.length;i++)
+      {
+        if(allResultArray[i].resultForUser==='win' ||allResultArray[i].resultForUser==='lose')
+        {
+          myResults.concat(allResultArray[i])
+        }
+      }
       if (currentToggleButtonDisplay.message === 'My results') {
         currentToggleButtonDisplay.message = 'All results';
         currentToggleButtonDisplay.expanded = false;
+        replacementResultArray = allResultArray;
         // call fetch results here?
       } else {
         currentToggleButtonDisplay.message = 'My results';
         currentToggleButtonDisplay.expanded = false;
+        replacementResultArray = myResults;
         // call fetch results here?
       }
 
       const replacementToggleButtonDisplay = {
         tabState: currentToggleButtonDisplay,
+        results: replacementResultArray
+        
       };
       return Object.assign({}, state, replacementToggleButtonDisplay);
 
     case replaceResults:
       // pass array of results to this function to display on front end
       // important you incorporate control flow in order to avoid infinite reloading
-      const replacementResults = { results: action.payload.newResults };
+      
+      const replacementResults = { results: action.payload.newResults,allResults:action.payload.newResults ,resultsFetched:true};
       return Object.assign({}, state, replacementResults);
 
     default:

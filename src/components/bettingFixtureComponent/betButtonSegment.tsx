@@ -42,6 +42,15 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
     }
   }
 
+  public renderWinnings(){
+    if(this.props.result.amountWon!==0)
+    {
+      return(
+        <div>ETH: {this.props.result.amountWon}</div>
+      )
+    }
+  }
+
   public render() {
     const loadScreenSpecificComponents = () => {
       if (this.props.screen === 'PLACE_BETS') {
@@ -60,7 +69,7 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
               <img className={arrowStyle} src={assets[this.props.result.resultForUser]} />
             </div>
             <div className={winnings}>
-              <div className={centerText}>ETH: {this.props.result.amountWon}</div>
+              <div className={centerText}>{this.renderWinnings()}</div>
             </div>
           </div>
         );
@@ -156,7 +165,8 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
     });
 
     const dynamicComponents = loadScreenSpecificComponents();
-
+// tslint:disable-next-line:no-console
+console.log(this.props)
     return (
       <div className={betButtonWrapper}>
         <div className={container}>

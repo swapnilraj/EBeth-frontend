@@ -96,7 +96,8 @@ class MyBetsComponent extends React.Component<IProps, {}> {
   }
 
   public async componentWillReceiveProps(nextProps) {
-    if (nextProps.placedBets.length > 0 && nextProps.userBets.length === 0) {
+    
+    if (nextProps.userBets.length === 0) {
       const promises = nextProps.placedBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
       const promisesUser = nextProps.placedBets.map(await getUserBetInfo);
@@ -158,7 +159,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
     }
   }
 
-  public onPopulateMyBets(newBets: IMyBets[]) {
+ public onPopulateMyBets(newBets: IMyBets[]) {
     this.props.onPopulateMyBets(newBets);
   }
 

@@ -181,6 +181,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
 
     const header = () =>
       style({
+       
         height: '3.5em',
         width: dynamicHeader[this.props.width !== undefined ? 'true' : 'false'].width,
         position: 'relative',
@@ -216,11 +217,15 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         width: '100%',
       });
 
+      const marginTop = style({
+       
+        marginTop:'3.5em'
+      })
     return renderIf(
-      this.props.availableBets.length > 0,
+      this.props.betComponent.fixture.length > 0,
       <div className={placeBetsWrapper()}>
-        <div>
-          <div className={header()} onClick={() => this.toggleValidUserInput()}>
+        <div className = {marginTop}>
+          <div className={header()} >
             <div className={heading}>Place Bets</div>
           </div>
           <ListOfBettingComponents

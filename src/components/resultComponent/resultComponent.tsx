@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { types } from 'typestyle';
 import { style } from 'typestyle';
+import { types } from 'typestyle';
 import * as crests from '../../Crests.json';
-import { defaultMyBet } from '../../reducers/myBetsReducer';
+import { defaultIFixture, defaultMyBet } from '../../reducers/myBetsReducer';
 import { BetButtonSegment } from '../bettingFixtureComponent/betButtonSegment';
 import { PotValue } from '../bettingFixtureComponent/potValue';
 import { StatsBar } from '../bettingFixtureComponent/statsBar';
@@ -95,6 +95,11 @@ export class ResultComponent extends React.Component<IProps, {}> {
       position: 'relative',
     });
 
+    const currentFixture:IFixture = defaultIFixture;
+    currentFixture.homeBets = this.props.result.homeTeamBets;
+    currentFixture.awayBets = this.props.result.awayTeamBets;
+    currentFixture.potValue = this.props.result.potValue;
+ 
     return (
       <div>
         <div className={bettingFixtureComponent()}>
@@ -128,7 +133,7 @@ export class ResultComponent extends React.Component<IProps, {}> {
           <BetButtonSegment
             message={this.props.status !== undefined ? this.props.status.message : 'none'}
             showMore={this.handler}
-            fixture={this.props.fixture}
+            fixture={currentFixture}
             expandBetMenu={this.props.expandBetMenu}
             screen="RESULTS"
             result={this.props.result}
@@ -137,8 +142,8 @@ export class ResultComponent extends React.Component<IProps, {}> {
         </div>
         <div className={stats()}>
           <div className={expandedSection}>
-            <PotValue fixture={this.props.fixture} />
-            <StatsBar fixture={this.props.fixture} />
+            <PotValue fixture={currentFixture} />
+            <StatsBar fixture={currentFixture} />
           </div>
         </div>
       </div>
