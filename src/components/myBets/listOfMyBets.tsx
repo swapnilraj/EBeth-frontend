@@ -52,17 +52,6 @@ export const defaultIResultComponent: IResultComponent = {
 };
 export class ListOfMyBets extends React.Component<IProps, {}> {
   public renderMyBetComponents(myBets: IMyBets[]) {
-    // if (this.props.componentStatus[0] === undefined || this.props.myBets[0] !== this.props.componentStatus[0].result) {
-    // for (let i = 0; i < results.length; i++) {
-    //   const newComponent = { result: defaultResult, id: 0, message: 'Show More', potValue: 0, status: 'expanded' };
-    //   newComponent.fixture = results[i];
-    //   newComponent.id = i;
-    //   newComponent.message = 'Show Details';
-    //   newComponent.potValue = results[i].potValue;
-    //   newComponent.status = 'contracted';
-    //   // this.props.addResultComponentToState(newComponent);
-    // }
-    // }
     if (this.props.componentStatus[0] === undefined) {
       if (myBets.length > 0) {
         return myBets.map((myBet, index) => (

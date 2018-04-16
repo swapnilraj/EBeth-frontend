@@ -4,8 +4,7 @@ import { types } from 'typestyle';
 import { IMyBets } from '../../reducers/myBetsReducer';
 
 import { defaultResult } from '../resultComponent/listOfResults';
-// import { BettingFixtureComponent } from '../bettingFixtureComponent/bettingFixtureComponent';
-import { /*IResult,*/ IFixture, IResultComponent } from '../Results';
+import { IFixture, IResultComponent } from '../Results';
 import { MyBetsComponent } from './myBetsComponent';
 
 interface IProps {

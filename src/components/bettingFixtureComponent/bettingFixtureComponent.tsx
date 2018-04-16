@@ -118,8 +118,6 @@ export class BettingFixtureComponent extends React.Component<IProps, {}> {
       yourBetValue: 0,
     };
 
-    // tslint:disable-next-line:no-console
-    console.log(this.props)
     return (
       <div>
         <div className={bettingFixtureComponent()}>

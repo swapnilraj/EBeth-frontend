@@ -147,12 +147,10 @@ class MyBetsComponent extends React.Component<IProps, {}> {
         newBet.fixture = tempFixture;
         newBet.betValue = userBetInfo[i].amount;
         newBet.betPlacedOn = Outcome[userBetInfo[i].outcomeIndex];
-        // TODO check if live
         myBets.push(newBet);
       }
 
       if (nextProps.userBets[0] !== myBets[0]) {
-        // this.updateComponentsInList(fixtureArray); REMOVE ??
         this.onPopulateMyBets(myBets);
       }
     }
@@ -296,7 +294,6 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
 
 const mapStateToProps = (state: IState) => {
   return {
-    // availableBets: state.contract.availableBets,
     placedBets: state.contract.placedBets,
     userAccount: state.contract.userAccount,
     betComponent: state.MyBetsReducer,

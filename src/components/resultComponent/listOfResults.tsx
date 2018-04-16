@@ -81,8 +81,6 @@ export class ListOfResults extends React.Component<IProps, {}> {
         return [];
       }
     } else {
-      // tslint:disable-next-line:no-console
-
       return results.map((result, index) => (
         <ResultWithDate
           marginLeft={this.props.marginLeft}

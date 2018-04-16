@@ -4,8 +4,6 @@ import { IMyBets } from '../../reducers/myBetsReducer';
 import { Colors, Dimens } from '../../utils/constants';
 import { IResult } from '../Results';
 
-
-
 interface IProps {
   startTime: string;
   screen: string;

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { style } from 'typestyle';
 import { types } from 'typestyle';
-
-// import { BettingFixtureComponent } from '../bettingFixtureComponent/bettingFixtureComponent';
 import { ResultComponent } from '../resultComponent/resultComponent';
 import { IFixture, IResult, IResultComponent } from '../Results';
 

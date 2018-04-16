@@ -26,7 +26,6 @@ interface IToggleStatsBar {
 }
 export const onToggleStatsBar: IToggleStatsBar['type'] = 'onToggleStatsBar';
 export const toggleStatsBar = componentId => {
-  // tslint:disable-next-line:no-console
 
   return {
     type: onToggleStatsBar,
@@ -44,7 +43,6 @@ interface ISwitchTab {
 }
 export const switchTab: ISwitchTab['type'] = 'switchTab';
 export const onSwitchTab = (tabState: ISwitchTab) => {
-  // tslint:disable-next-line:no-console
 
   return {
     type: switchTab,
@@ -62,7 +60,6 @@ interface ILoadSpecifiedResults {
 }
 export const loadResults: ILoadSpecifiedResults['type'] = 'loadResults';
 export const onLoadResults = (currentScreen: string) => {
-  // tslint:disable-next-line:no-console
 
   return {
     type: loadResults,
@@ -80,7 +77,6 @@ interface IReplaceResults {
 }
 export const replaceResults: IReplaceResults['type'] = 'replaceResults';
 export const onReplaceResults = (newResults: IResult[]) => {
-  // tslint:disable-next-line:no-console
 
   return {
     type: replaceResults,
@@ -164,12 +160,10 @@ export const ResultsReducer = (state = defaultListOfResultComponentState, action
         currentToggleButtonDisplay.message = 'All results';
         currentToggleButtonDisplay.expanded = false;
         replacementResultArray = allResultArray;
-        // call fetch results here?
       } else {
         currentToggleButtonDisplay.message = 'My results';
         currentToggleButtonDisplay.expanded = false;
         replacementResultArray = myResults;
-        // call fetch results here?
       }
 
       const replacementToggleButtonDisplay = {
