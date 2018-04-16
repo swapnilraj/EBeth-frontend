@@ -87,6 +87,7 @@ const Text = {
   editBetMenuButton: 'Edit Bet',
   editBetPopUpTitle: 'Your Bet is being edited!',
   editBetPopUpText: 'You betted on the outcome, that',
+  loading: 'Loading ...',
 };
 
 /**

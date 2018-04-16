@@ -21,6 +21,7 @@ import {
 import { defaultIFixture } from '../reducers/myBetsReducer';
 import { fetchAvailableBets, placeBet } from '../stores/contract';
 import { IState } from '../stores/root';
+import { Text } from '../utils/constants';
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
 
@@ -44,7 +45,6 @@ interface IComponent {
   potValue: number;
   message: string;
 }
-
 
 interface IProps {
   fixtureList: IFixture[];
@@ -101,11 +101,11 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
       const promises = nextProps.availableBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
-      const fixtureArray: IFixture[] = []; 
-      // for loop to iterate over match details and push fixtures to redux store 
+      const fixtureArray: IFixture[] = [];
+      // for loop to iterate over match details and push fixtures to redux store
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < APIfixtures.length; i++) {
-        const tempFixture = Object.assign({},defaultIFixture);
+        const tempFixture = Object.assign({}, defaultIFixture);
         const APIDate: Date = APIfixtures[i].kickOffTime;
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
@@ -114,12 +114,16 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         tempFixture.betEvent = this.props.availableBets[i];
-        tempFixture.date =  numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
+        tempFixture.date =
+          numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
         const time = APIDate.getHours();
         let formattedTime;
         // convert time to be in 12 hour clock
-        if (time > 12) { formattedTime = (time % 12).toString() + ' pm';} 
-        else {formattedTime = time.toString() + ' am';}
+        if (time > 12) {
+          formattedTime = (time % 12).toString() + ' pm';
+        } else {
+          formattedTime = time.toString() + ' am';
+        }
         tempFixture.time = formattedTime;
         fixtureArray.push(tempFixture);
       }
@@ -132,7 +136,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
       }
     }
   }
-/* 
+  /* 
   function that updates the redux store. Takes in a list of fixtures which it will use to replace 
   store.bettingComponentReducer.fixtures
 */
@@ -155,26 +159,26 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
   public toggleStatsBar(currentState: string, id: number) {
     this.props.onStatsBarToggle(currentState, id);
   }
-/*
+  /*
   Expands the bet menu with team select / input field when you click 'place bet' - changes state in reducer
 */
   public expandBetMenu(currentState: string, fixture: IFixture) {
     this.props.onToggleBetMenuDisplay(currentState, fixture);
   }
-/*
+  /*
   updates reducer state when a user selects which team they want to bet on
 */
   public selectTeamToBetOn(homeTeamName: string, panelType: string) {
     this.props.onSelectTeam(homeTeamName, panelType);
   }
-/*
+  /*
   boolean in the store which dictates if the amount entered by the user is a valid input. 
   if user input is invalid, they will not be able to click the 'place bet' button in the place bet menu
 */
   public toggleValidUserInput() {
     this.props.onToggleValidInput();
   }
-/*
+  /*
   updates value in the redux store which contains whatever the user has typed into the input field
 */
   public updateInputValue(newInput: string) {
@@ -193,7 +197,6 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
 
     const header = () =>
       style({
-       
         height: '3.5em',
         width: dynamicHeader[this.props.width !== undefined ? 'true' : 'false'].width,
         position: 'relative',
@@ -229,15 +232,14 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         width: '100%',
       });
 
-      const marginTop = style({
-       
-        marginTop:'3.5em'
-      })
+    const marginTop = style({
+      marginTop: '3.5em',
+    });
     return renderIf(
       this.props.betComponent.fixture.length > 0,
       <div className={placeBetsWrapper()}>
-        <div className = {marginTop}>
-          <div className={header()} >
+        <div className={marginTop}>
+          <div className={header()}>
             <div className={heading}>Place Bets</div>
           </div>
           <ListOfBettingComponents
@@ -264,7 +266,7 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
           />
         </div>
       </div>,
-      <h1>loading...</h1>,
+      <h1>{Text.loading}</h1>,
     );
   }
 }

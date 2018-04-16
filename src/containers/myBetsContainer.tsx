@@ -21,7 +21,7 @@ import {
 import { IMyBets, onPopulateMyBets, toggleStatsStatus } from '../reducers/myBetsReducer';
 import { changeBet, fetchPlacedBets } from '../stores/contract';
 import { IState } from '../stores/root';
-import { Outcome } from '../utils/constants';
+import { Outcome, Text } from '../utils/constants';
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
 
@@ -96,7 +96,6 @@ class MyBetsComponent extends React.Component<IProps, {}> {
   }
 
   public async componentWillReceiveProps(nextProps) {
-    
     if (nextProps.userBets.length === 0) {
       const promises = nextProps.placedBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
@@ -159,7 +158,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
     }
   }
 
- public onPopulateMyBets(newBets: IMyBets[]) {
+  public onPopulateMyBets(newBets: IMyBets[]) {
     this.props.onPopulateMyBets(newBets);
   }
 
@@ -272,7 +271,7 @@ class MyBetsComponent extends React.Component<IProps, {}> {
           />
         </div>
       </div>,
-      <h1>loading...</h1>,
+      <h1>{Text.loading}</h1>,
     );
   }
 }

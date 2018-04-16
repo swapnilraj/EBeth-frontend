@@ -5,7 +5,7 @@ import { style } from 'typestyle';
 import { ListOfResults } from '../components/resultComponent/listOfResults';
 import { ResultToggleButton } from '../components/resultComponent/resultToggleButton';
 import { defaultResult, IFixture, IResult, IResultComponent, ITabState } from '../components/Results';
-import { getBetInfo, getUserBetInfo , IBetInfo, IUserBetInfo } from '../ethereum/contract-interaction';
+import { getBetInfo, getUserBetInfo, IBetInfo, IUserBetInfo } from '../ethereum/contract-interaction';
 import { IMyBets, onPopulateMyBets } from '../reducers/myBetsReducer';
 import {
   onLoadResults,
@@ -16,7 +16,7 @@ import {
 } from '../reducers/resultsReducer';
 import { fetchPlacedBets, fetchResultsBet } from '../stores/contract';
 import { IState } from '../stores/root';
-import { Outcome } from '../utils/constants';
+import { Outcome, Text } from '../utils/constants';
 import { numToMonth, numToWeekDay } from '../utils/formatDates';
 import { renderIf } from '../utils/render-if-else';
 
@@ -54,10 +54,10 @@ interface IProps {
   betComponent: IBetComponent;
   betComponentStatus: IComponent[];
   results: IResult[];
-  resultBets: string[],
+  resultBets: string[];
   components: IResultComponent[];
   tabState: ITabState;
-  resultsFetched:boolean;
+  resultsFetched: boolean;
   fetchResultsBet();
   fetchPlacedBets();
   // onUpdateList(array: IFixture[]);
@@ -99,13 +99,13 @@ class ResultsComponent extends React.Component<IProps, {}> {
     // tslint:disable-next-line:no-console
     if (this.props.resultBets.length === 0) {
       this.props.fetchResultsBet();
-     this.props.fetchPlacedBets();
+      this.props.fetchPlacedBets();
     }
   }
 
   public async componentWillReceiveProps(nextProps) {
-    
-    if (nextProps.resultBets.length > 0 && this.props.results.length===0 && this.props.resultsFetched===false){ // } && nextProps.betComponent.fixture.length === 0) {
+    if (nextProps.resultBets.length > 0 && this.props.results.length === 0 && this.props.resultsFetched === false) {
+      // } && nextProps.betComponent.fixture.length === 0) {
 
       const promises = nextProps.resultBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
@@ -116,12 +116,10 @@ class ResultsComponent extends React.Component<IProps, {}> {
       const promisesUser = nextProps.placedBets.map(await getUserBetInfo);
       const userBetInfo: IUserBetInfo[] = (await Promise.all(promisesUser)) as any;
 
-      const myBetsArray :IMyBets[] = [];
+      const myBetsArray: IMyBets[] = [];
       // tslint:disable-next-line:prefer-for-of
-      for(let i = 0;i<userBetInfo.length;i++)
-      {
-
-        const tempFixture:IFixture = {
+      for (let i = 0; i < userBetInfo.length; i++) {
+        const tempFixture: IFixture = {
           homeTeamName: '',
           awayTeamName: '',
           date: '',
@@ -131,7 +129,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
           drawBets: 0,
           potValue: 0,
           betEvent: '',
-        }
+        };
         const APIDate: Date = APIMyBets[i].kickOffTime;
         tempFixture.homeTeamName = APIMyBets[i].outcomeOne;
         tempFixture.awayTeamName = APIMyBets[i].outcomeThree;
@@ -163,13 +161,13 @@ class ResultsComponent extends React.Component<IProps, {}> {
 
         myBetsArray.push(newBet);
       }
- 
+
       this.props.onPopulateMyBets(myBetsArray);
-     
+
       const resultArray: IResult[] = [];
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < APIfixtures.length; i++) {
-        const tempFixture:IFixture = {
+        const tempFixture: IFixture = {
           homeTeamName: '',
           awayTeamName: '',
           date: '',
@@ -179,7 +177,6 @@ class ResultsComponent extends React.Component<IProps, {}> {
           drawBets: 0,
           potValue: 0,
           betEvent: '',
-
         };
         const APIDate: Date = APIfixtures[i].kickOffTime;
         tempFixture.betEvent = nextProps.placedBets[i];
@@ -190,7 +187,8 @@ class ResultsComponent extends React.Component<IProps, {}> {
         tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         // tempFixture.score = APIfixtures[i].teamOneScore + ' - '+APIfixtures[i].teamTwoScore;
-        tempFixture.date = numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
+        tempFixture.date =
+          numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
         const time = APIDate.getHours();
         let formattedTime;
         if (time > 12) {
@@ -199,60 +197,53 @@ class ResultsComponent extends React.Component<IProps, {}> {
           formattedTime = time.toString() + ' am';
         }
         tempFixture.time = formattedTime;
-       
-         const myBetIndex = this.determineIndexOfResultInMyBets(tempFixture,myBetsArray)
-        if(myBetIndex!==-1){
-     
-          const newResult:IResult = defaultResult
+
+        const myBetIndex = this.determineIndexOfResultInMyBets(tempFixture, myBetsArray);
+        if (myBetIndex !== -1) {
+          const newResult: IResult = defaultResult;
           newResult.amountWon = myBetsArray[myBetIndex].betValue;
           newResult.awayTeamBets = tempFixture.awayBets;
           newResult.awayTeamName = tempFixture.awayTeamName;
           newResult.date = tempFixture.date;
-          newResult.drawBets  = tempFixture.drawBets;
+          newResult.drawBets = tempFixture.drawBets;
           newResult.homeTeamBets = tempFixture.homeBets;
           newResult.homeTeamName = tempFixture.homeTeamName;
           newResult.potValue = tempFixture.potValue;
-          newResult.resultForUser = Outcome[APIfixtures[i].winningIndex]  === myBetsArray[myBetIndex].betPlacedOn?'win':'lose',
-          newResult.score = APIfixtures[i].teamOneScore+' - '+APIfixtures[myBetIndex].teamTwoScore,
-          newResult.teamOfUser = myBetsArray[myBetIndex].betPlacedOn;
-          newResult.winningTeamStatus = Outcome[APIfixtures[i].winningIndex]
+          (newResult.resultForUser =
+            Outcome[APIfixtures[i].winningIndex] === myBetsArray[myBetIndex].betPlacedOn ? 'win' : 'lose'),
+            (newResult.score = APIfixtures[i].teamOneScore + ' - ' + APIfixtures[myBetIndex].teamTwoScore),
+            (newResult.teamOfUser = myBetsArray[myBetIndex].betPlacedOn);
+          newResult.winningTeamStatus = Outcome[APIfixtures[i].winningIndex];
           resultArray.push(newResult);
-        }
-        else
-        {
-          const newResult:IResult = defaultResult
+        } else {
+          const newResult: IResult = defaultResult;
           newResult.amountWon = 0;
           newResult.awayTeamBets = tempFixture.awayBets;
           newResult.awayTeamName = tempFixture.awayTeamName;
           newResult.date = tempFixture.date;
-          newResult.drawBets  = tempFixture.drawBets;
+          newResult.drawBets = tempFixture.drawBets;
           newResult.homeTeamBets = tempFixture.homeBets;
           newResult.homeTeamName = tempFixture.homeTeamName;
           newResult.potValue = tempFixture.potValue;
-          newResult.resultForUser = 'none',
-          newResult.score = APIfixtures[i].teamOneScore+' - '+APIfixtures[i].teamTwoScore,
-          newResult.teamOfUser = 'none';
-          newResult.winningTeamStatus = Outcome[APIfixtures[i].winningIndex]
+          (newResult.resultForUser = 'none'),
+            (newResult.score = APIfixtures[i].teamOneScore + ' - ' + APIfixtures[i].teamTwoScore),
+            (newResult.teamOfUser = 'none');
+          newResult.winningTeamStatus = Outcome[APIfixtures[i].winningIndex];
           resultArray.push(newResult);
         }
         // const newResult :IResult= {}
         // newResult.
         // resultArray.push(tempFixture);
       }
-    
-      
-        this.loadNewResults(resultArray);
+
+      this.loadNewResults(resultArray);
       // }
     }
   }
 
-
-  public determineIndexOfResultInMyBets(fixture:IFixture,myBets:IMyBets[])
-  {
-    for(let i = 0;i<myBets.length;i++)
-    {
-      if(myBets[i].fixture ===fixture)
-      {
+  public determineIndexOfResultInMyBets(fixture: IFixture, myBets: IMyBets[]) {
+    for (let i = 0; i < myBets.length; i++) {
+      if (myBets[i].fixture === fixture) {
         return i;
       }
     }
@@ -261,7 +252,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
 
   public updateComponentsInList(array: IFixture[]) {
     if (this.props.betComponent.fixture[0] !== array[0]) {
-     // this.props.onUpdateList(array);
+      // this.props.onUpdateList(array);
     }
   }
 
@@ -305,7 +296,6 @@ class ResultsComponent extends React.Component<IProps, {}> {
   }
 
   public loadNewResults(newResults: IResult[]) {
-
     this.props.replaceResults(newResults);
   }
 
@@ -321,7 +311,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
       width: '20%',
       marginLeft: '2.5%',
       fontSize: '3em',
-      fontWeight:'bold',
+      fontWeight: 'bold',
       color: 'rgb(251, 98, 53)',
       float: 'left',
       position: 'relative',
@@ -343,7 +333,7 @@ class ResultsComponent extends React.Component<IProps, {}> {
     });
 
     return renderIf(
-      this.props.resultsFetched===true ,
+      this.props.resultsFetched === true,
       <div>
         <div className={header}>
           <div className={heading}>
@@ -370,24 +360,23 @@ class ResultsComponent extends React.Component<IProps, {}> {
           replaceResults={this.loadNewResults}
         />
       </div>,
-      <h1>Loading ...</h1>
-    
+      <h1>{Text.loading}</h1>,
     );
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<IState>) =>
-  bindActionCreators({
-  
-    fetchPlacedBets,
-    fetchResultsBet,
-    onUpdateResultsComponentList: updateResultsComponentList,
-    onToggleStatsBar: toggleStatsBar,
-    onSwitchTab,
-    onLoadResults,
-    replaceResults: onReplaceResults,
-    onPopulateMyBets
-  },
+  bindActionCreators(
+    {
+      fetchPlacedBets,
+      fetchResultsBet,
+      onUpdateResultsComponentList: updateResultsComponentList,
+      onToggleStatsBar: toggleStatsBar,
+      onSwitchTab,
+      onLoadResults,
+      replaceResults: onReplaceResults,
+      onPopulateMyBets,
+    },
     dispatch,
   );
 
@@ -400,7 +389,6 @@ const mapStateToProps = (state: IState) => {
     components: state.ResultsReducer.components,
     tabState: state.ResultsReducer.tabState,
     userBets: state.MyBetsReducer.userBets,
-
   };
 };
 
