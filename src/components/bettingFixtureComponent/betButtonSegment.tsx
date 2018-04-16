@@ -165,8 +165,7 @@ export class BetButtonSegment extends React.Component<IProps, {}> {
     });
 
     const dynamicComponents = loadScreenSpecificComponents();
-// tslint:disable-next-line:no-console
-console.log(this.props)
+
     return (
       <div className={betButtonWrapper}>
         <div className={container}>
