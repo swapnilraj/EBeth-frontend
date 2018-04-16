@@ -30,6 +30,7 @@ const NoMatch = () => <div>Page under construction</div>;
 const Main = () => (
   <div className={container}>
     <Switch>
+      <Route exact path="/" component={PlaceBets} />
       <Route exact path="/about" component={About} />
       <Route exact path="/place_bets" component={PlaceBets} />
       <Route exact path="/results" component={Results} />
