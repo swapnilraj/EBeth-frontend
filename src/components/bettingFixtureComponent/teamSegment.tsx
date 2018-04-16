@@ -2,32 +2,18 @@ import * as React from 'react';
 import { classes, style, types } from 'typestyle';
 import { IMyBets } from '../../reducers/myBetsReducer';
 import { Colors, Dimens } from '../../utils/constants';
+import { IResult } from '../Results';
 
-export interface IResult {
-  homeTeamName: string;
-  awayTeamName: string;
-  winningTeamStatus: string; // should be Home Away Draw
-  date: string;
-  score: string;
-  resultForUser: string;
-  teamOfUser: string; // Home|Away|Draw
-  amountWon: number;
-  potValue: number;
-  homeTeamBets: number;
-  awayTeamBets: number;
-  drawBets: number;
-  yourBetValue: number;
-}
 
 interface IProps {
-  crest: string;
-  teamName: string;
-  status: string;
-  screen: string;
-  result: IResult;
-  bet: IMyBets;
-  team: string; // specifies whether team is home or away
-  liveMatch: boolean;
+  crest: string;        // the file path of the team crest
+  teamName: string;     // the team name being displayed in this component
+  status: string;       // this compoennt must be aware if the bet component is expanded or contracted as this will dicatte if the samll 'Home' or 'Away' text should be visible
+  screen: string;       // indicates which screen the user is currently on as this component is resused on RESULTS, MY_BETS and PLACE_BETS screens
+  result: IResult;      // result indicating the outcome of the game
+  bet: IMyBets;         // IMybet which indicates which way the user has bet and how much their bet is worth
+  team: string;         // specifies whether team is home or away
+  liveMatch: boolean;   // CSS of component changes dependng on whether or not a match is live
 }
 
 export class TeamSegment extends React.Component<IProps, {}> {
@@ -104,6 +90,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
       }
     };
 
+    // if the current state of the stats bar is 'contracted', then it should be hidden i.e display => 0
     const contracted = style({
       display: 'none' as types.CSSDisplay,
     });
@@ -118,6 +105,7 @@ export class TeamSegment extends React.Component<IProps, {}> {
       return classes(homeAwayText, isContracted ? contracted : null);
     };
 
+    // determines what color box should be green for win, red for lose or orange for undetermined
     const myBetBoxColor = color => {
       return style({ backgroundColor: Colors[color] });
     };

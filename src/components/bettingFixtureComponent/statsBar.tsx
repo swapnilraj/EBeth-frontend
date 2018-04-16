@@ -14,6 +14,8 @@ export class StatsBar extends React.Component<IProps, {}> {
     this.calculateMargin = this.calculateMargin.bind(this);
   }
 
+  // the margin left of the draw statistic must be calculated based on the width of the homeBets bar
+  // this is so that the draw statistic might appear below the draw bets bar. 
   public calculateMargin() {
     const total = +this.props.fixture.homeBets + +this.props.fixture.drawBets + +this.props.fixture.awayBets;
     const homeBets = +this.props.fixture.homeBets / total;
@@ -74,6 +76,7 @@ export class StatsBar extends React.Component<IProps, {}> {
       marginLeft: '10%',
     });
 
+    // these numbers will be used to determine width of home / draw / and away parts of stats bar
     const total = +this.props.fixture.homeBets + +this.props.fixture.drawBets + +this.props.fixture.awayBets;
     
     const homeBets = +this.props.fixture.homeBets / total;

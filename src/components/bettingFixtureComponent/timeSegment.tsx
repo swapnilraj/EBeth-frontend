@@ -2,22 +2,9 @@ import * as React from 'react';
 import { classes, style, types } from 'typestyle';
 import { IMyBets } from '../../reducers/myBetsReducer';
 import { Colors, Dimens } from '../../utils/constants';
+import { IResult } from '../Results';
 
-export interface IResult {
-  homeTeamName: string;
-  awayTeamName: string;
-  winningTeamStatus: string; // should be Home Away Draw
-  date: string;
-  score: string;
-  resultForUser: string;
-  teamOfUser: string; // Home|Away|Draw
-  amountWon: number;
-  potValue: number;
-  homeTeamBets: number;
-  awayTeamBets: number;
-  drawBets: number;
-  yourBetValue: number;
-}
+
 
 interface IProps {
   startTime: string;

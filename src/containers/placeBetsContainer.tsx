@@ -18,6 +18,7 @@ import {
   toggleStatsBarFunc,
   updateBetFixtureList,
 } from '../reducers/listOfBettingComponentsReducer';
+import { defaultIFixture } from '../reducers/myBetsReducer';
 import { fetchAvailableBets, placeBet } from '../stores/contract';
 import { IState } from '../stores/root';
 // import {formatDate , IFormatDate} from '../utils/formatDates'
@@ -45,10 +46,6 @@ interface IComponent {
   message: string;
 }
 
-// interface IBetComponent {
-//   fixture: IFixture[];
-//   components: IComponent[];
-// }
 
 interface IProps {
   fixtureList: IFixture[];
@@ -86,33 +83,30 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
     this.updateInputValue = this.updateInputValue.bind(this);
   }
 
+  /*
+  This is where the addresses for the available bets is queried.
+  This function will get the id of all fixtures we have made available and place in the availableBets array in the redux store
+  */
   public componentWillMount() {
-    // tslint:disable-next-line:no-console
-
     if (this.props.availableBets.length === 0) {
       this.props.fetchAvailableBets();
     }
   }
 
+  /*
+    Here the addresses pulled in the above componentWillMount method are converted into a fixture array and pushed back uo
+    to the redux store. From there they will distribute details of the available bets to the placeBetsContainer which will
+    render a list using this prop info.
+  */
   public async componentWillReceiveProps(nextProps) {
     if (nextProps.availableBets.length > 0 && nextProps.betComponent.fixture.length === 0) {
       const promises = nextProps.availableBets.map(await getBetInfo);
       const APIfixtures: IBetInfo[] = (await Promise.all(promises)) as any;
-
-      const fixtureArray: IFixture[] = [];
+      const fixtureArray: IFixture[] = []; 
+      // for loop to iterate over match details and push fixtures to redux store 
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < APIfixtures.length; i++) {
-        const tempFixture = {
-          homeTeamName: '',
-          awayTeamName: '',
-          date: '',
-          time: '',
-          homeBets: 0,
-          awayBets: 0,
-          drawBets: 0,
-          potValue: 0,
-          betEvent: '',
-        };
+        const tempFixture = defaultIFixture;
         const APIDate: Date = APIfixtures[i].kickOffTime;
         tempFixture.homeTeamName = APIfixtures[i].outcomeOne;
         tempFixture.awayTeamName = APIfixtures[i].outcomeThree;
@@ -121,50 +115,69 @@ class PlaceBetsComponent extends React.Component<IProps, {}> {
         tempFixture.awayBets = APIfixtures[i].poolThree;
         tempFixture.potValue = APIfixtures[i].totalPool;
         tempFixture.betEvent = this.props.availableBets[i];
-        tempFixture.date =
-          numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
+        tempFixture.date =  numToWeekDay(APIDate.getDay()) + '   |   ' + APIDate.getDate() + ' ' + numToMonth(APIDate.getMonth());
         const time = APIDate.getHours();
         let formattedTime;
-        if (time > 12) {
-          formattedTime = (time % 12).toString() + ' pm';
-        } else {
-          formattedTime = time.toString() + ' am';
-        }
+        // convert time to be in 12 hour clock
+        if (time > 12) { formattedTime = (time % 12).toString() + ' pm';} 
+        else {formattedTime = time.toString() + ' am';}
         tempFixture.time = formattedTime;
         fixtureArray.push(tempFixture);
       }
+      /* 
+      if the first fixture is different from the fixture of the first betting component, 
+      then update the redux store
+      */
       if (nextProps.betComponent.fixture[0] !== fixtureArray[0]) {
         this.updateComponentsInList(fixtureArray);
       }
     }
   }
-
+/* 
+  function that updates the redux store. Takes in a list of fixtures which it will use to replace 
+  store.bettingComponentReducer.fixtures
+*/
   public updateComponentsInList(array: IFixture[]) {
     if (this.props.betComponent.fixture[0] !== array[0]) {
       this.props.onUpdateList(array);
     }
   }
 
+  /*
+    updates the component list in  store.bettingComponentReducer.componentList. This contains information about
+    both the current fixture that a betting component is representing and its state e.g if it is contracted / expanded etc
+  */
   public addBetComponentToState(betComponent: IComponent) {
     this.props.onNewBetComponentMade(betComponent);
   }
-
+  /*
+    Expands the starts bar when show more / show less is clicked - edits state in reducer
+  */
   public toggleStatsBar(currentState: string, id: number) {
     this.props.onStatsBarToggle(currentState, id);
   }
-
+/*
+  Expands the bet menu with team select / input field when you click 'place bet' - changes state in reducer
+*/
   public expandBetMenu(currentState: string, fixture: IFixture) {
     this.props.onToggleBetMenuDisplay(currentState, fixture);
   }
-
+/*
+  updates reducer state when a user selects which team they want to bet on
+*/
   public selectTeamToBetOn(homeTeamName: string, panelType: string) {
     this.props.onSelectTeam(homeTeamName, panelType);
   }
-
+/*
+  boolean in the store which dictates if the amount entered by the user is a valid input. 
+  if user input is invalid, they will not be able to click the 'place bet' button in the place bet menu
+*/
   public toggleValidUserInput() {
     this.props.onToggleValidInput();
   }
-
+/*
+  updates value in the redux store which contains whatever the user has typed into the input field
+*/
   public updateInputValue(newInput: string) {
     this.props.onUpdateBetValueInput(newInput);
   }
