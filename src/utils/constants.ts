@@ -63,7 +63,7 @@ const Dimens = {
 const Text = {
   bannerShortTitle: 'E',
   bannerTitle: 'Ebeth',
-  profilePlaceholder: 'John Doe',
+  profilePlaceholder: '',
   placeBetsTab: 'Place Bets',
   currentBetsTab: 'My current bets',
   resultsTab: 'All results',
