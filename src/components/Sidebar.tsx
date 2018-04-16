@@ -6,6 +6,7 @@ import * as React from 'react';
 import { classes, style } from 'typestyle';
 
 import ConnectedRoundImg from '../containers/ConnectedRoundImg';
+import { IContractsState } from '../stores/contract';
 import { Colors, Dimens, Text } from '../utils/constants';
 import Icon from './Icon';
 import LargeText from './LargeText';
@@ -53,16 +54,22 @@ const tabsContainer = style({
 
 interface IProps {
   isCollapsed: boolean;
+  contract: IContractsState;
   toggleSidebar();
 }
 
-const Sidebar = ({ isCollapsed, toggleSidebar }: IProps) => (
+const Sidebar = ({ isCollapsed, contract, toggleSidebar }: IProps) => (
   <div className={container} data-is-collapsed={isCollapsed} onMouseEnter={toggleSidebar} onMouseLeave={toggleSidebar}>
     <div className={classes(banner, isCollapsed ? collapsedBanner : null)}>
       <LargeText text={isCollapsed ? Text.bannerShortTitle : Text.bannerTitle} className={bannerText} />
     </div>
     <div className={tabsContainer}>
-      <Tab icon={<ConnectedRoundImg />} isCollapsed={isCollapsed} route="/profile" title={Text.profilePlaceholder} />
+      <Tab
+        icon={<ConnectedRoundImg />}
+        isCollapsed={isCollapsed}
+        route="/profile"
+        title={`${contract.userAccount.substring(0, 10)}...`}
+      />
       <Tab icon={<Icon type="place-bets" />} isCollapsed={isCollapsed} route="/place_bets" title={Text.placeBetsTab} />
       <Tab icon={<Icon type="my-bets" />} isCollapsed={isCollapsed} route="/my_bets" title={Text.currentBetsTab} />
       <Tab icon={<Icon type="results" />} isCollapsed={isCollapsed} route="/results" title={Text.resultsTab} />

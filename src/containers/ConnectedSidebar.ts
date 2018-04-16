@@ -11,7 +11,7 @@ import { toggleSidebar } from '../stores/sidebar';
 
 import Sidebar from '../components/Sidebar';
 
-const mapState = (state: IState) => state.sidebar;
+const mapState = (state: IState) => ({ ...state.sidebar, contract: state.contract });
 
 const mapDispatch = (dispatch: Dispatch<IState>) =>
   bindActionCreators(
